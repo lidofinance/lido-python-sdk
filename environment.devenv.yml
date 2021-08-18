@@ -1,0 +1,27 @@
+name: blank-project
+channels:
+  - conda-forge
+dependencies:
+  # Python stack
+  - python>=3.6
+  - black
+  - numpy>=1.13.3
+  - pytest>=3.8.0
+  - scipy>=1.1.0
+
+  # For tests
+  - pytest>=3.8.0
+  - pytest-cov
+  - pytest-xdist
+  - codecov
+
+  # For documentation
+  - sphinx
+  - sphinx_rtd_theme
+
+  # Hooks for git
+  - pre-commit
+
+environment:
+  PYTHONPATH:
+    - {{ root }}

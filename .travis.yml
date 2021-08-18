@@ -1,0 +1,43 @@
+branches:
+  only:
+    - master
+
+matrix:
+  include:
+    - os: linux
+      dist: bionic
+      language: python
+      python: "3.6"
+    - os: linux
+      dist: bionic
+      language: python
+      python: "3.7"
+    - os: linux
+      dist: xenial
+      language: python
+      python: "3.6"
+    - os: linux
+      dist: xenial
+      language: python
+      python: "3.7"
+    - os: osx
+      osx_image: xcode11.2
+      language: shell
+
+install:
+  - pip3 install virtualenv  # this line have to be performed in Travis OSX, but it's not required for linux
+  - virtualenv devenv
+  - source devenv/bin/activate
+  - pip3 install -r requirements.txt
+  - pre-commit install
+
+script:
+  - pre-commit run --all-files
+  - pytest .
+
+notifications:
+  email:
+    recipients:
+      - your.email@somewhere.com
+    on_success: change
+    on_failure: change

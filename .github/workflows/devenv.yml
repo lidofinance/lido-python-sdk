@@ -1,0 +1,45 @@
+name: devenv
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - master
+
+  schedule:
+  - cron: "0 5 * * 1"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup conda
+        uses: s-weigand/setup-conda@v1
+        with:
+          update-conda: true
+          conda-channels: conda-forge
+      - run: conda --version
+      - name: Configure conda-devenv
+        shell: bash -l {0}
+        run: |
+          conda config --set always_yes yes --set changeps1 no
+          conda install conda-devenv
+          conda update -q conda
+          conda info -a
+          conda devenv
+          source activate blank-project
+      - name: pre-commit Checkers and Formatters
+        shell: bash -l {0}
+        run: |
+          source activate blank-project
+          pre-commit install
+          pre-commit run --all-files
+      - name: Test with pytest
+        shell: bash -l {0}
+        run: |
+          source activate blank-project
+          pytest . --cov-config=.coveragerc --cov-report=xml --cov=mypackage

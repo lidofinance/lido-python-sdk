@@ -1,0 +1,8 @@
+.idea/
+.pytest_cache/
+./mypackage/__pycache__/
+./docs/.build/
+./docs/.static/
+./docs/.templates/
+devenv/
+mypackage.egg-info/
