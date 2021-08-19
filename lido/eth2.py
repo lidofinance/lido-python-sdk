@@ -1,3 +1,8 @@
+"""
+Eth2 deposit utilities
+https://github.com/ethereum/eth2.0-deposit-cli
+"""
+
 from constants.chains import Eth2Chains
 from constants.eth2 import FORK_VERSIONS, DOMAIN_DEPOSIT, ZERO_BYTES32
 from ssz import Serializable, uint64, bytes4, bytes32, bytes48

@@ -3,6 +3,7 @@ pytest>=3.8.0
 scipy>=1.1.0
 ssz>=0.2.4
 web3>=5.23.0
+multicall>=0.1.2
 sphinx_rtd_theme
 pre-commit
 pytest-cov

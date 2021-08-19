@@ -1,25 +1,41 @@
-from typing import Callable, TypeVar, Dict, List, Any
+"""
+Utilities for processing the Call results
+"""
+
+from typing import Callable, TypeVar, Dict, List
 
 
+A = TypeVar('A')
 T = TypeVar('T')
 
 
 def get_call_data_setter(
-    data: Dict[str, Any],
+    result_dict: Dict[str, A],
     field: str
-) -> Callable[[T], Dict[str, T]]:
-    def assignment(value: T):
-        data[field] = value
-        return data
+) -> Callable[[T], Dict[str, A]]:
+    """Returns handler that assign input value to the result_dict[field]"""
 
-    return assignment
+    assert isinstance(result_dict, Dict)
+    assert isinstance(field, str)
+
+    def call_data_setter(value: T):
+        result_dict[field] = value
+        return result_dict
+
+    return call_data_setter
 
 
 def unzip_call_data(
     index: int,
-    result_dict: Dict,
+    result_dict: Dict[str, A],
     result_dict_fields: List[str]
-) -> list[tuple[int, Callable[[T], Dict[str, T]]]]:
+) -> list[tuple[int, Callable[[T], Dict[str, A]]]]:
+    """Generates handlers for the Call which assign data to the result_dict"""
+
+    assert index >= 0
+    assert isinstance(result_dict, Dict)
+    assert isinstance(result_dict_fields, List)
+
     return [
         (index, get_call_data_setter(result_dict, field_name))
         for field_name in result_dict_fields

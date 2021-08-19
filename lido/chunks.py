@@ -1,12 +1,18 @@
+"""
+Utilities for chunking data and processing chunks in multiple threads
+"""
+
 from concurrent.futures import ThreadPoolExecutor
 from asyncio import gather, get_event_loop
-from typing import Callable, TypeVar, List, Dict, Any
+from typing import Callable, TypeVar, List, Dict
 from itertools import chain
 from math import ceil
 
 
 class Chunk:
     def __init__(self, start_index: int, end_index: int):
+        assert start_index <= end_index
+
         self.start_index = start_index
         self.end_index = end_index
 
@@ -24,6 +30,8 @@ class Chunk:
 
 
 def get_chunks(start_index: int, end_index: int, chunk_size: int) -> List[Chunk]:
+    """Returns list of chunks in the passed range"""
+
     assert start_index >= 0
     assert start_index <= end_index
     assert chunk_size > 0
@@ -52,6 +60,12 @@ def chunks_multithread_execute(
     chunks: List[Chunk],
     get_processor: Callable[[Chunk], Callable[[], Dict[int, T]]],
 ) -> List[T]:
+    """Executes get_processor in the ThreadPoolExecutor"""
+
+    assert max_workers > 0
+    assert isinstance(chunks, List)
+    assert isinstance(get_processor, Callable)
+
     loop = get_event_loop()
 
     async def loop_execute():

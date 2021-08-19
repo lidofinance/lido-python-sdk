@@ -1,3 +1,7 @@
+"""
+Utilities for fetching a list of node operators from a registry
+"""
+
 from chunks import chunks_multithread_execute, get_chunks, Chunk
 from constants.workers import MAX_WORKERS_FOR_OPERATORS
 from constants.multicall import DEFAULT_MULTICALL_BATCH_OPERATORS, GET_OPERATOR_INTERFACE
@@ -30,6 +34,8 @@ def get_operators(
     chunk_size: int = DEFAULT_MULTICALL_BATCH_OPERATORS,
     max_workers: int = MAX_WORKERS_FOR_OPERATORS
 ) -> List[OperatorIndexed]:
+    """Returns node operators from registry"""
+
     registry_contract = get_registry_contract(w3, registry_address)
     total_operators = registry_contract.functions.getNodeOperatorsCount().call()
     end_index = (total_operators - 1) if end_index == -1 else end_index
@@ -57,10 +63,10 @@ def get_operators_chunked(
     registry_address: str,
     chunk: Chunk
 ) -> List[OperatorIndexed]:
-    """Returns operators in the chunk range"""
+    """Returns node operators in the chunk range"""
 
     operators: Dict[int, Operator] = {index: {} for index in chunk}
-    operator_fields = Operator.__annotations__.keys()
+    operator_fields = list(Operator.__annotations__.keys())
 
     Multicall([
         Call(
@@ -74,12 +80,16 @@ def get_operators_chunked(
         ) for index in chunk
     ], w3)()
 
-    operators_indexed = index_operators(operators)
+    operators_indexed = index_operators(operators).values()
     return operators_indexed
 
 
-def index_operators(operators: Dict[int, Operator]) -> List[OperatorIndexed]:
-    return [
-        {'index': operator_index, **operator_data}
+def index_operators(operators: Dict[int, Operator]) -> Dict[int, OperatorIndexed]:
+    """Adds index to operator's dict"""
+
+    assert isinstance(operators, Dict)
+
+    return {
+        operator_index: {'index': operator_index, **operator_data}
         for (operator_index, operator_data) in operators.items()
-    ]
+    }
