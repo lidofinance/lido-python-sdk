@@ -24,8 +24,8 @@ def test_index_operators_output_instance():
 
 
 def test_index_operators_output_data():
-    test_dict = {'name': 'test'}
+    test_dict = {"name": "test"}
     output = index_operators({5: test_dict})
 
     assert len(output) == 1
-    assert output[5] == {'index': 5, **test_dict}
+    assert output[5] == {"index": 5, **test_dict}

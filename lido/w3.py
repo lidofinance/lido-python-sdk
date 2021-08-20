@@ -13,6 +13,7 @@ def validate_web3(w3: Web3) -> None:
 
     if chain_id == EthChainIds.GOERLI:
         from web3.middleware import geth_poa_middleware
+
         injected = geth_poa_middleware in w3.middleware_onion
 
         assert injected, "PoA middleware isn't injected into Web3 middleware onion"

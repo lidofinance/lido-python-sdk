@@ -5,13 +5,12 @@ Utilities for processing the Call results
 from typing import Callable, TypeVar, Dict, List
 
 
-A = TypeVar('A')
-T = TypeVar('T')
+A = TypeVar("A")
+T = TypeVar("T")
 
 
 def get_call_data_setter(
-    result_dict: Dict[str, A],
-    field: str
+    result_dict: Dict[str, A], field: str
 ) -> Callable[[T], Dict[str, A]]:
     """Returns handler that assign input value to the result_dict[field]"""
 
@@ -26,9 +25,7 @@ def get_call_data_setter(
 
 
 def unzip_call_data(
-    index: int,
-    result_dict: Dict[str, A],
-    result_dict_fields: List[str]
+    index: int, result_dict: Dict[str, A], result_dict_fields: List[str]
 ) -> list[tuple[int, Callable[[T], Dict[str, A]]]]:
     """Generates handlers for the Call which assign data to the result_dict"""
 

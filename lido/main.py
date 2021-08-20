@@ -4,8 +4,14 @@ Lido Python SDK
 
 from lido.operators import get_operators
 from lido.constants.workers import MAX_WORKERS_FOR_OPERATORS, MAX_WORKERS_FOR_KEYS
-from lido.constants.multicall import DEFAULT_MULTICALL_BATCH_OPERATORS, DEFAULT_MULTICALL_BATCH_KEYS
-from lido.constants.addresses import get_default_lido_address, get_default_registry_address
+from lido.constants.multicall import (
+    DEFAULT_MULTICALL_BATCH_OPERATORS,
+    DEFAULT_MULTICALL_BATCH_KEYS,
+)
+from lido.constants.addresses import (
+    get_default_lido_address,
+    get_default_registry_address,
+)
 from lido.constants.chains import EthChainIds
 from lido.w3 import validate_web3
 from typing import Optional
@@ -45,5 +51,5 @@ class Lido:
             start_index,
             end_index,
             self.max_multicall_operators,
-            self.max_workers_operators
+            self.max_workers_operators,
         )
