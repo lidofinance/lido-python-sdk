@@ -1,4 +1,4 @@
-from constants.chains import EthChainIds
+from lido.constants.chains import EthChainIds
 from typing import Dict
 
 

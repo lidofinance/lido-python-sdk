@@ -1,4 +1,4 @@
-from constants.abi import get_lido_abi_path, get_registry_abi_path
+from lido.constants.abi import get_lido_abi_path, get_registry_abi_path
 from web3 import Web3
 from web3.contract import Contract
 

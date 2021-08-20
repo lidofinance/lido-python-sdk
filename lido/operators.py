@@ -2,15 +2,16 @@
 Utilities for fetching a list of node operators from a registry
 """
 
-from chunks import chunks_multithread_execute, get_chunks, Chunk
-from constants.workers import MAX_WORKERS_FOR_OPERATORS
-from constants.multicall import DEFAULT_MULTICALL_BATCH_OPERATORS, GET_OPERATOR_INTERFACE
-from constants.contracts import get_registry_contract
+from lido.chunks import chunks_multithread_execute, get_chunks, Chunk
+from lido.constants.workers import MAX_WORKERS_FOR_OPERATORS
+from lido.constants.multicall import DEFAULT_MULTICALL_BATCH_OPERATORS, GET_OPERATOR_INTERFACE
+from lido.constants.contracts import get_registry_contract
+from lido.calldata import unzip_call_data
 from typing import TypedDict, List, Dict
 from multicall import Call, Multicall
-from calldata import unzip_call_data
 from web3 import Web3
 from logging import getLogger
+
 
 logger = getLogger(__name__)
 

@@ -2,7 +2,7 @@
 Utilities for web3 integration
 """
 
-from constants.chains import EthChainIds
+from lido.constants.chains import EthChainIds
 from web3 import Web3
 
 
