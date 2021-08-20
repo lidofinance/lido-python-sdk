@@ -128,7 +128,13 @@ html_show_sourcelink = True
 #    ]
 # }
 
-html_sidebars = {"**": ["about.html", "navigation.html", "searchbox.html",]}
+html_sidebars = {
+    "**": [
+        "about.html",
+        "navigation.html",
+        "searchbox.html",
+    ]
+}
 
 
 # -- Options for HTMLHelp output ------------------------------------------
@@ -173,7 +179,13 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, "blank-python-project", "blank-python-project Documentation", [author], 1)
+    (
+        master_doc,
+        "blank-python-project",
+        "blank-python-project Documentation",
+        [author],
+        1,
+    )
 ]
 
 

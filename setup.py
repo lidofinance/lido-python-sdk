@@ -107,5 +107,7 @@ setup(
         "Programming Language :: Python :: 3 :: Only",
     ],
     # $ setup.py publish support.
-    cmdclass={"upload": UploadCommand,},
+    cmdclass={
+        "upload": UploadCommand,
+    },
 )
