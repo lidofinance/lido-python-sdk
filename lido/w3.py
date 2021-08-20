@@ -9,7 +9,7 @@ from web3 import Web3
 def validate_web3(w3: Web3) -> None:
     assert isinstance(w3, Web3)
 
-    chain_id = w3.eth.chainId
+    chain_id = w3.eth.chain_id
 
     if chain_id == EthChainIds.GOERLI:
         from web3.middleware import geth_poa_middleware

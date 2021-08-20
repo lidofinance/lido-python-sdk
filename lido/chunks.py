@@ -28,6 +28,9 @@ class Chunk:
         else:
             raise StopIteration
 
+    def __len__(self):
+        return self.end_index - self.start_index + 1
+
 
 def get_chunks(start_index: int, end_index: int, chunk_size: int) -> List[Chunk]:
     """Returns list of chunks in the passed range"""
