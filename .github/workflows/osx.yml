@@ -39,10 +39,6 @@ jobs:
         python3 -m ensurepip --upgrade
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
-    - name: pre-commit Checkers and Formatters
-      run: |
-        pre-commit install
-        pre-commit run --all-files
     - name: Test with pytest
       run: |
         pytest .
