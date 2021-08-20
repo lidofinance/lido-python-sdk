@@ -20,12 +20,12 @@ jobs:
       max-parallel: 4
       fail-fast: false
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.7, 3.9]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Create virtualenv
@@ -46,7 +46,6 @@ jobs:
       run: |
         pytest . --cov-config=.coveragerc --cov-report=xml --cov=mypackage
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1.0.3
+      uses: codecov/codecov-action@v2
       with:
-        token: ${{secrets.CODECOV_TOKEN}}
         file: ./coverage.xml
