@@ -39,8 +39,4 @@ pytest .
 * [virtualenv](https://virtualenv.pypa.io/en/latest/)
 * Hierarchical structure to a python package as suggested by ["The Hitchhiker’s Guide to Python"](https://docs.python-guide.org/) (highly recommended reading);
 * A [Read The Docs](https://readthedocs.org/) configuration scratch;
-* [pre-commit](https://pre-commit.com/) to perform git hooks before commits. The following plugins are being used:
-    - trailing-whitespace
-    - end-of-file-fixer
-    - black (default options combined with customized line length to 100 chars per line)
 * Coverage of the package with [Codecov](https://codecov.io/).
