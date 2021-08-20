@@ -1,2 +1,5 @@
 pytest==6.2.4
 pre-commit==2.14.0
+pytest-cov==2.12.1
+codecov==2.1.12
+sphinx_rtd_theme==0.5.2
