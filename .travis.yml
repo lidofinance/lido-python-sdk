@@ -25,7 +25,7 @@ matrix:
       language: shell
 
 install:
-  - pip3 install virtualenv  # this line have to be performed in Travis OSX, but it's not required for linux
+  - pip3 install virtualenv
   - virtualenv devenv
   - source devenv/bin/activate
   - pip3 install -r requirements.txt
@@ -38,6 +38,6 @@ script:
 notifications:
   email:
     recipients:
-      - your.email@somewhere.com
-    on_success: change
-    on_failure: change
+      - roman.s@p2p.org
+    on_success: never
+    on_failure: always

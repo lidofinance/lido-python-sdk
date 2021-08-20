@@ -5,4 +5,4 @@ Submodules
 ----------
 
 .. toctree::
-    mypackage.foo
+    lido.foo
