@@ -10,6 +10,9 @@ from typing import TypedDict, List, Dict
 from multicall import Call, Multicall
 from calldata import unzip_call_data
 from web3 import Web3
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 
 class Operator(TypedDict):
@@ -43,6 +46,14 @@ def get_operators(
     assert start_index <= total_operators
     assert end_index < total_operators
 
+    logger.info("Start fetching", extra={
+        'action': 'fetch',
+        'target': 'operators',
+        'state': 'start',
+        'start_index': start_index,
+        'end_index': end_index
+    })
+
     chunks = get_chunks(start_index, end_index, chunk_size)
     operators = chunks_multithread_execute(
         max_workers,
@@ -54,6 +65,14 @@ def get_operators(
                 chunk
             )
     )
+
+    logger.info("End fetching", extra={
+        'action': 'fetch',
+        'target': 'operators',
+        'state': 'end',
+        'start_index': start_index,
+        'end_index': end_index
+    })
 
     return operators
 
@@ -79,6 +98,14 @@ def get_operators_chunked(
             ), w3
         ) for index in chunk
     ], w3)()
+
+    logger.info("Chunk fetched", extra={
+        'action': 'chunk',
+        'target': 'operators',
+        'state': 'success',
+        'start_index': chunk.start_index,
+        'end_index': chunk.end_index
+    })
 
     operators_indexed = index_operators(operators).values()
     return operators_indexed
