@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-# Note: To use the 'upload' functionality of this file, you must:
-#   $ pip install twine
-
 import io
 import os
 import sys
@@ -11,22 +7,18 @@ from shutil import rmtree
 
 from setuptools import find_packages, setup, Command
 
+
 # Package meta-data.
-NAME = "mypackage"
-DESCRIPTION = "A short description"
-URL = "https://github.com//me/myproject"
-EMAIL = "your.email@somewhere.com"
-AUTHOR = "Your name"
-REQUIRES_PYTHON = ">=3.6.1"  # Put your required Python version
-VERSION = "0.1"  # Put the package version as a string (ex.: '1.0.0')
-
-# What packages are required for this module to be executed?
-REQUIRED = ["numpy", "pytest", "numpydoc"]
-
-# What packages are optional?
-EXTRAS = {
-    # 'fancy feature': ['django'],
-}
+NAME = "lido-sdk"
+DESCRIPTION = (
+    "This library consolidates various functions to efficiently load network data for Lido,"
+    " validate node operator keys and find key duplicates."
+)
+URL = "https://github.com/lidofinance/lido-validator-python"
+EMAIL = "info@lido.fi"
+AUTHOR = "Lido"
+REQUIRES_PYTHON = ">=3.6,<4"
+VERSION = "0.1.0"
 
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
@@ -43,17 +35,13 @@ try:
 except FileNotFoundError:
     long_description = DESCRIPTION
 
-# Load the package's __version__.py module as a dictionary.
-about = {}
-if not VERSION:
-    with open(os.path.join(here, NAME, "__version__.py")) as f:
-        exec(f.read(), about)
-else:
-    about["__version__"] = VERSION
-
 
 class UploadCommand(Command):
-    """Support setup.py upload."""
+    """
+    Support setup.py upload.
+        Note: To use the 'upload' functionality of this file, you must:
+        $ pip install twine
+    """
 
     description = "Build and publish the package."
     user_options = []
@@ -83,16 +71,20 @@ class UploadCommand(Command):
         os.system("twine upload dist/*")
 
         self.status("Pushing git tags…")
-        os.system("git tag v{0}".format(about["__version__"]))
+        os.system("git tag v{0}".format(VERSION))
         os.system("git push --tags")
 
         sys.exit()
 
 
+with open("requirements.txt", "r") as file:
+    requirements = [lib.strip() for lib in file.read().split("\n") if lib]
+
+
 # Where the magic happens:
 setup(
     name=NAME,
-    version=about["__version__"],
+    version=VERSION,
     description=DESCRIPTION,
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -101,23 +93,21 @@ setup(
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=find_packages(exclude=("tests",)),
-    # If your package is a single module, use this instead of 'packages':
-    # py_modules=['mypackage'],
+    # If your package is a single module, use this instead of "packages":
+    # py_modules=["mypackage"],
     # entry_points={
-    #     'console_scripts': ['mycli=mymodule:cli'],
+    #     "console_scripts": ["mycli=mymodule:cli"],
     # },
-    install_requires=REQUIRED,
-    extras_require=EXTRAS,
+    install_requires=requirements,
     include_package_data=True,
     license="MIT",
     classifiers=[
-        # Trove classifiers
-        # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         "License :: OSI Approved :: MIT License",
-        "Development Status :: 1 - Planning",
+        "Development Status :: 2 - Pre-Alpha",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.6",
     ],
     # $ setup.py publish support.
-    cmdclass={"upload": UploadCommand,},
+    cmdclass={
+        "upload": UploadCommand,
+    },
 )
