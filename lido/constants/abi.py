@@ -12,9 +12,9 @@ def load_contract_abi(file_name: str) -> List[Dict]:
 
 def get_lido_abi_path() -> List[Dict]:
     """Load an ABI file for Lido contract"""
-    return load_contract_abi('lido.json')
+    return load_contract_abi("lido.json")
 
 
 def get_registry_abi_path() -> List[Dict]:
     """Load an ABI file for Node Operators Registry contract"""
-    return load_contract_abi('node-operators-registry.json')
+    return load_contract_abi("node-operators-registry.json")

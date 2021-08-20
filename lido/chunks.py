@@ -45,17 +45,14 @@ def get_chunks(start_index: int, end_index: int, chunk_size: int) -> List[Chunk]
     return [
         Chunk(
             start_index + group_index * chunk_size,
-            min(
-                start_index + group_index * chunk_size + chunk_size - 1,
-                end_index
-            )
+            min(start_index + group_index * chunk_size + chunk_size - 1, end_index),
         )
         for group_index in range(groups_amount)
     ]
 
 
-A = TypeVar('A')
-T = TypeVar('T')
+A = TypeVar("A")
+T = TypeVar("T")
 
 
 def chunks_multithread_execute(
@@ -73,10 +70,12 @@ def chunks_multithread_execute(
 
     async def loop_execute():
         with ThreadPoolExecutor(max_workers) as executor:
-            result = await gather(*[
-                loop.run_in_executor(executor, get_processor(chunk))
-                for chunk in chunks
-            ])
+            result = await gather(
+                *[
+                    loop.run_in_executor(executor, get_processor(chunk))
+                    for chunk in chunks
+                ]
+            )
 
             return list(chain(*result))
 

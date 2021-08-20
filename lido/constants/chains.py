@@ -8,9 +8,9 @@ class EthChainIds(IntEnum):
 
 
 class Eth2Chains(Enum):
-    MAINNET = 'mainnet'
-    PYRMONT = 'pyrmont'
-    PRATER = 'prater'
+    MAINNET = "mainnet"
+    PYRMONT = "pyrmont"
+    PRATER = "prater"
 
 
 def get_eth2_chain(eth_chain_id: int) -> Eth2Chains:

@@ -13,10 +13,7 @@ def get_fork_version_by_chain(chain: Eth2Chains) -> bytes:
 
 
 class SigningData(Serializable):
-    fields = [
-        ("object_root", bytes32),
-        ("domain", bytes32)
-    ]
+    fields = [("object_root", bytes32), ("domain", bytes32)]
 
 
 class ForkData(Serializable):
@@ -31,9 +28,7 @@ def compute_deposit_domain(fork_version: bytes) -> bytes:
     Deposit-only `compute_domain`
     """
     if len(fork_version) != 4:
-        raise ValueError(
-            f"Fork version should be in 4 bytes. Got {len(fork_version)}."
-        )
+        raise ValueError(f"Fork version should be in 4 bytes. Got {len(fork_version)}.")
 
     domain_type = DOMAIN_DEPOSIT
     fork_data_root = compute_deposit_fork_data_root(fork_version)
@@ -63,9 +58,7 @@ def compute_signing_root(ssz_object: Serializable, domain: bytes) -> bytes:
     https://github.com/ethereum/eth2.0-specs/blob/dev/specs/phase0/beacon-chain.md#signingdata
     """
     if len(domain) != 32:
-        raise ValueError(
-            f"Domain should be in 32 bytes. Got {len(domain)}."
-        )
+        raise ValueError(f"Domain should be in 32 bytes. Got {len(domain)}.")
 
     return SigningData(
         object_root=ssz_object.hash_tree_root,
