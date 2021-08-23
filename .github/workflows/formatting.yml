@@ -1,4 +1,4 @@
-name: linux
+name: formating
 
 on:
   push:
