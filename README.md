@@ -33,15 +33,9 @@ pytest .
 ## Covered features
 
 * [Sphinx](http://www.sphinx-doc.org/en/master/) autodocumentation with [autodoc](https://docs-python2readthedocs.readthedocs.io/en/master/code-doc.html);
-* [Travis CI](https://travis-ci.com) minimal configuration;
 * [GitHub Actions](https://github.com/features/actions) workflows with minimal configurations for latest Ubuntu, macOS and Windows;
 * Tests with [pytest](https://docs.pytest.org/en/latest/);
 * [virtualenv](https://virtualenv.pypa.io/en/latest/)
 * Hierarchical structure to a python package as suggested by ["The Hitchhiker’s Guide to Python"](https://docs.python-guide.org/) (highly recommended reading);
 * A [Read The Docs](https://readthedocs.org/) configuration scratch;
-* [pre-commit](https://pre-commit.com/) to perform git hooks before commits. The following plugins are being used:
-    - trailing-whitespace
-    - end-of-file-fixer
-    - black (default options combined with customized line length to 100 chars per line)
-    - blacken-docs
 * Coverage of the package with [Codecov](https://codecov.io/).
