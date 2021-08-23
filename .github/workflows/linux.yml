@@ -38,15 +38,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
-    - name: pre-commit Checkers and Formatters
-      run: |
-        pre-commit install
-        pre-commit run --all-files
     - name: Test with pytest
       run: |
-        pytest . --cov-config=.coveragerc --cov-report=xml --cov=mypackage
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1.0.3
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-        file: ./coverage.xml
+        pytest .
