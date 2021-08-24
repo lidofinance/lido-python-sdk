@@ -17,7 +17,7 @@ DESCRIPTION = (
 URL = "https://github.com/lidofinance/lido-validator-python"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
-REQUIRES_PYTHON = ">=3.6,<4"
+REQUIRES_PYTHON = ">=3.7,<4"
 VERSION = "0.1.0"
 
 # The rest you shouldn't have to touch too much :)
@@ -105,6 +105,9 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Development Status :: 2 - Pre-Alpha",
         "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     # $ setup.py publish support.
     cmdclass={
