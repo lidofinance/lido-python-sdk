@@ -8,10 +8,10 @@ class Multicall(DefaultMulticall):
         """Overwrite call to use our MULTICALL_ADDRESSES"""
         aggregate = Call(
             MULTICALL_ADDRESSES[self.w3.eth.chainId],
-            'aggregate((address,bytes)[])(uint256,bytes[])',
+            "aggregate((address,bytes)[])(uint256,bytes[])",
             returns=None,
             _w3=self.w3,
-            block_id=self.block_id
+            block_id=self.block_id,
         )
         args = [[[call.target, call.data] for call in self.calls]]
         block, outputs = aggregate(args)

@@ -9,11 +9,7 @@ from web3.contract import Contract
 def _get_contract_abi(contract_name: str):
     script_dir = os.path.dirname(__file__)
 
-    return json.load(
-        open(
-            os.path.join(script_dir, "abi", contract_name)
-        )
-    )
+    return json.load(open(os.path.join(script_dir, "abi", contract_name)))
 
 
 class ContractABI(Enum):
