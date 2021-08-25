@@ -25,7 +25,9 @@ def execute_contract_multicall(
     """
     return Multicall(
         calls=[
-            _create_contract_call(w3, registry_address, abi_method_name, abi_input, abi_returns, args)
+            _create_contract_call(
+                w3, registry_address, abi_method_name, abi_input, abi_returns, args
+            )
             for args in args_list
         ],
         _w3=w3,
@@ -49,7 +51,9 @@ def execute_contract_call(
     @param args: List of arguments that will be used to call this function
     @return: List of results from each call that we did.
     """
-    return _create_contract_call(w3, registry_address, abi_method_name, abi_input, abi_returns, args)()
+    return _create_contract_call(
+        w3, registry_address, abi_method_name, abi_input, abi_returns, args
+    )()
 
 
 def _create_contract_call(
@@ -60,11 +64,11 @@ def _create_contract_call(
     abi_returns: List[Dict],
     args: List = None,
 ) -> Call:
-    input_args = ','.join([x['type'] for x in abi_input])
-    output_args = ','.join([x['type'] for x in abi_returns])
-    returns = [(abi_return['name'], lambda y: y) for abi_return in abi_returns]
+    input_args = ",".join([x["type"] for x in abi_input])
+    output_args = ",".join([x["type"] for x in abi_returns])
+    returns = [(abi_return["name"], lambda y: y) for abi_return in abi_returns]
 
-    function = f'{abi_method_name}({input_args})({output_args})'
+    function = f"{abi_method_name}({input_args})({output_args})"
 
     call = Call(
         target=registry_address,
