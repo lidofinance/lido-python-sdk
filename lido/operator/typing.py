@@ -1,7 +1,8 @@
-from typing import TypedDict
+from dataclasses import dataclass
 
 
-class Operator(TypedDict):
+@dataclass
+class Operator:
     index: int
     active: bool
     name: str
@@ -12,7 +13,8 @@ class Operator(TypedDict):
     usedSigningKeys: int
 
 
-class OperatorKey(TypedDict):
+@dataclass
+class OperatorKey:
     index: int
     key: bytes
     depositSignature: bytes
