@@ -19,7 +19,7 @@ class Multicall(DefaultMulticall):
 
     def __call__(self):
         calls_list = [
-            self.calls[i:i + self.MAX_CALLS_PER_MULTICALL]
+            self.calls[i : i + self.MAX_CALLS_PER_MULTICALL]
             for i in range(0, len(self.calls), self.MAX_CALLS_PER_MULTICALL)
         ]
 
