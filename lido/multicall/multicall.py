@@ -14,6 +14,7 @@ class Multicall(DefaultMulticall):
         - results from multicall is not a dict, but a list now. We are making a lot of requests to one contract's method,
         so we don't wanna loose data.
     """
+
     MAX_CALLS_PER_MULTICALL = 150
 
     def __call__(self):

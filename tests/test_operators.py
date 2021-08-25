@@ -1,4 +1,8 @@
-from lido.operator.operator import get_operators_count, get_operators_data, get_operator_keys
+from lido.operator.operator import (
+    get_operators_count,
+    get_operators_data,
+    get_operator_keys,
+)
 from tests.utils import get_mainnet_provider, get_ropsten_provider
 
 
