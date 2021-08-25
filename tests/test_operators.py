@@ -12,4 +12,4 @@ def test_get_operators():
     operators_data = get_operators_data(w3, operators_count)
     keys = get_operator_keys(w3, operators_data[0])
 
-    assert len(keys) == operators_data[0]['totalSigningKeys']
+    assert len(keys) == operators_data[0]["totalSigningKeys"]
