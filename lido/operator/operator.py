@@ -32,7 +32,7 @@ def get_operators_data(w3: Web3, operators_count: int) -> List[Operator]:
     return operators
 
 
-def get_operator_keys(w3: Web3, operator: Dict) -> List[OperatorKey]:
+def get_operator_keys(w3: Web3, operator: Operator) -> List[OperatorKey]:
     """
     @param w3: Web3 instance
     @param operator: Operator details from get_operators_data. But we need only `index` and `totalSigningKeys`

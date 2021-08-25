@@ -1,3 +1,5 @@
+from concurrent.futures import ThreadPoolExecutor
+
 from multicall import Call, Multicall as DefaultMulticall
 
 from lido.multicall.multicall_address import MULTICALL_ADDRESSES
@@ -12,9 +14,25 @@ class Multicall(DefaultMulticall):
         - results from multicall is not a dict, but a list now. We are making a lot of requests to one contract's method,
         so we don't wanna loose data.
     """
-    MAX_CALLS_PER_MULTICALL = 300
+    MAX_CALLS_PER_MULTICALL = 150
 
     def __call__(self):
+        calls_list = [
+            self.calls[i:i + self.MAX_CALLS_PER_MULTICALL]
+            for i in range(0, len(self.calls), self.MAX_CALLS_PER_MULTICALL)
+        ]
+
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            thread_results = executor.map(self.execute, calls_list)
+
+        result = []
+
+        for thread_result in thread_results:
+            result.extend(thread_result)
+
+        return result
+
+    def execute(self, calls):
         aggregate = Call(
             MULTICALL_ADDRESSES[self.w3.eth.chainId],
             "aggregate((address,bytes)[])(uint256,bytes[])",
@@ -23,17 +41,11 @@ class Multicall(DefaultMulticall):
             block_id=self.block_id,
         )
 
-        result = []
-        calls_list = [
-            self.calls[i:i + self.MAX_CALLS_PER_MULTICALL]
-            for i in range(0, len(self.calls), self.MAX_CALLS_PER_MULTICALL)
-        ]
+        args = [[[call.target, call.data] for call in calls]]
+        block, outputs = aggregate(args)
 
-        for calls in calls_list:
-            args = [[[call.target, call.data] for call in calls]]
-            block, outputs = aggregate(args)
+        results = []
+        for call, output in zip(self.calls, outputs):
+            results.append(call.decode_output(output))
 
-            for call, output in zip(self.calls, outputs):
-                result.append(call.decode_output(output))
-
-        return result
+        return results
