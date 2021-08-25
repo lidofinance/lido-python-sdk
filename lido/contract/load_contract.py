@@ -25,4 +25,6 @@ def _get_contract_abi(contract_name: str):
 
 # Load all supported contracts here
 LidoContract = Contract(LIDO_ADDRESSES, _get_contract_abi("Lido.json"))
-NodeOpsContract = Contract(NODE_OPS_ADDRESSES, _get_contract_abi("NodeOperatorsRegistry.json"))
+NodeOpsContract = Contract(
+    NODE_OPS_ADDRESSES, _get_contract_abi("NodeOperatorsRegistry.json")
+)
