@@ -15,7 +15,8 @@ class Multicall(DefaultMulticall):
         so we don't wanna loose data.
     """
 
-    MAX_CALLS_PER_MULTICALL = 150
+    MAX_CALLS_PER_MULTICALL = 275
+    MAX_WORKERS = 6
 
     def __call__(self):
         calls_list = [
@@ -23,7 +24,7 @@ class Multicall(DefaultMulticall):
             for i in range(0, len(self.calls), self.MAX_CALLS_PER_MULTICALL)
         ]
 
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=self.MAX_WORKERS) as executor:
             thread_results = executor.map(self.execute, calls_list)
 
         result = []
