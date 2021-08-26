@@ -18,7 +18,7 @@ URL = "https://github.com/lidofinance/lido-validator-python"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
 REQUIRES_PYTHON = ">=3.7,<4"
-VERSION = "0.2.2"
+VERSION = "0.2.3"
 
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
