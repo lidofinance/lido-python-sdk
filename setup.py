@@ -117,6 +117,6 @@ setup(
         "upload": UploadCommand,
     },
     dependency_links=[
-        "http://github.com/ethereum/eth2.0-deposit-cli/tarball/v1.2.0#egg=eth2_deposit-1.2.0",
+        "https://github.com/ethereum/eth2.0-deposit-cli/tarball/v1.2.0#egg=eth2deposit-1.2.0",
     ],
 )
