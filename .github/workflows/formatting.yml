@@ -49,6 +49,7 @@ jobs:
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         file: ./coverage.xml
     - name: Create Pull Request
       if: steps.action_black.outputs.is_formatted == 'true'
