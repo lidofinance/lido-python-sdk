@@ -2,7 +2,7 @@
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![codecov](https://codecov.io/gh/volpatto/blank-python-project/branch/master/graph/badge.svg)](https://github.com/lidofinance/lido-validator-python)
+[![codecov](https://codecov.io/gh/lidofinance/lido-python-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/lidofinance/lido-python-sdk)
 
 This repo provides a scratch of a Python project. Its purpose is to serve as starting point for
 the development of a Python project based on a minimal working structure.
