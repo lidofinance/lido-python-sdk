@@ -45,7 +45,7 @@ jobs:
         black_args: "."
     - name: Test with pytest
       run: |
-        pytest . --cov-config=.coveragerc --cov-report=xml --cov=mypackage
+        pytest . --cov-config=.coveragerc --cov-report=xml --cov=lido
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
