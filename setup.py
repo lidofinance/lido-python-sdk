@@ -18,7 +18,7 @@ URL = "https://github.com/lidofinance/lido-validator-python"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
 REQUIRES_PYTHON = ">=3.7,<4"
-VERSION = "0.2.3"
+VERSION = "0.3.0"
 
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
@@ -77,6 +77,9 @@ class UploadCommand(Command):
         sys.exit()
 
 
+with open("requirements.txt", "r") as file:
+    requirements = [lib.strip() for lib in file.read().split("\n") if lib]
+
 # Where the magic happens:
 setup(
     name=NAME,
@@ -94,13 +97,7 @@ setup(
     # entry_points={
     #     "console_scripts": ["mycli=mymodule:cli"],
     # },
-    install_requires=[
-        "multicall==0.1.2",
-        "web3==5.23.0",
-        "blspy==1.0.5",
-        "eth2deposit==1.2.0",
-        "ssz==0.2.4",
-    ],
+    install_requires=requirements,
     tests_require=["pytest==6.2.4"],
     include_package_data=True,
     license="MIT",
