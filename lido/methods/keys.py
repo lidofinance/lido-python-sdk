@@ -1,7 +1,11 @@
 from typing import List, Tuple
 
 from blspy import PopSchemeMPL, G1Element, G2Element
-from eth2deposit.utils.ssz import compute_deposit_domain, DepositMessage, compute_signing_root
+from eth2deposit.utils.ssz import (
+    compute_deposit_domain,
+    DepositMessage,
+    compute_signing_root,
+)
 from web3 import Web3
 
 from lido.contract import LidoContract
@@ -9,7 +13,9 @@ from lido.methods.typing import OperatorKey
 from lido.network.type import WITHDRAWAL_CREDENTIALS, GENESIS_FORK_VERSION
 
 
-def find_keys_duplicates(keys: List[OperatorKey]) -> List[Tuple[OperatorKey, OperatorKey]]:
+def find_keys_duplicates(
+    keys: List[OperatorKey],
+) -> List[Tuple[OperatorKey, OperatorKey]]:
     """
     Find all duplicates in list of keys
 
@@ -20,10 +26,10 @@ def find_keys_duplicates(keys: List[OperatorKey]) -> List[Tuple[OperatorKey, Ope
     duplicates = []
 
     for key in keys:
-        if key['key'] not in keys_dict:
-            keys_dict[key['key']] = key
+        if key["key"] not in keys_dict:
+            keys_dict[key["key"]] = key
         else:
-            duplicates.append((key, keys_dict[key['key']]))
+            duplicates.append((key, keys_dict[key["key"]]))
 
     return duplicates
 
@@ -42,8 +48,11 @@ def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
     @param keys: List of keys to validate
     @return: List of keys that are invalid
     """
-    actual_credentials = LidoContract.getWithdrawalCredentials(w3)['']
-    withdrawal_credentials = [*_get_withdrawal_credentials(w3.eth.chain_id), actual_credentials]
+    actual_credentials = LidoContract.getWithdrawalCredentials(w3)[""]
+    withdrawal_credentials = [
+        *_get_withdrawal_credentials(w3.eth.chain_id),
+        actual_credentials,
+    ]
 
     deposit_domain = compute_deposit_domain(GENESIS_FORK_VERSION[w3.eth.chain_id])
 
@@ -57,7 +66,9 @@ def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
     return invalid_keys
 
 
-def validate_key(key: OperatorKey, withdrawal_credentials: List[bytes], deposit_domain: bytes) -> bool:
+def validate_key(
+    key: OperatorKey, withdrawal_credentials: List[bytes], deposit_domain: bytes
+) -> bool:
     """
     @param key: Key to check.
     @param withdrawal_credentials: List of possible creds.
