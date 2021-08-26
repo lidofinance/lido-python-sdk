@@ -31,7 +31,7 @@ def test_get_operators():
     tick = time.perf_counter()
     print(f"Get operators data: {start - tick:0.4f}")
 
-    keys = get_operators_keys(w3, operators_data)[:100]
+    keys = get_operators_keys(w3, operators_data)
 
     tick = time.perf_counter()
     print(f"Get keys: {start - tick:0.4f}")
