@@ -95,13 +95,13 @@ setup(
     #     "console_scripts": ["mycli=mymodule:cli"],
     # },
     install_requires=[
-        'multicall==0.1.2',
-        'web3==5.23.0',
-        'blspy==1.0.5',
-        'eth2deposit==1.2.0',
-        'ssz==0.2.4',
+        "multicall==0.1.2",
+        "web3==5.23.0",
+        "blspy==1.0.5",
+        "eth2deposit==1.2.0",
+        "ssz==0.2.4",
     ],
-    tests_require=['pytest==6.2.4'],
+    tests_require=["pytest==6.2.4"],
     include_package_data=True,
     license="MIT",
     classifiers=[
@@ -117,6 +117,6 @@ setup(
         "upload": UploadCommand,
     },
     dependency_links=[
-        'http://github.com/ethereum/eth2.0-deposit-cli/tarball/v1.2.0#egg=eth2_deposit-1.2.0',
+        "http://github.com/ethereum/eth2.0-deposit-cli/tarball/v1.2.0#egg=eth2_deposit-1.2.0",
     ],
 )
