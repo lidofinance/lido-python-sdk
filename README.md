@@ -1,14 +1,14 @@
-# Lido Python SDK
+# <img src="https://docs.lido.fi/img/logo.svg" alt="Lido" width="46"/> Lido Python SDK 
 
+[![codecov](https://codecov.io/gh/lidofinance/lido-python-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/lidofinance/lido-python-sdk)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![codecov](https://codecov.io/gh/lidofinance/lido-python-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/lidofinance/lido-python-sdk)
 
 This repo provides a scratch of a Python project. Its purpose is to serve as starting point for
 the development of a Python project based on a minimal working structure.
 
 ## Installation
-This library is abailable on PyPi:
+This library is available on PyPi:
 
 ```bash
 pip install lido-sdk
@@ -44,37 +44,8 @@ Available networks:
 
 You can mix and match these functions, but make sure to use get_operators_data() first.
 
-## Notes
-
-1. Signature validation will be skipped if its results are already present in operator_data. This way you can safely load validation results from cache and add `["valid_signature"] = Boolean` to already checked keys.
-
-2. Signature validation functions are accounting for previous withdrawal credentials by default. However, if you are building a fresh key validator it is vitally important to enable strict mode by setting strict argument of the functions to `True`. This way new keys with old withdrawal credentials won't pass validation.
-
-## Running an example script
-
-The example script uses web3.auto, so use a RPC provider url as an environment variable to run it:
-
-`WEB3_PROVIDER_URI=https://eth-mainnet.provider.xx example.py`
-
-See `example.py` for a complete example, make sure to use a main function and a script entry point check when using validate_keys_multi() or fetch_and_validate().
-
-## Options
-
-If you are testing a new deployment of Lido, you can override addresses and ABIs with constructor of Lido object. Also you can configure the maximum number of calls agregated to one multicall:
-
-```python
-lido = Lido(
-    w3,
-    lido_address=LIDO_ADDRESS,
-    registry_address=REGISTRY_ADDRESS,
-    lido_abi_path=LIDO_ABI, # the file-path to the contract's ABI
-    registry_abi_path=REGISTRY_ABI, # the file-path to the contract's ABI
-    max_multicall=MAX_MULTICALL,
-)
-```
-
-
 ## Development
+
 Clone project:
 ```bash
 git clone git@github.com:lidofinance/lido-python-sdk.git
@@ -96,13 +67,3 @@ Simply run in project root directory:
 ```bash
 pytest .
 ```
-
-## Covered features
-
-* [Sphinx](http://www.sphinx-doc.org/en/master/) autodocumentation with [autodoc](https://docs-python2readthedocs.readthedocs.io/en/master/code-doc.html);
-* [GitHub Actions](https://github.com/features/actions) workflows with minimal configurations for latest Ubuntu, macOS and Windows;
-* Tests with [pytest](https://docs.pytest.org/en/latest/);
-* [virtualenv](https://virtualenv.pypa.io/en/latest/)
-* Hierarchical structure to a python package as suggested by ["The Hitchhiker’s Guide to Python"](https://docs.python-guide.org/) (highly recommended reading);
-* A [Read The Docs](https://readthedocs.org/) configuration scratch;
-* Coverage of the package with [Codecov](https://codecov.io/).

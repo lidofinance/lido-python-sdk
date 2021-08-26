@@ -7,12 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/lidofinance/lido-python-sdk)
 
-## [0.1.0](https://github.com/lidofinance/lido-python-sdk) - 2021-10-20
+## [0.2.0](https://github.com/lidofinance/lido-python-sdk) - 2021-10-26
 ### Added
-- Operators [#0001](https://github.com/lidofinance/lido-python-sdk/pull/1)
-
-### Changed
-- Initial release
+- Github actions ([#0005](https://github.com/lidofinance/lido-python-sdk/pull/5))
+- Contract interact and contract's multicall support ([#0006](https://github.com/lidofinance/lido-python-sdk/pull/6))
+- Base operator's methods ([#0008](https://github.com/lidofinance/lido-python-sdk/pull/8))
+- Key validation method ([#0011](https://github.com/lidofinance/lido-python-sdk/pull/11))
+- Stats method ([#0013](https://github.com/lidofinance/lido-python-sdk/pull/11))
 
 ### Fixed
-- Configuration setup ([#0002](https://github.com/lidofinance/lido-python-sdk/pull/2))
+- Code coverage ([#0014](https://github.com/lidofinance/lido-python-sdk/pull/14))
+
+## [0.1.0](https://github.com/lidofinance/lido-python-sdk) - 2021-10-20
+### Added
+- Initial release
+- Setup configuration ([#0002](https://github.com/lidofinance/lido-python-sdk/pull/2))
