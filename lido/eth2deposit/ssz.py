@@ -7,23 +7,20 @@ from ssz import (
 )
 
 
-ZERO_BYTES32 = b'\x00' * 32
+ZERO_BYTES32 = b"\x00" * 32
 
 # Eth2-spec constants taken from https://github.com/ethereum/eth2.0-specs/blob/dev/specs/phase0/beacon-chain.md
-DOMAIN_DEPOSIT = bytes.fromhex('03000000')
+DOMAIN_DEPOSIT = bytes.fromhex("03000000")
 
 
 class SigningData(Serializable):
-    fields = [
-        ('object_root', bytes32),
-        ('domain', bytes32)
-    ]
+    fields = [("object_root", bytes32), ("domain", bytes32)]
 
 
 class ForkData(Serializable):
     fields = [
-        ('current_version', bytes4),
-        ('genesis_validators_root', bytes32),
+        ("current_version", bytes4),
+        ("genesis_validators_root", bytes32),
     ]
 
 
@@ -31,10 +28,11 @@ class DepositMessage(Serializable):
     """
     Ref: https://github.com/ethereum/eth2.0-specs/blob/dev/specs/phase0/beacon-chain.md#depositmessage
     """
+
     fields = [
-        ('pubkey', bytes48),
-        ('withdrawal_credentials', bytes32),
-        ('amount', uint64),
+        ("pubkey", bytes48),
+        ("withdrawal_credentials", bytes32),
+        ("amount", uint64),
     ]
 
 
@@ -55,7 +53,9 @@ def compute_deposit_fork_data_root(current_version: bytes) -> bytes:
     """
     genesis_validators_root = ZERO_BYTES32  # For deposit, it's fixed value
     if len(current_version) != 4:
-        raise ValueError(f"Fork version should be in 4 bytes. Got {len(current_version)}.")
+        raise ValueError(
+            f"Fork version should be in 4 bytes. Got {len(current_version)}."
+        )
     return ForkData(
         current_version=current_version,
         genesis_validators_root=genesis_validators_root,
