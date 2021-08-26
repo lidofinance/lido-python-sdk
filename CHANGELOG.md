@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/lidofinance/lido-python-sdk)
 
+## [0.2.2](https://github.com/lidofinance/lido-python-sdk) - 2021-10-26
+### Fixed
+- Setup library from PyPi
+
 ## [0.2.0](https://github.com/lidofinance/lido-python-sdk) - 2021-10-26
 ### Added
 - Github actions ([#0005](https://github.com/lidofinance/lido-python-sdk/pull/5))
