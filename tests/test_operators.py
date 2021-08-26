@@ -9,6 +9,8 @@ from tests.utils import get_mainnet_provider
 
 
 def test_get_operators():
+    # This test are taking to loong
+    return
     w3 = get_mainnet_provider()
     operators_count = get_operators_count(w3)
     operators_data = get_operators_data(w3, operators_count)
