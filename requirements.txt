@@ -2,4 +2,4 @@ multicall==0.1.2
 web3==5.23.0
 blspy==1.0.5
 git+git://github.com/ethereum/eth2.0-deposit-cli@v1.2.0
-# ssz==0.2.4
+ssz==0.2.4
