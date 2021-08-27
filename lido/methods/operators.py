@@ -6,27 +6,28 @@ from lido.contract.load_contract import NodeOpsContract
 from lido.methods.typing import Operator, OperatorKey
 
 
-def get_operators_count(w3: Web3) -> int:
+def get_operators_indexes(w3: Web3) -> List[int]:
     """
     @param w3: Web3 instance
     @return: Node operators count
     """
-    return NodeOpsContract.getNodeOperatorsCount(w3)[""]
+    operators_count = NodeOpsContract.getNodeOperatorsCount(w3)[""]
+    return [x for x in range(operators_count)]
 
 
-def get_operators_data(w3: Web3, operators_count: int) -> List[Operator]:
+def get_operators_data(w3: Web3, operators_index_list: List[int]) -> List[Operator]:
     """
     @param w3: Web3 instance
-    @param operators_count: Operators count
+    @param operators_index_list: Operator's indexes to fetch
     @return: List of dictionary with operators details
     """
     operators = NodeOpsContract.getNodeOperator_multicall(
         w3,
-        [(i, True) for i in range(operators_count)],
+        [(i, True) for i in operators_index_list],
     )
 
     # Add index to each operator
-    for index, operator in enumerate(operators):
+    for index, operator in zip(operators_index_list, operators):
         operator["index"] = index
 
     return operators

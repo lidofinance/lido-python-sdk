@@ -13,7 +13,7 @@ from lido.methods.typing import OperatorKey
 from lido.network.type import WITHDRAWAL_CREDENTIALS, GENESIS_FORK_VERSION
 
 
-def find_keys_duplicates(
+def find_duplicated_keys(
     keys: List[OperatorKey],
 ) -> List[Tuple[OperatorKey, OperatorKey]]:
     """
@@ -29,7 +29,7 @@ def find_keys_duplicates(
         if key["key"] not in keys_dict:
             keys_dict[key["key"]] = key
         else:
-            duplicates.append((key, keys_dict[key["key"]]))
+            duplicates.append((keys_dict[key["key"]], key))
 
     return duplicates
 
