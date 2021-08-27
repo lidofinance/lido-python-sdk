@@ -1,6 +1,4 @@
 from typing import List, Tuple
-
-from blspy import PopSchemeMPL, G1Element, G2Element
 from lido.eth2deposit.ssz import (
     compute_deposit_domain,
     DepositMessage,
@@ -11,6 +9,7 @@ from web3 import Web3
 from lido.contract import LidoContract
 from lido.methods.typing import OperatorKey
 from lido.network.type import WITHDRAWAL_CREDENTIALS, GENESIS_FORK_VERSION
+from lido.blstverify.verifier import verify
 
 
 def find_keys_duplicates(
@@ -75,8 +74,8 @@ def validate_key(
     @param deposit_domain: Magic bytes.
     @return: Bool - Valid or Invalid this key
     """
-    g1_pub_key = G1Element.from_bytes(key["key"])
-    g2_signature = G2Element.from_bytes(key["depositSignature"])
+    pub_key = key["key"]
+    signature = key["depositSignature"]
 
     for wc in withdrawal_credentials:
         ETH32 = 32 * 10 ** 9
@@ -87,7 +86,7 @@ def validate_key(
         )
 
         message = compute_signing_root(deposit_message, deposit_domain)
-        is_valid = PopSchemeMPL.verify(g1_pub_key, message, g2_signature)
+        is_valid = verify(pub_key, message, signature)
 
         if is_valid:
             return is_valid
