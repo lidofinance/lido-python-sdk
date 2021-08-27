@@ -36,7 +36,7 @@ URL = "https://github.com/lidofinance/lido-python-sdk"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
 REQUIRES_PYTHON = ">=3.7,<4"
-VERSION = "0.2.3"
+VERSION = "0.3.0"
 
 
 # C/C++ Extensions
@@ -93,6 +93,51 @@ try:
 except FileNotFoundError:
     long_description = DESCRIPTION
 
+
+class UploadCommand(Command):
+    """
+    Support setup.py upload.
+        Note: To use the 'upload' functionality of this file, you must:
+        $ pip install twine
+    """
+
+    description = "Build and publish the package."
+    user_options = []
+
+    @staticmethod
+    def status(s):
+        """Prints things in bold."""
+        print("\033[1m{0}\033[0m".format(s))
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        try:
+            self.status("Removing previous builds…")
+            rmtree(os.path.join(here, "dist"))
+        except OSError:
+            pass
+
+        self.status("Building Source and Wheel (universal) distribution…")
+        os.system("{0} setup.py sdist bdist_wheel --universal".format(sys.executable))
+
+        self.status("Uploading the package to PyPI via Twine…")
+        os.system("twine upload dist/*")
+
+        self.status("Pushing git tags…")
+        os.system("git tag v{0}".format(VERSION))
+        os.system("git push --tags")
+
+        sys.exit()
+
+
+with open("requirements.txt", "r") as file:
+    requirements = [lib.strip() for lib in file.read().split("\n") if lib]
+
 # Where the magic happens:
 setup(
     name=NAME,
@@ -110,13 +155,7 @@ setup(
     # entry_points={
     #     "console_scripts": ["mycli=mymodule:cli"],
     # },
-    install_requires=[
-        "multicall==0.1.2",
-        "web3==5.23.0",
-        "blspy==1.0.5",
-        "eth2deposit==1.2.0",
-        "ssz==0.2.4",
-    ],
+    install_requires=requirements,
     tests_require=["pytest==6.2.4"],
     include_package_data=True,
     license="MIT",

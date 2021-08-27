@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
 from blspy import PopSchemeMPL, G1Element, G2Element
-from eth2deposit.utils.ssz import (
+from lido.eth2deposit.ssz import (
     compute_deposit_domain,
     DepositMessage,
     compute_signing_root,
