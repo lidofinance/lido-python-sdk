@@ -46,7 +46,10 @@ jobs:
         ./build.sh
         cd ..
         mkdir -p ./blst-lib/darwin/
-        cp ./blst/libblst.a   ./blst-lib/darwin/
+        cp ./blst/libblst.a           ./blst-lib/darwin/
+        cp ./blst/bindings/blst.h     ./blst-lib/
+        cp ./blst/bindings/blst.hpp   ./blst-lib/
+        cp ./blst/bindings/blst_aux.h ./blst-lib/
         python setup.py build_ext --inplace
     - name: Test with pytest
       run: |
