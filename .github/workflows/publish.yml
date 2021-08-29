@@ -104,7 +104,7 @@ jobs:
             ./blst-lib/**/*.lib
           if-no-files-found: error
 
-  build-wheels:
+  build-wheels-and-publish:
     needs: ["build-swig", "build-blst"]
     runs-on: ${{matrix.os}}
     strategy:
