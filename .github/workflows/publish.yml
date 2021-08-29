@@ -158,7 +158,7 @@ jobs:
       - name: Testing (native blst tests)
         run: |
           python setup.py build_ext --inplace
-          python ./lido/blstverify/lib/test.py
+          python ./lido/blstverify/test.py
 
       - name: Building binary wheel distrubution (windows and macos)
         if: matrix.os == 'macos-latest' || matrix.os == 'windows-latest'
