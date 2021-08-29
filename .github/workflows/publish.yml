@@ -111,7 +111,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        python-version: [ 3.6, 3.7, 3.8, 3.9 ]
+        python-version: [ 3.7, 3.8, 3.9 ]
         architecture: [ x64 ]
     defaults:
       run:
@@ -170,6 +170,13 @@ jobs:
         run: |
           python setup.py sdist
 
+      - name: Upload binary distrubutions as artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: wheels
+          path: ./dist
+          if-no-files-found: error
+
       - name: Publish distribution to PyPI
         if: startsWith(github.event.ref, 'refs/tags')
         env:
@@ -188,9 +195,3 @@ jobs:
         run: |
           twine upload --non-interactive --skip-existing --verbose 'dist/*'
 
-      - name: Upload binary distrubutions as artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: wheels
-          path: ./dist
-          if-no-files-found: error
