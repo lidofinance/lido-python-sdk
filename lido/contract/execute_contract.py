@@ -1,4 +1,4 @@
-from typing import List, Dict, Iterable
+from typing import List, Dict
 
 from multicall import Call
 from web3 import Web3

@@ -26,7 +26,7 @@ class Lido:
     def __init__(self, w3: Web3):
         self._w3 = w3
 
-        if w3.eth.chainId == Network.Görli:
+        if w3.eth.chain_id == Network.Görli:
             from web3.middleware import geth_poa_middleware
 
             # Checking by value b/c we don't know the key
@@ -70,18 +70,20 @@ class Lido:
 
         return self.keys
 
-    def validate_keys(self, keys: Optional[List[OperatorKey]] = None) -> List[OperatorKey]:
+    def validate_keys(self, keys: Optional[List[OperatorKey]] = None, strict: bool = False) -> List[OperatorKey]:
         """
         Validate all provided keys with pub_key, signature, withdrawal_credentials and DepositDomain.
 
         @param keys: List of operators keys.
+        @param strict: If strict is on, only actual contract widthdraw credentionals will be used check key.
+        If not we will try old withdrawal credentials.
         @return: All invalid keys that were found.
         """
         keys = keys or self.keys
         if keys is None:
             raise LidoException('`get_operators_keys` should be called first or provide `keys` param')
 
-        return validate_keys(self._w3, keys)
+        return validate_keys(self._w3, keys, strict)
 
     def find_duplicated_keys(self, keys: Optional[List[OperatorKey]] = None) -> List[Tuple[OperatorKey, OperatorKey]]:
         """

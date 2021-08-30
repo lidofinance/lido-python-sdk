@@ -2,11 +2,6 @@ from typing import Dict, List, Optional
 
 from web3 import Web3
 
-from lido.contract.execute_contract import (
-    execute_contract_call,
-    execute_contract_multicall,
-)
-
 
 class Contract:
     """
@@ -26,7 +21,7 @@ class Contract:
 
     def __init__(self, registry_addresses: Dict[int, str], contract_abi: List[Dict]):
         """
-        @param registry_addresses: It is a dictionary where chainId is a key and str is the address in this Chain
+        @param registry_addresses: It is a dictionary where chain_id is a key and str is the address in this Chain
         where contract is deployed.
         @param contract_abi: Typical contract interface
 
@@ -42,10 +37,12 @@ class Contract:
     def _create_contract_method(self, abi_function):
         """Create all methods announced in contract's abi"""
 
-        def call(w3: Web3, args: List = None):
+        def call(w3: Web3, args: Optional[List] = None):
+            from lido.contract.execute_contract import execute_contract_call
+
             return execute_contract_call(
                 w3,
-                self.registry_addresses[w3.eth.chainId],
+                self.registry_addresses[w3.eth.chain_id],
                 abi_function["name"],
                 abi_function["inputs"],
                 abi_function["outputs"],
@@ -53,11 +50,13 @@ class Contract:
             )
 
         def multicall(w3: Web3, args_list: Optional[List[List]] = None):
+            from lido.contract.execute_contract import execute_contract_multicall
+
             args_list = args_list or [[]]
 
             return execute_contract_multicall(
                 w3,
-                self.registry_addresses[w3.eth.chainId],
+                self.registry_addresses[w3.eth.chain_id],
                 abi_function["name"],
                 abi_function["inputs"],
                 abi_function["outputs"],
