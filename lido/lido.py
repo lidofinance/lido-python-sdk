@@ -85,7 +85,7 @@ class Lido:
         Validate all provided keys with pub_key, signature, withdrawal_credentials and DepositDomain.
 
         @param keys: List of operators keys.
-        @param strict: If strict is on, only actual contract widthdraw credentionals will be used check key.
+        @param strict: If strict is on, only actual contract withdraw credentials will be used check key.
         If not we will try old withdrawal credentials.
         @return: All invalid keys that were found.
         """
