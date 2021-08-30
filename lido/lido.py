@@ -31,7 +31,9 @@ class Lido:
 
             # Checking by value b/c we don't know the key
             if geth_poa_middleware not in self._w3.middleware_onion:
-                raise LidoException("PoA middleware isn't injected into Web3 middleware onion")
+                raise LidoException(
+                    "PoA middleware isn't injected into Web3 middleware onion"
+                )
 
     def get_operators_indexes(self) -> List[int]:
         """
@@ -40,7 +42,9 @@ class Lido:
         self.operators_indexes = get_operators_indexes(self._w3)
         return self.operators_indexes
 
-    def get_operators_data(self, operators_indexes: Optional[List[int]] = None) -> List[Operator]:
+    def get_operators_data(
+        self, operators_indexes: Optional[List[int]] = None
+    ) -> List[Operator]:
         """
         It will fetch details for each operator specified.
 
@@ -49,13 +53,17 @@ class Lido:
         """
         operators_indexes = operators_indexes or self.operators_indexes
         if operators_indexes is None:
-            raise LidoException('`get_operators_indexes` should be called first or provide `operators_indexes` param')
+            raise LidoException(
+                "`get_operators_indexes` should be called first or provide `operators_indexes` param"
+            )
 
         self.operators = get_operators_data(self._w3, operators_indexes)
 
         return self.operators
 
-    def get_operators_keys(self, operators: Optional[List[Operator]] = None) -> List[OperatorKey]:
+    def get_operators_keys(
+        self, operators: Optional[List[Operator]] = None
+    ) -> List[OperatorKey]:
         """
         Returns all keys for specified operators.
 
@@ -64,7 +72,9 @@ class Lido:
         """
         operators = operators or self.operators
         if operators is None:
-            raise LidoException('`get_operators_data` should be called first or provide `operators` param')
+            raise LidoException(
+                "`get_operators_data` should be called first or provide `operators` param"
+            )
 
         self.keys = get_operators_keys(self._w3, operators)
 
@@ -81,11 +91,15 @@ class Lido:
         """
         keys = keys or self.keys
         if keys is None:
-            raise LidoException('`get_operators_keys` should be called first or provide `keys` param')
+            raise LidoException(
+                "`get_operators_keys` should be called first or provide `keys` param"
+            )
 
         return validate_keys(self._w3, keys, strict)
 
-    def find_duplicated_keys(self, keys: Optional[List[OperatorKey]] = None) -> List[Tuple[OperatorKey, OperatorKey]]:
+    def find_duplicated_keys(
+        self, keys: Optional[List[OperatorKey]] = None
+    ) -> List[Tuple[OperatorKey, OperatorKey]]:
         """
         Find and returns all keys duplicates.
 
@@ -94,7 +108,9 @@ class Lido:
         """
         keys = keys or self.keys
         if keys is None:
-            raise LidoException('`get_operators_keys` should be called first or provide `keys` param')
+            raise LidoException(
+                "`get_operators_keys` should be called first or provide `keys` param"
+            )
 
         return find_duplicated_keys(keys)
 
