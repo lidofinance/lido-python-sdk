@@ -80,7 +80,9 @@ class Lido:
 
         return self.keys
 
-    def validate_keys(self, keys: Optional[List[OperatorKey]] = None, strict: bool = False) -> List[OperatorKey]:
+    def validate_keys(
+        self, keys: Optional[List[OperatorKey]] = None, strict: bool = False
+    ) -> List[OperatorKey]:
         """
         Validate all provided keys with pub_key, signature, withdrawal_credentials and DepositDomain.
 

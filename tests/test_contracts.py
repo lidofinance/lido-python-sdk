@@ -21,19 +21,27 @@ class ContractTest(MockTestCase):
 
     def _check_all_methods_exists(self, contract: Contract, contract_abi: List[Dict]):
         for element in contract_abi:
-            if element['type'] == 'function':
-                self.assertTrue(getattr(contract, element['name'], None))
-                self.assertTrue(getattr(contract, element['name'] + '_multicall', None))
+            if element["type"] == "function":
+                self.assertTrue(getattr(contract, element["name"], None))
+                self.assertTrue(getattr(contract, element["name"] + "_multicall", None))
 
     def test_contract_call_function(self):
-        call = self.mocker.patch('lido.contract.execute_contract.execute_contract_call', return_value=2)
-        contract_multicall = self.mocker.patch('multicall.Call.__call__', return_value=(
-            2, [
-                b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\r',
-                b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\r',
-            ]
-        ))
-        self.mocker.patch('web3.eth.Eth.chain_id', return_value=1, new_callable=PropertyMock)
+        call = self.mocker.patch(
+            "lido.contract.execute_contract.execute_contract_call", return_value=2
+        )
+        contract_multicall = self.mocker.patch(
+            "multicall.Call.__call__",
+            return_value=(
+                2,
+                [
+                    b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\r",
+                    b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\r",
+                ],
+            ),
+        )
+        self.mocker.patch(
+            "web3.eth.Eth.chain_id", return_value=1, new_callable=PropertyMock
+        )
 
         from lido.contract.load_contract import NodeOpsContract
 

@@ -42,7 +42,9 @@ def _get_withdrawal_credentials(chain_id: int):
     return [bytes.fromhex(cred[2:]) for cred in WITHDRAWAL_CREDENTIALS[chain_id]]
 
 
-def validate_keys(w3: Web3, keys: List[OperatorKey], strict: bool = False) -> List[OperatorKey]:
+def validate_keys(
+    w3: Web3, keys: List[OperatorKey], strict: bool = False
+) -> List[OperatorKey]:
     """
     @param w3: Web3
     @param keys: List of keys to validate

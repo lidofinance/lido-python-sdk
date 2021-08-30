@@ -16,7 +16,9 @@ from tests.utils import get_mainnet_provider, MockTestCase
 
 class OperatorTest(MockTestCase):
     def setUp(self) -> None:
-        self.mocker.patch('web3.eth.Eth.chain_id', return_value=1, new_callable=PropertyMock)
+        self.mocker.patch(
+            "web3.eth.Eth.chain_id", return_value=1, new_callable=PropertyMock
+        )
         self.w3 = Web3()
 
         self.lido = Lido(self.w3)
@@ -36,7 +38,10 @@ class OperatorTest(MockTestCase):
         self.assertListEqual(duplicates, [])
 
     def test_get_operators_indexes(self):
-        self.mocker.patch('lido.contract.load_contract.NodeOpsContract.getNodeOperatorsCount', return_value={"": 5})
+        self.mocker.patch(
+            "lido.contract.load_contract.NodeOpsContract.getNodeOperatorsCount",
+            return_value={"": 5},
+        )
 
         operator_indexes = self.lido.get_operators_indexes()
         self.assertListEqual([x for x in range(5)], operator_indexes)
@@ -44,7 +49,7 @@ class OperatorTest(MockTestCase):
     def test_get_operators_data(self):
         """We are checking that indexes are assigned correctly"""
         self.mocker.patch(
-            'lido.contract.load_contract.NodeOpsContract.getNodeOperator_multicall',
+            "lido.contract.load_contract.NodeOpsContract.getNodeOperator_multicall",
             return_value=OPERATORS_DATA,
         )
 
@@ -55,33 +60,35 @@ class OperatorTest(MockTestCase):
 
     def test_get_operators_keys(self):
         self.mocker.patch(
-            'lido.contract.load_contract.NodeOpsContract.getSigningKey_multicall',
+            "lido.contract.load_contract.NodeOpsContract.getSigningKey_multicall",
             return_value=OPERATORS_KEYS,
         )
 
         operators = OPERATORS_DATA[:]
 
-        operators[0]['index'] = 0
-        operators[1]['index'] = 1
+        operators[0]["index"] = 0
+        operators[1]["index"] = 1
 
         keys = self.lido.get_operators_keys(OPERATORS_DATA)
 
         expected_indexes = [
-            {'index': 0, 'operator_index': 0},
-            {'index': 1, 'operator_index': 0},
-            {'index': 0, 'operator_index': 1},
-            {'index': 1, 'operator_index': 1},
-            {'index': 2, 'operator_index': 1},
+            {"index": 0, "operator_index": 0},
+            {"index": 1, "operator_index": 0},
+            {"index": 0, "operator_index": 1},
+            {"index": 1, "operator_index": 1},
+            {"index": 2, "operator_index": 1},
         ]
 
         for expected_key, key in zip(expected_indexes, keys):
-            self.assertEquals(expected_key['index'], key['index'])
-            self.assertEquals(expected_key['operator_index'], key['operator_index'])
+            self.assertEquals(expected_key["index"], key["index"])
+            self.assertEquals(expected_key["operator_index"], key["operator_index"])
 
     def test_validate_keys(self):
         self.mocker.patch(
-            'lido.contract.load_contract.LidoContract.getWithdrawalCredentials',
-            return_value={'': b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xb9\xd7\x93Hx\xb5\xfb\x96\x10\xb3\xfe\x8a^D\x1e\x8f\xad~)?'},
+            "lido.contract.load_contract.LidoContract.getWithdrawalCredentials",
+            return_value={
+                "": b"\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xb9\xd7\x93Hx\xb5\xfb\x96\x10\xb3\xfe\x8a^D\x1e\x8f\xad~)?"
+            },
         )
 
         invalid_keys = self.lido.validate_keys(OPERATORS_KEYS)
@@ -91,7 +98,9 @@ class OperatorTest(MockTestCase):
         self.assertEquals(4, len(invalid_keys))
 
     def test_find_duplicated_keys(self):
-        duplicates = self.lido.find_duplicated_keys([*OPERATORS_KEYS, OPERATORS_KEYS[0]])
+        duplicates = self.lido.find_duplicated_keys(
+            [*OPERATORS_KEYS, OPERATORS_KEYS[0]]
+        )
 
         self.assertEquals(1, len(duplicates))
-        self.assertEquals(duplicates[0][0]['key'], duplicates[0][1]['key'])
+        self.assertEquals(duplicates[0][0]["key"], duplicates[0][1]["key"])
