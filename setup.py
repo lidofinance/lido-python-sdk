@@ -14,7 +14,7 @@ DESCRIPTION = (
     "This library consolidates various functions to efficiently load network data for Lido,"
     " validate node operator keys and find key duplicates."
 )
-URL = "https://github.com/lidofinance/lido-validator-python"
+URL = "https://github.com/lidofinance/lido-python-sdk"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
 REQUIRES_PYTHON = ">=3.7,<4"
@@ -113,7 +113,5 @@ setup(
     cmdclass={
         "upload": UploadCommand,
     },
-    dependency_links=[
-        "https://github.com/ethereum/eth2.0-deposit-cli/tarball/v1.2.0#egg=eth2deposit-1.2.0",
-    ],
+    dependency_links=[],
 )

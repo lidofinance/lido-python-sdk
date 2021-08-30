@@ -14,11 +14,126 @@ This library is available on PyPi:
 pip install lido-sdk
 ```
 
+## Fast start
+
+1. Create Web3 provider. One of fast options to start is INFURA.
+```python
+from web3 import Web3
+# 
+w3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/{INFURA_PROJECT_ID}'))
+```
+
+2. Create Lido instance and provide web3 provider
+```python
+from lido import Lido
+
+lido = Lido(w3)
+```
+
+3. Call one 
+```python
+response = lido.fetch_all_keys_and_validate()
+
+if response['invalid_keys'] or response['duplicated_keys']:
+    # This is not cool
+    print('There is invalid or duplicated keys\n')
+    print(response)
+else:
+    print('Everything is good!')
+```
+
+## Base methods
+Everything you need is in Lido class.
+
+- `Lido.get_operators_indexes(self) -> List[int]`  
+Returns: Node operators indexes in contract.
+```
+>>> lido.get_operators_indexes()
+
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+```
+
+- `Lido.get_operators_data(self, operators_indexes: Optional[List[int]] = None) -> List[Operator]`  
+Receives: List of operators indexes. If nothing provided will take previous return from `get_operators_indexes` method.  
+Returns: List of operators details.  
+```
+>>> lido.get_operators_data([1])
+
+[{'active': True, 'name': 'Certus One', 'rewardAddress': '0x8d689476eb446a1fb0065bffac32398ed7f89165', 'stakingLimit': 1000, 'stoppedValidators': 0, 'totalSigningKeys': 1000, 'usedSigningKeys': 1000, 'index': 1}]```
+```
+
+- `Lido.get_operators_keys(self, operators: Optional[List[Operator]] = None) -> List[OperatorKey]`
+Receives: List of operators details. If nothing provided will take previous return from `get_operators_data` method.  
+Returns: List of keys in contract.
+```
+>>> lido.get_operators_keys(operators_data)
+
+[{'key': b'...', 'depositSignature': b'...', 'used': False, 'index': 6921, 'operator_index': 8}, ...]
+```
+
+- `Lido.validate_keys(self, keys: Optional[List[OperatorKey]] = None) -> List[OperatorKey]`  
+Receives: List of keys to validate. If nothing provided will take previous return from `get_operators_keys` method.  
+Returns: List of invalid keys.
+```
+>>> lido.validate_keys()
+
+[{'key': b'...', 'depositSignature': b'...', 'used': False, 'index': 6521, 'operator_index': 5}]
+```
+
+- `Lido.find_duplicated_keys(self, keys: Optional[List[OperatorKey]] = None) -> List[Tuple[OperatorKey, OperatorKey]]`  
+Receives: List of keys to compare. If nothing provided will take previous return from `get_operators_keys` method.  
+Returns: List of same pairs keys.  
+```
+>>> lido.find_duplicated_keys()
+
+[
+    (
+        {'key': b'abc...', 'index': 222, 'operator_index': 5, ...}, 
+        {'key': b'abc...', 'index': 111, 'operator_index': 5, ...}
+    )
+]
+```
+
+- `Lido.get_status(self) -> dict`  
+Returns dict with Lido current state.
+```
+>>> lido.get_status()
+
+{
+    'isStopped': False, 
+    'totalPooledEther': 1045230979275869331637351, 
+    'withdrawalCredentials': b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xb9\xd7\x93Hx\xb4\xfb\x96\x10\xb3\xfe\x8a^D\x1e\x8f\xad~)?', 
+    'bufferedEther': 76467538672788331637351, 
+    'feeBasisPoints': 1000, 
+    'treasuryFeeBasisPoints': 0, 
+    'insuranceFeeBasisPoints': 5000, 
+    'operatorsFeeBasisPoints': 5000, 
+    'depositedValidators': 29800, 
+    'beaconValidators': 29800, 
+    'beaconBalance': 968763440603081000000000, 
+    'last_block': 13110151, 
+    'last_blocktime': 1630103538,
+}
+```
+
+- `Lido.fetch_all_keys_and_validate(self) -> Dict[str, list]`  
+Makes all steps below except `get_status`.  
+Returns all invalid and duplicated keys.
+```
+>>> lido.fetch_all_keys_and_validate()
+
+{
+    'invalid_keys': [...],
+    'duplicated_keys': [...],
+}
+```
+
 ## Main Features
 
 ### Multicall Function Calls
 
-Instead of making network requests one-by-one, this library combines many requests into one RPC call. It uses [banteg/multicall.py](https://github.com/banteg/multicall.py), a Python wrapper for [makerdao/multicall](https://github.com/makerdao/multicall).
+- Instead of making network requests one-by-one, this library combines many requests into one RPC call. It uses [banteg/multicall.py](https://github.com/banteg/multicall.py), a Python wrapper for [makerdao/multicall](https://github.com/makerdao/multicall).
+- Fast validation system powered by [blst](https://github.com/supranational/blst)
 
 ### Automatic Testnet / Mainnet Switching
 
@@ -27,22 +142,6 @@ Available networks:
 - Mainnet
 - Görli
 - Ropsten
-
-## Helpers Provided
-
-- lido.get_operators_data() -> operator_data - load node operator data
-- lido.get_operators_keys(operator_data) -> operator_data - fetches and adds keys to operator_data
-- lido.validate_keys(operator_data, strict = False) -> [] - same as validate_keys_multi(), but returns a list of invalid keys  
-(IN PROGRESS)
-- lido.validate_key(chain_id, key, withdrawal_credentials) -> Boolean - low-level validation function, doesn't check for correct
-  chain_id and withdrawal_credentials for a Lido deployment. For most use-cases use validate_keys_multi or validate_key_list_multi instead
-- lido.find_duplicates(operator_data) -> operator_data - finds duplicate keys and adds results to operator_data
-
-- lido.fetch_and_validate() -> operator_data - combines fetching operator data and running all validations on it - useful when you would be running all validations on data anyway
-
-- lido.get_stats() -> stats - fetches various constants from Lido contract, but you can even pass a list of functions to fetch eg get_stats(["isStopped"])
-
-You can mix and match these functions, but make sure to use get_operators_data() first.
 
 ## Development
 

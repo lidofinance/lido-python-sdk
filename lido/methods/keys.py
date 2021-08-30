@@ -13,7 +13,7 @@ from lido.methods.typing import OperatorKey
 from lido.network.type import WITHDRAWAL_CREDENTIALS, GENESIS_FORK_VERSION
 
 
-def find_keys_duplicates(
+def find_duplicated_keys(
     keys: List[OperatorKey],
 ) -> List[Tuple[OperatorKey, OperatorKey]]:
     """
@@ -29,7 +29,7 @@ def find_keys_duplicates(
         if key["key"] not in keys_dict:
             keys_dict[key["key"]] = key
         else:
-            duplicates.append((key, keys_dict[key["key"]]))
+            duplicates.append((keys_dict[key["key"]], key))
 
     return duplicates
 
@@ -42,54 +42,59 @@ def _get_withdrawal_credentials(chain_id: int):
     return [bytes.fromhex(cred[2:]) for cred in WITHDRAWAL_CREDENTIALS[chain_id]]
 
 
-def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
+def validate_keys(
+    w3: Web3, keys: List[OperatorKey], strict: bool = False
+) -> List[OperatorKey]:
     """
     @param w3: Web3
     @param keys: List of keys to validate
+    @param strict: Should be used for new keys. It will check that key was signed using contract's actual WC
     @return: List of keys that are invalid
     """
     actual_credentials = LidoContract.getWithdrawalCredentials(w3)[""]
-    withdrawal_credentials = [
-        *_get_withdrawal_credentials(w3.eth.chain_id),
-        actual_credentials,
-    ]
+    withdrawal_credentials = [actual_credentials]
+
+    if not strict:
+        withdrawal_credentials.extend(_get_withdrawal_credentials(w3.eth.chain_id))
 
     deposit_domain = compute_deposit_domain(GENESIS_FORK_VERSION[w3.eth.chain_id])
 
     invalid_keys = []
 
     for key in keys:
-        is_valid = validate_key(key, withdrawal_credentials, deposit_domain)
-        if not is_valid:
+        for withdrawal_credential in withdrawal_credentials:
+            is_valid = validate_key(key, withdrawal_credential, deposit_domain)
+            if is_valid:
+                break
+        else:
             invalid_keys.append(key)
 
     return invalid_keys
 
 
 def validate_key(
-    key: OperatorKey, withdrawal_credentials: List[bytes], deposit_domain: bytes
+    key: OperatorKey, withdrawal_credential: bytes, deposit_domain: bytes
 ) -> bool:
     """
     @param key: Key to check.
-    @param withdrawal_credentials: List of possible creds.
+    @param withdrawal_credential: Possible credential.
     @param deposit_domain: Magic bytes.
     @return: Bool - Valid or Invalid this key
     """
     g1_pub_key = G1Element.from_bytes(key["key"])
     g2_signature = G2Element.from_bytes(key["depositSignature"])
 
-    for wc in withdrawal_credentials:
-        ETH32 = 32 * 10 ** 9
-        deposit_message = DepositMessage(
-            pubkey=key["key"],
-            withdrawal_credentials=wc,
-            amount=ETH32,
-        )
+    ETH32 = 32 * 10 ** 9
+    deposit_message = DepositMessage(
+        pubkey=key["key"],
+        withdrawal_credentials=withdrawal_credential,
+        amount=ETH32,
+    )
 
-        message = compute_signing_root(deposit_message, deposit_domain)
-        is_valid = PopSchemeMPL.verify(g1_pub_key, message, g2_signature)
+    message = compute_signing_root(deposit_message, deposit_domain)
+    is_valid = PopSchemeMPL.verify(g1_pub_key, message, g2_signature)
 
-        if is_valid:
-            return is_valid
+    if is_valid:
+        return is_valid
 
     return False

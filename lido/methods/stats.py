@@ -3,7 +3,7 @@ from web3 import Web3
 from lido.contract import LidoContract
 
 
-def get_stats(w3: Web3):
+def get_status(w3: Web3):
     return {
         "isStopped": LidoContract.isStopped(w3)[""],
         "totalPooledEther": LidoContract.getTotalPooledEther(w3)[""],

@@ -14,6 +14,7 @@ class Operator(TypedDict):
 
 class OperatorKey(TypedDict):
     index: int
+    operator_index: int
     key: bytes
     depositSignature: bytes
     used: bool
