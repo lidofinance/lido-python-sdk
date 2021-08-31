@@ -48,25 +48,28 @@ def validate_keys(
     """
     @param w3: Web3
     @param keys: List of keys to validate
-    @param strict: Should be used for new keys. It will check that key was signed using contract's actual WC
+    @param strict: Should be used for new keys. It will check that key was signed using contract's actual WC.
     @return: List of keys that are invalid
     """
     actual_credentials = LidoContract.getWithdrawalCredentials(w3)[""]
-    withdrawal_credentials = [actual_credentials]
-
-    if not strict:
-        withdrawal_credentials.extend(_get_withdrawal_credentials(w3.eth.chain_id))
 
     deposit_domain = compute_deposit_domain(GENESIS_FORK_VERSION[w3.eth.chain_id])
 
     invalid_keys = []
 
     for key in keys:
-        for withdrawal_credential in withdrawal_credentials:
-            is_valid = validate_key(key, withdrawal_credential, deposit_domain)
-            if is_valid:
-                break
-        else:
+        is_valid = validate_key(key, actual_credentials, deposit_domain)
+
+        if not is_valid and not strict and key['used']:
+            withdrawal_credentials = _get_withdrawal_credentials(w3.eth.chain_id)
+
+            for wc in withdrawal_credentials:
+                is_valid = validate_key(key, wc, deposit_domain)
+
+                if is_valid:
+                    break
+
+        if not is_valid:
             invalid_keys.append(key)
 
     return invalid_keys

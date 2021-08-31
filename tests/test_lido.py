@@ -55,8 +55,8 @@ class OperatorTest(MockTestCase):
 
         operators_data = self.lido.get_operators_data([0, 1])
 
-        self.assertEquals(0, operators_data[0]["index"])
-        self.assertEquals(1, operators_data[1]["index"])
+        self.assertEqual(0, operators_data[0]["index"])
+        self.assertEqual(1, operators_data[1]["index"])
 
     def test_get_operators_keys(self):
         self.mocker.patch(
@@ -80,8 +80,8 @@ class OperatorTest(MockTestCase):
         ]
 
         for expected_key, key in zip(expected_indexes, keys):
-            self.assertEquals(expected_key["index"], key["index"])
-            self.assertEquals(expected_key["operator_index"], key["operator_index"])
+            self.assertEqual(expected_key["index"], key["index"])
+            self.assertEqual(expected_key["operator_index"], key["operator_index"])
 
     def test_validate_keys(self):
         self.mocker.patch(
@@ -92,15 +92,15 @@ class OperatorTest(MockTestCase):
         )
 
         invalid_keys = self.lido.validate_keys(OPERATORS_KEYS)
-        self.assertEquals(1, len(invalid_keys))
+        self.assertEqual(2, len(invalid_keys))
 
         invalid_keys = self.lido.validate_keys(OPERATORS_KEYS, strict=True)
-        self.assertEquals(4, len(invalid_keys))
+        self.assertEqual(4, len(invalid_keys))
 
     def test_find_duplicated_keys(self):
         duplicates = self.lido.find_duplicated_keys(
             [*OPERATORS_KEYS, OPERATORS_KEYS[0]]
         )
 
-        self.assertEquals(1, len(duplicates))
-        self.assertEquals(duplicates[0][0]["key"], duplicates[0][1]["key"])
+        self.assertEqual(1, len(duplicates))
+        self.assertEqual(duplicates[0][0]["key"], duplicates[0][1]["key"])

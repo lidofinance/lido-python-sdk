@@ -53,4 +53,4 @@ class ContractTest(MockTestCase):
         NodeOpsContract.getNodeOperatorsCount_multicall(w3, [[], []])
 
         contract_multicall.assert_called_once()
-        self.assertEquals(2, len(contract_multicall.call_args[0][0][0]))
+        self.assertEqual(2, len(contract_multicall.call_args[0][0][0]))
