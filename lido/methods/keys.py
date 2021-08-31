@@ -58,10 +58,15 @@ def validate_keys(
 
     invalid_keys = []
 
-    key_params = [(key, actual_credential, possible_credentials, deposit_domain, strict) for key in keys]
+    key_params = [
+        (key, actual_credential, possible_credentials, deposit_domain, strict)
+        for key in keys
+    ]
 
     with ProcessPoolExecutor() as executor:
-        for key, is_valid in zip(keys, executor.map(_executor_validate_key, key_params)):
+        for key, is_valid in zip(
+            keys, executor.map(_executor_validate_key, key_params)
+        ):
             if not is_valid:
                 invalid_keys.append(key)
 
