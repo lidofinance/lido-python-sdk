@@ -20,7 +20,9 @@ NODE_OPS_ADDRESSES = {
 
 def _get_contract_abi(contract_name: str):
     script_dir = os.path.dirname(__file__)
-    return json.load(open(os.path.join(script_dir, "abi", contract_name)))
+
+    with open(os.path.join(script_dir, "abi", contract_name)) as file:
+        return json.load(file)
 
 
 # Load all supported contracts here

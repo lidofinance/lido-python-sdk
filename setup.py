@@ -127,7 +127,5 @@ setup(
         "Programming Language :: Python :: 3.9",
     ],
     ext_modules=ext_modules,
-    dependency_links=[
-        "https://github.com/ethereum/eth2.0-deposit-cli/tarball/v1.2.0#egg=eth2deposit-1.2.0",
-    ],
+    dependency_links=[],
 )

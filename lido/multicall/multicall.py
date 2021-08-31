@@ -36,7 +36,7 @@ class Multicall(DefaultMulticall):
 
     def execute(self, calls):
         aggregate = Call(
-            MULTICALL_ADDRESSES[self.w3.eth.chainId],
+            MULTICALL_ADDRESSES[self.w3.eth.chain_id],
             "aggregate((address,bytes)[])(uint256,bytes[])",
             returns=None,
             _w3=self.w3,
@@ -44,7 +44,12 @@ class Multicall(DefaultMulticall):
         )
 
         args = [[[call.target, call.data] for call in calls]]
-        block, outputs = aggregate(args)
+        try:
+            block, outputs = aggregate(args)
+        except ValueError:
+            # It seems it is {'code': -32000, 'message': 'execution aborted (timeout = 5s)'}
+            # Try again
+            block, outputs = aggregate(args)
 
         results = []
         for call, output in zip(self.calls, outputs):
