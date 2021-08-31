@@ -34,7 +34,7 @@ class ValidationTest(MockTestCase):
 
         total = t1 - t0
 
-        self.assertGreater(20, total)
+        self.assertGreater(22, total)
 
     def test_strict_validation_performance(self):
         keys = OPERATORS_KEYS * 2000  # 10.000 keys
@@ -45,4 +45,4 @@ class ValidationTest(MockTestCase):
 
         total = t1 - t0
 
-        self.assertGreater(40, total)
+        self.assertGreater(42, total)

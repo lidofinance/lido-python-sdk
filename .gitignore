@@ -141,6 +141,7 @@ cython_debug/
 .idea/
 
 # BLST
+blst
 blst/libblst.a
 blst-lib/linux/libblst.a
 blst-lib/windows/blst.lib
