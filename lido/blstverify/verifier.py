@@ -20,5 +20,3 @@ def verify(pubkey: bytes, message: bytes, signature: bytes) -> bool:
         return ctx.finalverify(gtsig)
     except:
         return False
-
-

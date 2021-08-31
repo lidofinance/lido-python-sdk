@@ -9,22 +9,22 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Extension
 
 if sys.version_info < (3, 7):
-    raise Exception('Python 3.7 or higher is required')
+    raise Exception("Python 3.7 or higher is required")
 
-PLATFORMS = {'windows', 'linux', 'darwin', 'cygwin', 'android'}
+PLATFORMS = {"windows", "linux", "darwin", "cygwin", "android"}
 
 # detecting target platform
 target = platform.system().lower()
 
-if 'pydroid3' in sys.executable.lower():
-    target = 'android'
+if "pydroid3" in sys.executable.lower():
+    target = "android"
 
 for known in PLATFORMS:
     if target.startswith(known):
         target = known
 
 if target not in PLATFORMS:
-    target = 'linux'
+    target = "linux"
 
 # Package meta-data.
 NAME = "lido-sdk"
@@ -41,29 +41,33 @@ VERSION = "0.3.0"
 
 # C/C++ Extensions
 LIBRARIES = []
-STATIC_LIBRARIES = ['blst']
-STATIC_LIB_DIR = f'blst-lib/{target}'
-LIBRARY_DIRS = ['blst-lib/']
-INCLUDE_DIRS = ['blst-lib/']
+STATIC_LIBRARIES = ["blst"]
+STATIC_LIB_DIR = f"blst-lib/{target}"
+LIBRARY_DIRS = ["blst-lib/"]
+INCLUDE_DIRS = ["blst-lib/"]
 SOURCES = [
-    'blst-lib/blst_wrap.cpp',
+    "blst-lib/blst_wrap.cpp",
 ]
 DEPENDS = [
-    'blst-lib/blst.h',
-    'blst-lib/blst.hpp',
-    'blst-lib/blst_aux.h',
-    'blst-lib/libblst.a',
-    'blst-lib/blstlib.dll',
+    "blst-lib/blst.h",
+    "blst-lib/blst.hpp",
+    "blst-lib/blst_aux.h",
+    "blst-lib/libblst.a",
+    "blst-lib/blstlib.dll",
 ]
 
-if target == 'windows':
+if target == "windows":
     LIBRARIES.extend(STATIC_LIBRARIES)
     LIBRARY_DIRS.append(STATIC_LIB_DIR)
-    EXTRA_OBJECTS = ['{}/{}.lib'.format(STATIC_LIB_DIR, lib_name) for lib_name in STATIC_LIBRARIES]
+    EXTRA_OBJECTS = [
+        "{}/{}.lib".format(STATIC_LIB_DIR, lib_name) for lib_name in STATIC_LIBRARIES
+    ]
 else:  # POSIX
     LIBRARIES.extend(STATIC_LIBRARIES)
     LIBRARY_DIRS.append(STATIC_LIB_DIR)
-    EXTRA_OBJECTS = ['{}/lib{}.a'.format(STATIC_LIB_DIR, lib_name) for lib_name in STATIC_LIBRARIES]
+    EXTRA_OBJECTS = [
+        "{}/lib{}.a".format(STATIC_LIB_DIR, lib_name) for lib_name in STATIC_LIBRARIES
+    ]
 
 ext_modules = [
     Extension(
