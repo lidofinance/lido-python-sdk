@@ -60,7 +60,7 @@ def validate_keys(
     for key in keys:
         is_valid = validate_key(key, actual_credentials, deposit_domain)
 
-        if not is_valid and not strict and key['used']:
+        if not is_valid and not strict and key["used"]:
             withdrawal_credentials = _get_withdrawal_credentials(w3.eth.chain_id)
 
             for wc in withdrawal_credentials:
