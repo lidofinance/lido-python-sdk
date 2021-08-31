@@ -22,8 +22,8 @@ pk_for_wire = blst.P1(SK).serialize()
 
 #                               # optional vvvvvvvvvvv augmentation
 sig_for_wire = blst.P2().hash_to(msg, DST, pk_for_wire) \
-    .sign_with(SK) \
-    .serialize()
+                        .sign_with(SK) \
+                        .serialize()
 
 ########################################################################
 # at this point 'pk_for_wire', 'sig_for_wire' and 'msg' are
@@ -46,8 +46,8 @@ pk_for_wire = blst.P2(SK).serialize()
 
 #                               # optional vvvvvvvvvvv augmentation
 sig_for_wire = blst.P1().hash_to(msg, DST, pk_for_wire) \
-    .sign_with(SK) \
-    .serialize()
+                        .sign_with(SK) \
+                        .serialize()
 
 ########################################################################
 # at this point 'pk_for_wire', 'sig_for_wire' and 'msg' are
@@ -144,7 +144,7 @@ for _ in range(0, 42):
     points.append(blst.G1().mult(p))
     scalars.append(s)
     total += s * int.from_bytes(p, "little")
-a = blst.P1s.mult_pippenger(blst.P1s.to_affine(points), scalars)
+a = blst.P1_Affines.mult_pippenger(blst.P1_Affines.as_memory(points), scalars)
 if not a.is_equal(blst.G1().mult(total)):
     raise AssertionError("disaster")
 
@@ -157,7 +157,7 @@ for _ in range(0, 42):
     points.append(blst.G2().mult(p))
     scalars.append(s)
     total += s * int.from_bytes(p, "little")
-a = blst.P2s.mult_pippenger(blst.P2s.to_affine(points), scalars)
+a = blst.P2_Affines.mult_pippenger(blst.P2_Affines.as_memory(points), scalars)
 if not a.is_equal(blst.G2().mult(total)):
     raise AssertionError("disaster")
 
@@ -168,7 +168,7 @@ if not a.is_equal(blst.G2().mult(total)):
 PK = blst.P1(SK).to_affine()
 
 # User wants to have |msg| signed,
-H_msg = blst.P2().hash_to(msg, DST)
+H_msg = blst.P2().hash_to(msg, DST, PK.compress())
 # chooses random |r|,
 r = blst.Scalar().from_bendian(os.urandom(32))  # should be PRF in real life...
 # blinds the H(|msg|) with |r| and sends it to the Signer.
@@ -194,7 +194,7 @@ if not blst.PT.finalverify(C1, C2):
 
 # Now |signature| can be verified as any other, e.g....
 ctx = blst.Pairing(True, DST)
-ctx.aggregate(PK, signature, msg)
+ctx.aggregate(PK, signature, msg, PK.compress())
 ctx.commit()
 if not ctx.finalverify():
     raise AssertionError("disaster")
@@ -233,7 +233,7 @@ a = blst.G1().add(g[0].dup().mult(s))
 for i in range(count):
     a.add(g[i+1].dup().mult(m[i]))
 
-A = a.dup().sign_with(e.dup().add(SK).inverse()).to_affine()
+A = a.sign_with(e.dup().add(SK).inverse()).to_affine()
 
 signature = [A, e, s]               # serialize to application liking
 
@@ -283,8 +283,8 @@ e = blst.Scalar().from_bendian(os.urandom(32))
 s_pprime = blst.Scalar().from_bendian(os.urandom(32))
 
 A = blst.G1().add(g[0].dup().mult(s_pprime)) \
-    .add(commitment) \
-    .sign_with(e.dup().add(SK).inverse()).to_affine()
+             .add(commitment) \
+             .sign_with(e.dup().add(SK).inverse()).to_affine()
 
 blind_signature = [A, e, s_pprime]  # serialize to application liking
 
