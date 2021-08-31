@@ -187,6 +187,7 @@ jobs:
           twine upload --non-interactive --skip-existing --verbose 'dist/*'
 
       - name: Publish distribution to Test PyPI
+        continue-on-error: true
         env:
           TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
           TWINE_USERNAME: __token__
