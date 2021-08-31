@@ -23,7 +23,9 @@ jobs:
         python-version: [3.7, 3.8, 3.9]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
@@ -38,6 +40,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
+    - name: Prepapre MSVC dev environment
+      uses: ilammy/msvc-dev-cmd@v1
+    - name: Compile blst and build ext (in-place)
+      run: |
+        cd blst/
+        ./build.bat
+        cd ..
+        mkdir -p ./blst-lib/windows/
+        cp ./blst/blst.lib            ./blst-lib/windows/
+        cp ./blst/bindings/blst.h     ./blst-lib/
+        cp ./blst/bindings/blst.hpp   ./blst-lib/
+        cp ./blst/bindings/blst_aux.h ./blst-lib/
+        python setup.py build_ext --inplace
     - name: Test with pytest
       run: |
         pytest .

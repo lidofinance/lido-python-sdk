@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/lidofinance/lido-python-sdk)
 ### Added
 - Lido public class [#0020](https://github.com/lidofinance/lido-python-sdk/pull/20)
+- Added fast BLS verification [#0019](https://github.com/lidofinance/lido-python-sdk/pull/19)
 
 ### Changed
 - If strict is false, for validation we will try possible WC only for already used keys [#0024](https://github.com/lidofinance/lido-python-sdk/pull/24)

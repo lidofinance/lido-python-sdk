@@ -1,0 +1,6 @@
+recursive-include blst-lib *.cpp *.hpp *.h *.a *.lib
+recursive-include blst/bindings/vectors *.json
+include README.md
+include CHANGELOG.md
+include LICENSE
+include *.txt

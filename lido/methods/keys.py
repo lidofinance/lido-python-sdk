@@ -1,7 +1,5 @@
 from concurrent.futures import ProcessPoolExecutor
 from typing import List, Tuple
-
-from blspy import PopSchemeMPL, G1Element, G2Element
 from lido.eth2deposit.ssz import (
     compute_deposit_domain,
     DepositMessage,
@@ -12,6 +10,7 @@ from web3 import Web3
 from lido.contract import LidoContract
 from lido.methods.typing import OperatorKey
 from lido.network.type import WITHDRAWAL_CREDENTIALS, GENESIS_FORK_VERSION
+from lido.blstverify.verifier import verify
 
 
 def find_duplicated_keys(
@@ -59,10 +58,15 @@ def validate_keys(
 
     invalid_keys = []
 
-    key_params = [(key, actual_credential, possible_credentials, deposit_domain, strict) for key in keys]
+    key_params = [
+        (key, actual_credential, possible_credentials, deposit_domain, strict)
+        for key in keys
+    ]
 
     with ProcessPoolExecutor() as executor:
-        for key, is_valid in zip(keys, executor.map(_executor_validate_key, key_params)):
+        for key, is_valid in zip(
+            keys, executor.map(_executor_validate_key, key_params)
+        ):
             if not is_valid:
                 invalid_keys.append(key)
 
@@ -93,8 +97,8 @@ def validate_key(
     @param deposit_domain: Magic bytes.
     @return: Bool - Valid or Invalid this key
     """
-    g1_pub_key = G1Element.from_bytes(key["key"])
-    g2_signature = G2Element.from_bytes(key["depositSignature"])
+    pub_key = key["key"]
+    signature = key["depositSignature"]
 
     ETH32 = 32 * 10 ** 9
     deposit_message = DepositMessage(
@@ -104,7 +108,7 @@ def validate_key(
     )
 
     message = compute_signing_root(deposit_message, deposit_domain)
-    is_valid = PopSchemeMPL.verify(g1_pub_key, message, g2_signature)
+    is_valid = verify(pub_key, message, signature)
 
     if is_valid:
         return is_valid
