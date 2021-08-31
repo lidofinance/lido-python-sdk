@@ -18,7 +18,7 @@ def verify(pubkey: bytes, message: bytes, signature: bytes) -> bool:
         gtsig = PT(sig_affine)
 
         return ctx.finalverify(gtsig)
-    except:
+    except RuntimeError:
         return False
 
 

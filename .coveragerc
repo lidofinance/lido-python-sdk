@@ -5,6 +5,7 @@ source = blank-python-project
 omit =
     tests/*
     notebooks/*
+    lido/blstverify/test.py
 
 [report]
 exclude_lines =

@@ -12,7 +12,6 @@ def test_valid_bls():
     res = verify(pubkey, signing_root, signature)
 
     assert res is True
-    print(res)
 
 
 def test_invalid_pubkey():
@@ -26,7 +25,6 @@ def test_invalid_pubkey():
     res = verify(pubkey, signing_root, signature)
 
     assert res is False
-    print(res)
 
 
 def test_invalid_signing_root():
@@ -40,7 +38,6 @@ def test_invalid_signing_root():
     res = verify(pubkey, signing_root, signature)
 
     assert res is False
-    print(res)
 
 
 def test_invalid_signature():
@@ -54,4 +51,3 @@ def test_invalid_signature():
     res = verify(pubkey, signing_root, signature)
 
     assert res is False
-    print(res)
