@@ -23,7 +23,7 @@ class ValidationTest(MockTestCase):
             },
         )
 
-        self.logger = logging.Logger('tests')
+        self.logger = logging.Logger("tests")
 
     def test_validation_performance(self):
         keys = OPERATORS_KEYS * 2000  # 10.000 keys
