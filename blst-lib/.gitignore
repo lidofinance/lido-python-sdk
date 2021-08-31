@@ -1,5 +1,4 @@
 *.cpp
-!blst_wrap.cpp
 *.h
 *.hpp
 *.a
