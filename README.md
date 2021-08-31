@@ -160,6 +160,30 @@ Install all dependencies:
   pip install -r requirements.txt
   pip install -r requirements-dev.txt
 ```
+Build blst locally (linux):
+```bash
+  cd blst/
+  ./build.sh
+  cd ..
+  mkdir -p ./blst-lib/linux/
+  cp ./blst/libblst.a           ./blst-lib/linux/
+  cp ./blst/bindings/blst.h     ./blst-lib/
+  cp ./blst/bindings/blst.hpp   ./blst-lib/
+  cp ./blst/bindings/blst_aux.h ./blst-lib/
+  python setup.py build_ext --inplace
+```
+Build blst locally (osx):
+```bash
+  cd blst/
+  ./build.sh
+  cd ..
+  mkdir -p ./blst-lib/darwin/
+  cp ./blst/libblst.a           ./blst-lib/darwin/
+  cp ./blst/bindings/blst.h     ./blst-lib/
+  cp ./blst/bindings/blst.hpp   ./blst-lib/
+  cp ./blst/bindings/blst_aux.h ./blst-lib/
+  python setup.py build_ext --inplace
+```
 
 ## How to test
 Simply run in project root directory:
