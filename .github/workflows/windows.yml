@@ -41,7 +41,6 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
     - name: Prepapre MSVC dev environment
-      if: matrix.os == 'windows-latest'
       uses: ilammy/msvc-dev-cmd@v1
     - name: Compile blst and build ext (in-place)
       run: |
