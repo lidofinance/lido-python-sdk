@@ -1,3 +1,4 @@
+from concurrent.futures import ProcessPoolExecutor
 from typing import List, Tuple
 
 from blspy import PopSchemeMPL, G1Element, G2Element
@@ -51,28 +52,36 @@ def validate_keys(
     @param strict: Should be used for new keys. It will check that key was signed using contract's actual WC.
     @return: List of keys that are invalid
     """
-    actual_credentials = LidoContract.getWithdrawalCredentials(w3)[""]
-
     deposit_domain = compute_deposit_domain(GENESIS_FORK_VERSION[w3.eth.chain_id])
+
+    actual_credential = LidoContract.getWithdrawalCredentials(w3)[""]
+    possible_credentials = _get_withdrawal_credentials(w3.eth.chain_id)
 
     invalid_keys = []
 
-    for key in keys:
-        is_valid = validate_key(key, actual_credentials, deposit_domain)
+    key_params = [(key, actual_credential, possible_credentials, deposit_domain, strict) for key in keys]
 
-        if not is_valid and not strict and key["used"]:
-            withdrawal_credentials = _get_withdrawal_credentials(w3.eth.chain_id)
-
-            for wc in withdrawal_credentials:
-                is_valid = validate_key(key, wc, deposit_domain)
-
-                if is_valid:
-                    break
-
-        if not is_valid:
-            invalid_keys.append(key)
+    with ProcessPoolExecutor() as executor:
+        for key, is_valid in zip(keys, executor.map(_executor_validate_key, key_params)):
+            if not is_valid:
+                invalid_keys.append(key)
 
     return invalid_keys
+
+
+def _executor_validate_key(data: Tuple):
+    key, actual_credential, possible_credential, deposit_domain, strict = data
+
+    is_valid = validate_key(key, actual_credential, deposit_domain)
+
+    if not is_valid and not strict and key["used"]:
+        for wc in possible_credential:
+            is_valid = validate_key(key, wc, deposit_domain)
+
+            if is_valid:
+                break
+
+    return is_valid
 
 
 def validate_key(
