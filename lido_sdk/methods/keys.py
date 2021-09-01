@@ -1,16 +1,16 @@
 from concurrent.futures import ProcessPoolExecutor
 from typing import List, Tuple
-from lido.eth2deposit.ssz import (
+from lido_sdk.eth2deposit.ssz import (
     compute_deposit_domain,
     DepositMessage,
     compute_signing_root,
 )
 from web3 import Web3
 
-from lido.contract import LidoContract
-from lido.methods.typing import OperatorKey
-from lido.network.type import WITHDRAWAL_CREDENTIALS, GENESIS_FORK_VERSION
-from lido.blstverify.verifier import verify
+from lido_sdk.contract import LidoContract
+from lido_sdk.methods.typing import OperatorKey
+from lido_sdk.network.type import WITHDRAWAL_CREDENTIALS, GENESIS_FORK_VERSION
+from lido_sdk.blstverify.verifier import verify
 
 
 def find_duplicated_keys(

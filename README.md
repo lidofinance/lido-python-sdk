@@ -25,7 +25,7 @@ w3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/{INFURA_PROJECT_ID}'))
 
 2. Create Lido instance and provide web3 provider
 ```python
-from lido import Lido
+from lido_sdk import Lido
 
 lido = Lido(w3)
 ```

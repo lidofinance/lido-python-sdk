@@ -38,7 +38,7 @@ class Contract:
         """Create all methods announced in contract's abi"""
 
         def call(w3: Web3, args: Optional[List] = None):
-            from lido.contract.execute_contract import execute_contract_call
+            from lido_sdk.contract.execute_contract import execute_contract_call
 
             return execute_contract_call(
                 w3,
@@ -50,7 +50,7 @@ class Contract:
             )
 
         def multicall(w3: Web3, args_list: Optional[List[List]] = None):
-            from lido.contract.execute_contract import execute_contract_multicall
+            from lido_sdk.contract.execute_contract import execute_contract_multicall
 
             args_list = args_list or [[]]
 

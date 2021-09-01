@@ -36,7 +36,7 @@ URL = "https://github.com/lidofinance/lido-python-sdk"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
 REQUIRES_PYTHON = ">=3.7,<4"
-VERSION = "1.0.1"
+VERSION = "2.0.0"
 
 
 # C/C++ Extensions
@@ -71,7 +71,7 @@ else:  # POSIX
 
 ext_modules = [
     Extension(
-        "lido.blstverify._blst",
+        "lido_sdk.blstverify._blst",
         sources=SOURCES,
         depends=DEPENDS,
         include_dirs=INCLUDE_DIRS,

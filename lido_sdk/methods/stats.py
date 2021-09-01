@@ -1,6 +1,6 @@
 from web3 import Web3
 
-from lido.contract import LidoContract
+from lido_sdk.contract import LidoContract
 
 
 def get_status(w3: Web3):

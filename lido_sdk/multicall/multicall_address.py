@@ -1,4 +1,4 @@
-from lido.network import Network
+from lido_sdk.network import Network
 
 
 MULTICALL_ADDRESSES = {

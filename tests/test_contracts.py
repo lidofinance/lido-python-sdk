@@ -3,14 +3,14 @@ from unittest.mock import PropertyMock
 
 from web3 import Web3
 
-from lido.contract.contract import Contract
-from lido.contract.load_contract import _get_contract_abi
+from lido_sdk.contract.contract import Contract
+from lido_sdk.contract.load_contract import _get_contract_abi
 from tests.utils import MockTestCase
 
 
 class ContractTest(MockTestCase):
     def test_load_contract(self):
-        from lido.contract.load_contract import LidoContract, NodeOpsContract
+        from lido_sdk.contract.load_contract import LidoContract, NodeOpsContract
 
         lido_abi = _get_contract_abi("Lido.json")
 
@@ -27,7 +27,7 @@ class ContractTest(MockTestCase):
 
     def test_contract_call_function(self):
         call = self.mocker.patch(
-            "lido.contract.execute_contract.execute_contract_call", return_value=2
+            "lido_sdk.contract.execute_contract.execute_contract_call", return_value=2
         )
         contract_multicall = self.mocker.patch(
             "multicall.Call.__call__",
@@ -43,7 +43,7 @@ class ContractTest(MockTestCase):
             "web3.eth.Eth.chain_id", return_value=1, new_callable=PropertyMock
         )
 
-        from lido.contract.load_contract import NodeOpsContract
+        from lido_sdk.contract.load_contract import NodeOpsContract
 
         w3 = Web3()
 
