@@ -96,6 +96,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           cd blst/
+          sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
           ./build.sh
           cd ..
           mkdir -p ./blst-lib/linux/
