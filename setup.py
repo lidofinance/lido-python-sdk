@@ -36,7 +36,7 @@ URL = "https://github.com/lidofinance/lido-python-sdk"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
 REQUIRES_PYTHON = ">=3.7,<4"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 
 # C/C++ Extensions
