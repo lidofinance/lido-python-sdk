@@ -36,7 +36,7 @@ URL = "https://github.com/lidofinance/lido-python-sdk"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
 REQUIRES_PYTHON = ">=3.7,<4"
-VERSION = "2.0.0"
+VERSION = "2.0.1"
 
 
 # C/C++ Extensions
@@ -113,6 +113,7 @@ setup(
     url=URL,
     package_dir={"": "."},
     packages=find_packages(exclude=("tests",)),
+    package_data={'lido_sdk.contract': ['abi/*.json']},
     # If your package is a single module, use this instead of "packages":
     # py_modules=["mypackage"],
     # entry_points={
