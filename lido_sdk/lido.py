@@ -2,7 +2,7 @@ from typing import List, Optional, Tuple, Dict
 
 from web3 import Web3
 
-from lido.methods import (
+from lido_sdk.methods import (
     find_duplicated_keys,
     validate_keys,
     get_operators_indexes,
@@ -10,8 +10,8 @@ from lido.methods import (
     get_operators_keys,
     get_status,
 )
-from lido.methods.typing import Operator, OperatorKey
-from lido.network import Network
+from lido_sdk.methods.typing import Operator, OperatorKey
+from lido_sdk.network import Network
 
 
 class LidoException(Exception):

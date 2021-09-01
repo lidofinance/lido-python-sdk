@@ -2,7 +2,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from multicall import Call, Multicall as DefaultMulticall
 
-from lido.multicall.multicall_address import MULTICALL_ADDRESSES
+from lido_sdk.multicall.multicall_address import MULTICALL_ADDRESSES
 
 
 class Multicall(DefaultMulticall):

@@ -3,7 +3,7 @@ from typing import List, Dict
 from multicall import Call
 from web3 import Web3
 
-from lido.multicall import Multicall
+from lido_sdk.multicall import Multicall
 
 
 def execute_contract_multicall(

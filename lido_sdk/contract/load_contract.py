@@ -1,8 +1,8 @@
 import json
 import os
 
-from lido.contract.contract import Contract
-from lido.network import Network
+from lido_sdk.contract.contract import Contract
+from lido_sdk.network import Network
 
 
 LIDO_ADDRESSES = {

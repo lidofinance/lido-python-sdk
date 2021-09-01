@@ -29,7 +29,7 @@ jobs:
 
       - name: Setup SWIG
         run: |
-          git clone https://github.com/swig/swig;
+          git clone --branch v4.0.2 https://github.com/swig/swig;
           cd swig;
           ./autogen.sh;
           ./configure --prefix=$HOME/swig;
@@ -78,6 +78,11 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: ilammy/msvc-dev-cmd@v1
 
+      - name: Print CPU info
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          ./cpuinfo.sh
+
       - name: Build 'blst' dynamic library (windows)
         if: matrix.os == 'windows-latest'
         run: |
@@ -91,6 +96,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           cd blst/
+          sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
           ./build.sh
           cd ..
           mkdir -p ./blst-lib/linux/
@@ -142,6 +148,11 @@ jobs:
           python --version
           python3 --version
 
+      - name: Print CPU info
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          ./cpuinfo.sh
+
       - name: Installing pip packages
         run: |
           pip install wheel
@@ -157,7 +168,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: blst_swig_bindings_py
-          path: ./lido/blstverify/
+          path: ./lido_sdk/blstverify/
 
       - name: Get static blst library from artifact storage
         uses: actions/download-artifact@v2
@@ -180,7 +191,7 @@ jobs:
       - name: Testing (native blst tests)
         run: |
           python setup.py build_ext --inplace
-          python ./lido/blstverify/test.py
+          python ./lido_sdk/blstverify/test.py
 
       - name: Testing (pytest)
         run: |

@@ -36,7 +36,7 @@ URL = "https://github.com/lidofinance/lido-python-sdk"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
 REQUIRES_PYTHON = ">=3.7,<4"
-VERSION = "1.0.1"
+VERSION = "2.0.1"
 
 
 # C/C++ Extensions
@@ -71,7 +71,7 @@ else:  # POSIX
 
 ext_modules = [
     Extension(
-        "lido.blstverify._blst",
+        "lido_sdk.blstverify._blst",
         sources=SOURCES,
         depends=DEPENDS,
         include_dirs=INCLUDE_DIRS,
@@ -113,6 +113,7 @@ setup(
     url=URL,
     package_dir={"": "."},
     packages=find_packages(exclude=("tests",)),
+    package_data={"lido_sdk.contract": ["abi/*.json"]},
     # If your package is a single module, use this instead of "packages":
     # py_modules=["mypackage"],
     # entry_points={
@@ -123,8 +124,15 @@ setup(
     include_package_data=True,
     license="MIT",
     classifiers=[
+        # Pick your license as you wish (should match "license" above)
         "License :: OSI Approved :: MIT License",
-        "Development Status :: 2 - Pre-Alpha",
+        # How mature is this project? Common values are
+        #   2 - Pre-Alpha
+        #   3 - Alpha
+        #   4 - Beta
+        #   5 - Production/Stable
+        "Development Status :: 4 - Beta",
+        # Supported Python versions
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",

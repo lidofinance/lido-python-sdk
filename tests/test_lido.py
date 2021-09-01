@@ -2,8 +2,8 @@ from unittest.mock import PropertyMock
 
 from web3 import Web3
 
-from lido import Lido
-from lido.methods import (
+from lido_sdk import Lido
+from lido_sdk.methods import (
     get_operators_indexes,
     get_operators_data,
     get_operators_keys,
@@ -39,7 +39,7 @@ class OperatorTest(MockTestCase):
 
     def test_get_operators_indexes(self):
         self.mocker.patch(
-            "lido.contract.load_contract.NodeOpsContract.getNodeOperatorsCount",
+            "lido_sdk.contract.load_contract.NodeOpsContract.getNodeOperatorsCount",
             return_value={"": 5},
         )
 
@@ -49,7 +49,7 @@ class OperatorTest(MockTestCase):
     def test_get_operators_data(self):
         """We are checking that indexes are assigned correctly"""
         self.mocker.patch(
-            "lido.contract.load_contract.NodeOpsContract.getNodeOperator_multicall",
+            "lido_sdk.contract.load_contract.NodeOpsContract.getNodeOperator_multicall",
             return_value=OPERATORS_DATA,
         )
 
@@ -60,7 +60,7 @@ class OperatorTest(MockTestCase):
 
     def test_get_operators_keys(self):
         self.mocker.patch(
-            "lido.contract.load_contract.NodeOpsContract.getSigningKey_multicall",
+            "lido_sdk.contract.load_contract.NodeOpsContract.getSigningKey_multicall",
             return_value=OPERATORS_KEYS,
         )
 
@@ -85,7 +85,7 @@ class OperatorTest(MockTestCase):
 
     def test_validate_keys(self):
         self.mocker.patch(
-            "lido.contract.load_contract.LidoContract.getWithdrawalCredentials",
+            "lido_sdk.contract.load_contract.LidoContract.getWithdrawalCredentials",
             return_value={
                 "": b"\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xb9\xd7\x93Hx\xb5\xfb\x96\x10\xb3\xfe\x8a^D\x1e\x8f\xad~)?"
             },

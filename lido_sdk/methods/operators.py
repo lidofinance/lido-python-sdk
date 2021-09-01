@@ -2,8 +2,8 @@ from typing import List
 
 from web3 import Web3
 
-from lido.contract.load_contract import NodeOpsContract
-from lido.methods.typing import Operator, OperatorKey
+from lido_sdk.contract.load_contract import NodeOpsContract
+from lido_sdk.methods.typing import Operator, OperatorKey
 
 
 def get_operators_indexes(w3: Web3) -> List[int]:

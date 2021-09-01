@@ -4,7 +4,7 @@ from unittest.mock import PropertyMock
 
 from web3 import Web3
 
-from lido.methods import validate_keys
+from lido_sdk.methods import validate_keys
 from tests.fixtures import OPERATORS_KEYS
 from tests.utils import MockTestCase
 
@@ -17,7 +17,7 @@ class ValidationTest(MockTestCase):
         self.w3 = Web3()
 
         self.mocker.patch(
-            "lido.contract.load_contract.LidoContract.getWithdrawalCredentials",
+            "lido_sdk.contract.load_contract.LidoContract.getWithdrawalCredentials",
             return_value={
                 "": b"\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xb9\xd7\x93Hx\xb5\xfb\x96\x10\xb3\xfe\x8a^D\x1e\x8f\xad~)?"
             },
