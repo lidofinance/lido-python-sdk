@@ -5,7 +5,11 @@ All notable changes to this project are documented in this file.
 This changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.1](https://github.com/lidofinance/lido-python-sdk) - 2021-10-31
+## [Unreleased](https://github.com/lidofinance/lido-python-sdk) - 2021-09-01
+### Changed
+- Renamed library root package to `lido_sdk`, added more tests, fixed ABIs packaging [#0029](https://github.com/lidofinance/lido-python-sdk/pull/29)
+
+## [1.0.1](https://github.com/lidofinance/lido-python-sdk) - 2021-08-31
 ### Added
 - Lido public class [#0020](https://github.com/lidofinance/lido-python-sdk/pull/20)
 - Added fast BLS verification [#0019](https://github.com/lidofinance/lido-python-sdk/pull/19)
@@ -13,11 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - If strict is false, for validation we will try possible WC only for already used keys [#0024](https://github.com/lidofinance/lido-python-sdk/pull/24)
 
-## [0.3.0](https://github.com/lidofinance/lido-python-sdk) - 2021-10-26
+## [0.3.0](https://github.com/lidofinance/lido-python-sdk) - 2021-08-26
 ### Fixed
 - Move eth2deposit code to repository
 
-## [0.2.0](https://github.com/lidofinance/lido-python-sdk) - 2021-10-26
+## [0.2.0](https://github.com/lidofinance/lido-python-sdk) - 2021-08-26
 ### Added
 - Github actions ([#0005](https://github.com/lidofinance/lido-python-sdk/pull/5))
 - Contract interact and contract's multicall support ([#0006](https://github.com/lidofinance/lido-python-sdk/pull/6))
@@ -28,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Code coverage ([#0014](https://github.com/lidofinance/lido-python-sdk/pull/14))
 
-## [0.1.0](https://github.com/lidofinance/lido-python-sdk) - 2021-10-20
+## [0.1.0](https://github.com/lidofinance/lido-python-sdk) - 2021-08-20
 ### Added
 - Initial release
 - Setup configuration ([#0002](https://github.com/lidofinance/lido-python-sdk/pull/2))
