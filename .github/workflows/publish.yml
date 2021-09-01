@@ -4,6 +4,9 @@ name: publish
 on:
   push:
     branches: [ master ]
+    tags: [ "*" ]
+    paths-ignore:
+      - '.github/**'
   pull_request:
     branches: [ master ]
 
