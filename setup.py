@@ -113,7 +113,7 @@ setup(
     url=URL,
     package_dir={"": "."},
     packages=find_packages(exclude=("tests",)),
-    package_data={'lido_sdk.contract': ['abi/*.json']},
+    package_data={"lido_sdk.contract": ["abi/*.json"]},
     # If your package is a single module, use this instead of "packages":
     # py_modules=["mypackage"],
     # entry_points={
