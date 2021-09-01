@@ -1,11 +1,16 @@
 from lido_sdk.blstverify import verify
-from tests.fixtures import VALID_KEY_BYTEARRAY, VALID_KEY_BYTES, INVALID_KEY_BYTEARRAY, INVALID_KEY_BYTES
+from tests.fixtures import (
+    VALID_KEY_BYTEARRAY,
+    VALID_KEY_BYTES,
+    INVALID_KEY_BYTEARRAY,
+    INVALID_KEY_BYTES,
+)
 
 
 def test_valid_bls_bytearray():
-    pubkey = VALID_KEY_BYTEARRAY['pubkey']
-    signing_root = VALID_KEY_BYTEARRAY['signing_root']
-    signature = VALID_KEY_BYTEARRAY['signature']
+    pubkey = VALID_KEY_BYTEARRAY["pubkey"]
+    signing_root = VALID_KEY_BYTEARRAY["signing_root"]
+    signature = VALID_KEY_BYTEARRAY["signature"]
 
     res = verify(pubkey, signing_root, signature)
 
@@ -13,9 +18,9 @@ def test_valid_bls_bytearray():
 
 
 def test_invalid_bls_bytearray():
-    pubkey = INVALID_KEY_BYTEARRAY['pubkey']
-    signing_root = INVALID_KEY_BYTEARRAY['signing_root']
-    signature = INVALID_KEY_BYTEARRAY['signature']
+    pubkey = INVALID_KEY_BYTEARRAY["pubkey"]
+    signing_root = INVALID_KEY_BYTEARRAY["signing_root"]
+    signature = INVALID_KEY_BYTEARRAY["signature"]
 
     res = verify(pubkey, signing_root, signature)
 
@@ -23,9 +28,9 @@ def test_invalid_bls_bytearray():
 
 
 def test_valid_bls_bytes():
-    pubkey = VALID_KEY_BYTES['pubkey']
-    signing_root = VALID_KEY_BYTES['signing_root']
-    signature = VALID_KEY_BYTES['signature']
+    pubkey = VALID_KEY_BYTES["pubkey"]
+    signing_root = VALID_KEY_BYTES["signing_root"]
+    signature = VALID_KEY_BYTES["signature"]
 
     res = verify(pubkey, signing_root, signature)
 
@@ -33,9 +38,9 @@ def test_valid_bls_bytes():
 
 
 def test_invalid_bls_bytes():
-    pubkey = INVALID_KEY_BYTES['pubkey']
-    signing_root = INVALID_KEY_BYTES['signing_root']
-    signature = INVALID_KEY_BYTES['signature']
+    pubkey = INVALID_KEY_BYTES["pubkey"]
+    signing_root = INVALID_KEY_BYTES["signing_root"]
+    signature = INVALID_KEY_BYTES["signature"]
 
     res = verify(pubkey, signing_root, signature)
 
@@ -44,8 +49,8 @@ def test_invalid_bls_bytes():
 
 def test_empty_pubkey():
     pubkey = bytearray()
-    signing_root = VALID_KEY_BYTEARRAY['signing_root']
-    signature = VALID_KEY_BYTEARRAY['signature']
+    signing_root = VALID_KEY_BYTEARRAY["signing_root"]
+    signature = VALID_KEY_BYTEARRAY["signature"]
 
     res = verify(pubkey, signing_root, signature)
 
@@ -53,9 +58,9 @@ def test_empty_pubkey():
 
 
 def test_invalid_pubkey():
-    pubkey = INVALID_KEY_BYTEARRAY['pubkey']
-    signing_root = VALID_KEY_BYTEARRAY['signing_root']
-    signature = VALID_KEY_BYTEARRAY['signature']
+    pubkey = INVALID_KEY_BYTEARRAY["pubkey"]
+    signing_root = VALID_KEY_BYTEARRAY["signing_root"]
+    signature = VALID_KEY_BYTEARRAY["signature"]
 
     res = verify(pubkey, signing_root, signature)
 
@@ -63,9 +68,9 @@ def test_invalid_pubkey():
 
 
 def test_invalid_signing_root():
-    pubkey = VALID_KEY_BYTEARRAY['pubkey']
-    signing_root = INVALID_KEY_BYTEARRAY['signing_root']
-    signature = VALID_KEY_BYTEARRAY['signature']
+    pubkey = VALID_KEY_BYTEARRAY["pubkey"]
+    signing_root = INVALID_KEY_BYTEARRAY["signing_root"]
+    signature = VALID_KEY_BYTEARRAY["signature"]
 
     res = verify(pubkey, signing_root, signature)
 
@@ -73,9 +78,9 @@ def test_invalid_signing_root():
 
 
 def test_empty_signing_root():
-    pubkey = VALID_KEY_BYTEARRAY['pubkey']
+    pubkey = VALID_KEY_BYTEARRAY["pubkey"]
     signing_root = bytearray()
-    signature = VALID_KEY_BYTEARRAY['signature']
+    signature = VALID_KEY_BYTEARRAY["signature"]
 
     res = verify(pubkey, signing_root, signature)
 
@@ -83,9 +88,9 @@ def test_empty_signing_root():
 
 
 def test_invalid_signature():
-    pubkey = VALID_KEY_BYTEARRAY['pubkey']
-    signing_root = INVALID_KEY_BYTEARRAY['signing_root']
-    signature = INVALID_KEY_BYTEARRAY['signature']
+    pubkey = VALID_KEY_BYTEARRAY["pubkey"]
+    signing_root = INVALID_KEY_BYTEARRAY["signing_root"]
+    signature = INVALID_KEY_BYTEARRAY["signature"]
 
     res = verify(pubkey, signing_root, signature)
 
@@ -93,8 +98,8 @@ def test_invalid_signature():
 
 
 def test_empty_signature():
-    pubkey = VALID_KEY_BYTEARRAY['pubkey']
-    signing_root = VALID_KEY_BYTEARRAY['signing_root']
+    pubkey = VALID_KEY_BYTEARRAY["pubkey"]
+    signing_root = VALID_KEY_BYTEARRAY["signing_root"]
     signature = bytearray()
 
     res = verify(pubkey, signing_root, signature)

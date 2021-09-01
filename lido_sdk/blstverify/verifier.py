@@ -6,9 +6,11 @@ VALID_TYPES = (bytes, bytearray)
 
 
 def verify(pubkey: bytes, message: bytes, signature: bytes) -> bool:
-    if (not isinstance(pubkey, VALID_TYPES)) or \
-            (not isinstance(message, VALID_TYPES)) or \
-            (not isinstance(signature, VALID_TYPES)):
+    if (
+        (not isinstance(pubkey, VALID_TYPES))
+        or (not isinstance(message, VALID_TYPES))
+        or (not isinstance(signature, VALID_TYPES))
+    ):
         return False
 
     try:
