@@ -2,6 +2,7 @@ from typing import List, Optional, Tuple, Dict
 
 from web3 import Web3
 
+from lido_sdk import config
 from lido_sdk.methods import (
     find_duplicated_keys,
     validate_keys,
@@ -23,8 +24,10 @@ class Lido:
     operators = None
     keys = None
 
-    def __init__(self, w3: Web3):
+    def __init__(self, w3: Web3, **kwargs):
         self._w3 = w3
+
+        self._set_configs(kwargs)
 
         if w3.eth.chain_id == Network.Görli:
             from web3.middleware import geth_poa_middleware
@@ -34,6 +37,10 @@ class Lido:
                 raise LidoException(
                     "PoA middleware isn't injected into Web3 middleware onion"
                 )
+
+    def _set_configs(self, kwargs: Dict):
+        for key, value in kwargs.items():
+            setattr(config, key, value)
 
     def get_operators_indexes(self) -> List[int]:
         """

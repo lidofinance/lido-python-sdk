@@ -1,0 +1,4 @@
+# Multicall default settings settings
+MULTICALL_MAX_BUNCH = 275
+MULTICALL_MAX_WORKERS = 6
+MULTICALL_MAX_RETRIES = 5
