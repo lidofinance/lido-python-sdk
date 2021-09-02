@@ -15,6 +15,7 @@ class Multicall(DefaultMulticall):
         - results from multicall is not a dict, but a list now. We are making a lot of requests to one contract's method,
         so we don't wanna loose data.
     """
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -63,4 +64,4 @@ class Multicall(DefaultMulticall):
                 return results
 
         # Not expected exception
-        raise Exception('Bug in Multicall')
+        raise Exception("Bug in Multicall")
