@@ -2,6 +2,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from multicall import Call, Multicall as DefaultMulticall
 
+from lido_sdk import config
 from lido_sdk.multicall.multicall_address import MULTICALL_ADDRESSES
 
 
@@ -15,16 +16,20 @@ class Multicall(DefaultMulticall):
         so we don't wanna loose data.
     """
 
-    MAX_CALLS_PER_MULTICALL = 275
-    MAX_WORKERS = 6
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.max_call_bunch = config.MULTICALL_MAX_BUNCH
+        self.max_workers = config.MULTICALL_MAX_WORKERS
+        self.max_retries = config.MULTICALL_MAX_RETRIES
 
     def __call__(self):
         calls_list = [
-            self.calls[i : i + self.MAX_CALLS_PER_MULTICALL]
-            for i in range(0, len(self.calls), self.MAX_CALLS_PER_MULTICALL)
+            self.calls[i : i + self.max_call_bunch]
+            for i in range(0, len(self.calls), self.max_call_bunch)
         ]
 
-        with ThreadPoolExecutor(max_workers=self.MAX_WORKERS) as executor:
+        with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             thread_results = executor.map(self.execute, calls_list)
 
         result = []
@@ -44,15 +49,19 @@ class Multicall(DefaultMulticall):
         )
 
         args = [[[call.target, call.data] for call in calls]]
-        try:
-            block, outputs = aggregate(args)
-        except ValueError:
-            # It seems it is {'code': -32000, 'message': 'execution aborted (timeout = 5s)'}
-            # Try again
-            block, outputs = aggregate(args)
 
-        results = []
-        for call, output in zip(self.calls, outputs):
-            results.append(call.decode_output(output))
+        for retry_num in range(self.max_retries):
+            try:
+                block, outputs = aggregate(args)
+            except ValueError as error:
+                if retry_num == self.max_retries - 1:
+                    raise error
+            else:
+                results = []
+                for call, output in zip(self.calls, outputs):
+                    results.append(call.decode_output(output))
 
-        return results
+                return results
+
+        # Not expected exception
+        raise Exception("Bug in Multicall")

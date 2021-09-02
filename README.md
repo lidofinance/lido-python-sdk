@@ -42,6 +42,19 @@ else:
     print('Everything is good!')
 ```
 
+## Params for Lido
+| Param name             | Default value | Description |
+| -------------          | ---------     | ----------- |
+| w3                     | required      | Web3 provider |
+| MULTICALL_MAX_BUNCH    | 275           | Count of calls in one multicall (not recommended to increase) |
+| MULTICALL_MAX_WORKERS  | 6             | Count of requests in parallel (not recommended to have more than 12) |
+| MULTICALL_MAX_RETRIES  | 5             | Count of retries before exception will be raised |
+
+Settings example if timeout exception was raised:
+```python
+Lido(w3=w3, MULTICALL_MAX_BUNCH=100, MULTICALL_MAX_WORKERS=3)
+```
+
 ## Base methods
 Everything you need is in Lido class.
 
