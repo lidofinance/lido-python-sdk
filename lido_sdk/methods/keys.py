@@ -78,7 +78,7 @@ def _executor_validate_key(data: Tuple):
 
     is_valid = validate_key(key, actual_credential, deposit_domain)
 
-    if not is_valid and not strict and key["used"]:
+    if not is_valid and not strict and key.get("used", False):
         for wc in possible_credential:
             is_valid = validate_key(key, wc, deposit_domain)
 
