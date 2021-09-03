@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/lidofinance/lido-python-sdk)
 
+## [2.1.1](https://github.com/lidofinance/lido-python-sdk) - 2021-09-03
+### Changed
+- Update web3 from 5.23.0 to 5.23.1. Now "used" key is optional for verification [#0035](https://github.com/lidofinance/lido-python-sdk/pull/35)
+
 ## [2.1.0](https://github.com/lidofinance/lido-python-sdk) - 2021-09-03
 ### Added
 - Add new params that could be provided to multicall [#0032](https://github.com/lidofinance/lido-python-sdk/pull/32)
