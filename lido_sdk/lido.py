@@ -1,8 +1,6 @@
-from functools import cache
 from typing import List, Optional, Tuple, Dict
 
 from web3 import Web3
-from web3.eth import Eth
 
 from lido_sdk import config
 from lido_sdk.methods import (
