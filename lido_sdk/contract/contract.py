@@ -2,8 +2,6 @@ from typing import Dict, List, Optional
 
 from web3 import Web3
 
-from lido_sdk import config
-
 
 class Contract:
     """
@@ -44,7 +42,7 @@ class Contract:
 
             return execute_contract_call(
                 w3,
-                self.registry_addresses[config.ETH_CHAIN_ID],
+                self.registry_addresses[w3.eth.chain_id],
                 abi_function["name"],
                 abi_function["inputs"],
                 abi_function["outputs"],
@@ -58,7 +56,7 @@ class Contract:
 
             return execute_contract_multicall(
                 w3,
-                self.registry_addresses[config.ETH_CHAIN_ID],
+                self.registry_addresses[w3.eth.chain_id],
                 abi_function["name"],
                 abi_function["inputs"],
                 abi_function["outputs"],

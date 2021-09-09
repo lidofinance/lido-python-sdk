@@ -1,7 +1,5 @@
 from concurrent.futures import ProcessPoolExecutor
 from typing import List, Tuple
-
-from lido_sdk import config
 from lido_sdk.eth2deposit.ssz import (
     compute_deposit_domain,
     DepositMessage,
@@ -53,10 +51,12 @@ def validate_keys(
     @param strict: Should be used for new keys. It will check that key was signed using contract's actual WC.
     @return: List of keys that are invalid
     """
-    deposit_domain = compute_deposit_domain(GENESIS_FORK_VERSION[config.ETH_CHAIN_ID])
+    deposit_domain = compute_deposit_domain(
+        GENESIS_FORK_VERSION[w3.eth.chain_id]
+    )
 
     actual_credential = LidoContract.getWithdrawalCredentials(w3)[""]
-    possible_credentials = _get_withdrawal_credentials(config.ETH_CHAIN_ID)
+    possible_credentials = _get_withdrawal_credentials(w3.eth.chain_id)
 
     invalid_keys = []
 

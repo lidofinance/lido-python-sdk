@@ -41,7 +41,7 @@ class Multicall(DefaultMulticall):
 
     def execute(self, calls):
         aggregate = Call(
-            MULTICALL_ADDRESSES[config.ETH_CHAIN_ID],
+            MULTICALL_ADDRESSES[self.w3.eth.chain_id],
             "aggregate((address,bytes)[])(uint256,bytes[])",
             returns=None,
             _w3=self.w3,
