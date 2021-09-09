@@ -26,10 +26,9 @@ class Lido:
 
     def __init__(self, w3: Web3, **kwargs):
         self._w3 = w3
-
         self._set_configs(kwargs)
 
-        if w3.eth.chain_id == Network.Görli:
+        if config.ETH_CHAIN_ID == Network.Görli:
             from web3.middleware import geth_poa_middleware
 
             # Checking by value b/c we don't know the key
@@ -39,6 +38,8 @@ class Lido:
                 )
 
     def _set_configs(self, kwargs: Dict):
+        config.ETH_CHAIN_ID = self._w3.eth.chain_id
+
         for key, value in kwargs.items():
             setattr(config, key, value)
 
