@@ -53,9 +53,7 @@ def validate_keys(
     @param strict: Should be used for new keys. It will check that key was signed using contract's actual WC.
     @return: List of keys that are invalid
     """
-    deposit_domain = compute_deposit_domain(
-        GENESIS_FORK_VERSION[config.ETH_CHAIN_ID]
-    )
+    deposit_domain = compute_deposit_domain(GENESIS_FORK_VERSION[config.ETH_CHAIN_ID])
 
     actual_credential = LidoContract.getWithdrawalCredentials(w3)[""]
     possible_credentials = _get_withdrawal_credentials(config.ETH_CHAIN_ID)
