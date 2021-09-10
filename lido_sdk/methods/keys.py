@@ -1,3 +1,4 @@
+import logging
 from concurrent.futures import ProcessPoolExecutor
 from typing import List, Tuple
 from lido_sdk.eth2deposit.ssz import (
@@ -11,6 +12,9 @@ from lido_sdk.contract import LidoContract
 from lido_sdk.methods.typing import OperatorKey
 from lido_sdk.network.type import WITHDRAWAL_CREDENTIALS, GENESIS_FORK_VERSION
 from lido_sdk.blstverify.verifier import verify
+
+
+logger = logging.getLogger(__name__)
 
 
 def find_duplicated_keys(
@@ -63,10 +67,34 @@ def validate_keys(
         for key in keys
     ]
 
+    keys_count = len(keys)
+
+    logger.log(
+        level=logging.INFO,
+        msg='Start validating',
+        data={
+            'total_keys': keys_count,
+            'strict': strict,
+        },
+    )
+
     with ProcessPoolExecutor() as executor:
+        keys_validated = 0
+
         for key, is_valid in zip(
             keys, executor.map(_executor_validate_key, key_params)
         ):
+            keys_validated += 1
+            logger.log(
+                level=logging.INFO,
+                msg='Validate progress',
+                data={
+                    'total_keys': keys_count,
+                    'keys_validated': keys_validated,
+                    'strict': strict,
+                },
+            )
+
             if not is_valid:
                 invalid_keys.append(key)
 
