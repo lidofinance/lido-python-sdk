@@ -35,9 +35,9 @@ class Multicall(DefaultMulticall):
 
         logger.log(
             level=logging.INFO,
-            msg='Start multicall',
+            msg="Start multicall",
             data={
-                'total_calls': len(calls_list),
+                "total_calls": len(calls_list),
             },
         )
 
@@ -49,10 +49,10 @@ class Multicall(DefaultMulticall):
         for thread_result in thread_results:
             logger.log(
                 level=logging.INFO,
-                msg='Validate progress',
+                msg="Validate progress",
                 data={
-                    'total_calls': len(calls_list),
-                    'calls_done': len(result),
+                    "total_calls": len(calls_list),
+                    "calls_done": len(result),
                 },
             )
 

@@ -71,10 +71,10 @@ def validate_keys(
 
     logger.log(
         level=logging.INFO,
-        msg='Start validating',
+        msg="Start validating",
         data={
-            'total_keys': keys_count,
-            'strict': strict,
+            "total_keys": keys_count,
+            "strict": strict,
         },
     )
 
@@ -87,11 +87,11 @@ def validate_keys(
             keys_validated += 1
             logger.log(
                 level=logging.INFO,
-                msg='Validate progress',
+                msg="Validate progress",
                 data={
-                    'total_keys': keys_count,
-                    'keys_validated': keys_validated,
-                    'strict': strict,
+                    "total_keys": keys_count,
+                    "keys_validated": keys_validated,
+                    "strict": strict,
                 },
             )
 
