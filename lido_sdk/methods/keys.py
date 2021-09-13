@@ -61,16 +61,10 @@ def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
         for key in keys
     ]
 
-    keys_count = len(keys)
-
     with ProcessPoolExecutor() as executor:
-        keys_validated = 0
-
         for key, is_valid in zip(
             keys, executor.map(_executor_validate_key, key_params)
         ):
-            keys_validated += 1
-
             if not is_valid:
                 invalid_keys.append(key)
 
