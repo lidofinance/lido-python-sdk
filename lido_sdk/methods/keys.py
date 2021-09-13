@@ -57,8 +57,7 @@ def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
     invalid_keys = []
 
     key_params = [
-        (key, actual_credential, possible_credentials, deposit_domain)
-        for key in keys
+        (key, actual_credential, possible_credentials, deposit_domain) for key in keys
     ]
 
     with ProcessPoolExecutor() as executor:
