@@ -1,6 +1,6 @@
-import logging
 from concurrent.futures import ProcessPoolExecutor
 from typing import List, Tuple
+
 from lido_sdk.eth2deposit.ssz import (
     compute_deposit_domain,
     DepositMessage,
@@ -12,9 +12,6 @@ from lido_sdk.contract import LidoContract
 from lido_sdk.methods.typing import OperatorKey
 from lido_sdk.network.type import WITHDRAWAL_CREDENTIALS, GENESIS_FORK_VERSION
 from lido_sdk.blstverify.verifier import verify
-
-
-logger = logging.getLogger(__name__)
 
 
 def find_duplicated_keys(
@@ -46,13 +43,10 @@ def _get_withdrawal_credentials(chain_id: int):
     return [bytes.fromhex(cred[2:]) for cred in WITHDRAWAL_CREDENTIALS[chain_id]]
 
 
-def validate_keys(
-    w3: Web3, keys: List[OperatorKey], strict: bool = False
-) -> List[OperatorKey]:
+def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
     """
     @param w3: Web3
     @param keys: List of keys to validate
-    @param strict: Should be used for new keys. It will check that key was signed using contract's actual WC.
     @return: List of keys that are invalid
     """
     deposit_domain = compute_deposit_domain(GENESIS_FORK_VERSION[w3.eth.chain_id])
@@ -63,20 +57,11 @@ def validate_keys(
     invalid_keys = []
 
     key_params = [
-        (key, actual_credential, possible_credentials, deposit_domain, strict)
+        (key, actual_credential, possible_credentials, deposit_domain)
         for key in keys
     ]
 
     keys_count = len(keys)
-
-    logger.log(
-        level=logging.INFO,
-        msg="Start validating",
-        data={
-            "total_keys": keys_count,
-            "strict": strict,
-        },
-    )
 
     with ProcessPoolExecutor() as executor:
         keys_validated = 0
@@ -85,15 +70,6 @@ def validate_keys(
             keys, executor.map(_executor_validate_key, key_params)
         ):
             keys_validated += 1
-            logger.log(
-                level=logging.INFO,
-                msg="Validate progress",
-                data={
-                    "total_keys": keys_count,
-                    "keys_validated": keys_validated,
-                    "strict": strict,
-                },
-            )
 
             if not is_valid:
                 invalid_keys.append(key)
@@ -102,11 +78,11 @@ def validate_keys(
 
 
 def _executor_validate_key(data: Tuple):
-    key, actual_credential, possible_credential, deposit_domain, strict = data
+    key, actual_credential, possible_credential, deposit_domain = data
 
     is_valid = validate_key(key, actual_credential, deposit_domain)
 
-    if not is_valid and not strict and key.get("used", False):
+    if not is_valid and key.get("used", False):
         for wc in possible_credential:
             is_valid = validate_key(key, wc, deposit_domain)
 

@@ -1,13 +1,9 @@
-import logging
 from concurrent.futures import ThreadPoolExecutor
 
 from multicall import Call, Multicall as DefaultMulticall
 
 from lido_sdk import config
 from lido_sdk.multicall.multicall_address import MULTICALL_ADDRESSES
-
-
-logger = logging.getLogger(__name__)
 
 
 class Multicall(DefaultMulticall):
@@ -33,29 +29,12 @@ class Multicall(DefaultMulticall):
             for i in range(0, len(self.calls), self.max_call_bunch)
         ]
 
-        logger.log(
-            level=logging.INFO,
-            msg="Start multicall",
-            data={
-                "total_calls": len(calls_list),
-            },
-        )
-
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             thread_results = executor.map(self.execute, calls_list)
 
         result = []
 
         for thread_result in thread_results:
-            logger.log(
-                level=logging.INFO,
-                msg="Validate progress",
-                data={
-                    "total_calls": len(calls_list),
-                    "calls_done": len(result),
-                },
-            )
-
             result.extend(thread_result)
 
         return result

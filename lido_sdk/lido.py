@@ -90,15 +90,11 @@ class Lido:
 
         return self.keys
 
-    def validate_keys(
-        self, keys: Optional[List[OperatorKey]] = None, strict: bool = False
-    ) -> List[OperatorKey]:
+    def validate_keys(self, keys: Optional[List[OperatorKey]] = None) -> List[OperatorKey]:
         """
         Validate all provided keys with pub_key, signature, withdrawal_credentials and DepositDomain.
 
         @param keys: List of operators keys.
-        @param strict: If strict is on, only actual contract withdraw credentials will be used check key.
-        If not we will try old withdrawal credentials.
         @return: All invalid keys that were found.
         """
         keys = keys or self.keys
@@ -107,7 +103,7 @@ class Lido:
                 "`get_operators_keys` should be called first or provide `keys` param"
             )
 
-        return validate_keys(self._w3, keys, strict)
+        return validate_keys(self._w3, keys)
 
     def find_duplicated_keys(
         self, keys: Optional[List[OperatorKey]] = None
