@@ -61,7 +61,9 @@ class Lido:
         @param operators_indexes: List operators indexes to fetch.
         @return: List of operators details.
         """
-        operators_indexes = self.operators_indexes if (operators_indexes is None) else operators_indexes
+        operators_indexes = (
+            self.operators_indexes if (operators_indexes is None) else operators_indexes
+        )
         if operators_indexes is None:
             raise LidoException(
                 "`get_operators_indexes` should be called first or provide `operators_indexes` param"
