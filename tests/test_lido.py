@@ -94,9 +94,6 @@ class OperatorTest(MockTestCase):
         invalid_keys = self.lido.validate_keys(OPERATORS_KEYS)
         self.assertEqual(2, len(invalid_keys))
 
-        invalid_keys = self.lido.validate_keys(OPERATORS_KEYS, strict=True)
-        self.assertEqual(4, len(invalid_keys))
-
     def test_find_duplicated_keys(self):
         duplicates = self.lido.find_duplicated_keys(
             [*OPERATORS_KEYS, OPERATORS_KEYS[0]]

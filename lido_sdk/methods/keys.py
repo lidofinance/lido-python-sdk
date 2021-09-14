@@ -1,5 +1,6 @@
 from concurrent.futures import ProcessPoolExecutor
 from typing import List, Tuple
+
 from lido_sdk.eth2deposit.ssz import (
     compute_deposit_domain,
     DepositMessage,
@@ -42,13 +43,10 @@ def _get_withdrawal_credentials(chain_id: int):
     return [bytes.fromhex(cred[2:]) for cred in WITHDRAWAL_CREDENTIALS[chain_id]]
 
 
-def validate_keys(
-    w3: Web3, keys: List[OperatorKey], strict: bool = False
-) -> List[OperatorKey]:
+def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
     """
     @param w3: Web3
     @param keys: List of keys to validate
-    @param strict: Should be used for new keys. It will check that key was signed using contract's actual WC.
     @return: List of keys that are invalid
     """
     deposit_domain = compute_deposit_domain(GENESIS_FORK_VERSION[w3.eth.chain_id])
@@ -59,8 +57,7 @@ def validate_keys(
     invalid_keys = []
 
     key_params = [
-        (key, actual_credential, possible_credentials, deposit_domain, strict)
-        for key in keys
+        (key, actual_credential, possible_credentials, deposit_domain) for key in keys
     ]
 
     with ProcessPoolExecutor() as executor:
@@ -74,11 +71,11 @@ def validate_keys(
 
 
 def _executor_validate_key(data: Tuple):
-    key, actual_credential, possible_credential, deposit_domain, strict = data
+    key, actual_credential, possible_credential, deposit_domain = data
 
     is_valid = validate_key(key, actual_credential, deposit_domain)
 
-    if not is_valid and not strict and key.get("used", False):
+    if not is_valid and key.get("used", False):
         for wc in possible_credential:
             is_valid = validate_key(key, wc, deposit_domain)
 

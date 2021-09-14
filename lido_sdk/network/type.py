@@ -19,7 +19,7 @@ GENESIS_FORK_VERSION = {
 
 # Existing withdrawal credentials on the chain
 # Will be filtered for unique values
-# Will be used as a fallback for used keys or in strict mode when validating signatures
+# Will be used as a fallback for used keys
 WITHDRAWAL_CREDENTIALS = {
     Network.Mainnet: [
         "0x009690e5d4472c7c0dbdf490425d89862535d2a52fb686333f3a0a9ff5d2125e"
