@@ -53,8 +53,21 @@ class OperatorTest(MockTestCase):
             return_value=OPERATORS_DATA,
         )
 
+        self.lido.operators_indexes = [0, 1]
         operators_data = self.lido.get_operators_data([0, 1])
+        self.assertEqual(2, len(operators_data))
+        self.assertEqual(0, operators_data[0]["index"])
+        self.assertEqual(1, operators_data[1]["index"])
 
+        """Input is an empty array"""
+        self.lido.operators_indexes = [0, 1]
+        operators_data = self.lido.get_operators_data([])
+        self.assertEqual(0, len(operators_data))
+
+        """Input is None"""
+        self.lido.operators_indexes = [0, 1]
+        operators_data = self.lido.get_operators_data()
+        self.assertEqual(2, len(operators_data))
         self.assertEqual(0, operators_data[0]["index"])
         self.assertEqual(1, operators_data[1]["index"])
 
@@ -83,6 +96,16 @@ class OperatorTest(MockTestCase):
             self.assertEqual(expected_key["index"], key["index"])
             self.assertEqual(expected_key["operator_index"], key["operator_index"])
 
+        """Input is None"""
+        self.lido.operators = OPERATORS_DATA
+        keys = self.lido.get_operators_keys()
+        self.assertEqual(5, len(keys))
+
+        """Input is an empty array"""
+        self.lido.operators = OPERATORS_DATA
+        keys = self.lido.get_operators_keys([])
+        self.assertEqual(0, len(keys))
+
     def test_validate_keys(self):
         self.mocker.patch(
             "lido_sdk.contract.load_contract.LidoContract.getWithdrawalCredentials",
@@ -97,10 +120,41 @@ class OperatorTest(MockTestCase):
         invalid_keys = self.lido.validate_keys(OPERATORS_KEYS, strict=True)
         self.assertEqual(4, len(invalid_keys))
 
+        """Forcing lido.keys have invalid keys and input is an empty array"""
+        self.lido.keys = OPERATORS_KEYS
+        invalid_keys = self.lido.validate_keys([], strict=True)
+        self.assertEqual(0, len(invalid_keys))
+
+        """Forcing lido.keys have invalid keys and input is None"""
+        self.lido.keys = OPERATORS_KEYS
+        invalid_keys = self.lido.validate_keys(strict=True)
+        self.assertEqual(4, len(invalid_keys))
+
     def test_find_duplicated_keys(self):
         duplicates = self.lido.find_duplicated_keys(
             [*OPERATORS_KEYS, OPERATORS_KEYS[0]]
         )
 
+        self.assertEqual(1, len(duplicates))
+        self.assertEqual(duplicates[0][0]["key"], duplicates[0][1]["key"])
+
+        """Forcing lido.keys are empty and input is None"""
+        self.lido.keys = []
+        duplicates = self.lido.find_duplicated_keys()
+        self.assertEqual(0, len(duplicates))
+
+        """Forcing lido.keys empty array and input is an empty array"""
+        self.lido.keys = []
+        duplicates = self.lido.find_duplicated_keys([])
+        self.assertEqual(0, len(duplicates))
+
+        """Forcing lido.keys have duplicates and input is an empty array"""
+        self.lido.keys = [*OPERATORS_KEYS, OPERATORS_KEYS[0]]
+        duplicates = self.lido.find_duplicated_keys([])
+        self.assertEqual(0, len(duplicates))
+
+        """Forcing lido.keys have duplicates and input is None"""
+        self.lido.keys = [*OPERATORS_KEYS, OPERATORS_KEYS[0]]
+        duplicates = self.lido.find_duplicated_keys()
         self.assertEqual(1, len(duplicates))
         self.assertEqual(duplicates[0][0]["key"], duplicates[0][1]["key"])
