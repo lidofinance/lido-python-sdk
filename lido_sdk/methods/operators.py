@@ -21,7 +21,7 @@ def get_operators_data(w3: Web3, operators_index_list: List[int]) -> List[Operat
     @param operators_index_list: Operator's indexes to fetch
     @return: List of dictionary with operators details
     """
-    if len(operators_index_list) == 0:
+    if not operators_index_list:
         return []
 
     operators = NodeOpsContract.getNodeOperator_multicall(
