@@ -118,7 +118,7 @@ class Lido:
         @param keys: List a keys to check.
         @return: List of duplicate pairs keys.
         """
-        keys = self.keys if (keys is None) else keys
+        keys = self.keys if keys is None else keys
         if keys is None:
             raise LidoException(
                 "`get_operators_keys` should be called first or provide `keys` param"
