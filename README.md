@@ -83,7 +83,6 @@ Returns: List of keys in contract.
 
 [{'key': b'...', 'depositSignature': b'...', 'used': False, 'index': 6921, 'operator_index': 8}, ...]
 ```
-
 - `Lido.validate_keys(self, keys: Optional[List[OperatorKey]] = None) -> List[OperatorKey]`  
 Receives: List of keys to validate. If nothing provided will take previous return from `get_operators_keys` method.  
 Returns: List of invalid keys.

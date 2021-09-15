@@ -117,18 +117,15 @@ class OperatorTest(MockTestCase):
         invalid_keys = self.lido.validate_keys(OPERATORS_KEYS)
         self.assertEqual(2, len(invalid_keys))
 
-        invalid_keys = self.lido.validate_keys(OPERATORS_KEYS, strict=True)
-        self.assertEqual(4, len(invalid_keys))
-
         """Forcing lido.keys have invalid keys and input is an empty array"""
         self.lido.keys = OPERATORS_KEYS
-        invalid_keys = self.lido.validate_keys([], strict=True)
+        invalid_keys = self.lido.validate_keys([])
         self.assertEqual(0, len(invalid_keys))
 
         """Forcing lido.keys have invalid keys and input is None"""
         self.lido.keys = OPERATORS_KEYS
-        invalid_keys = self.lido.validate_keys(strict=True)
-        self.assertEqual(4, len(invalid_keys))
+        invalid_keys = self.lido.validate_keys()
+        self.assertEqual(2, len(invalid_keys))
 
     def test_find_duplicated_keys(self):
         duplicates = self.lido.find_duplicated_keys(

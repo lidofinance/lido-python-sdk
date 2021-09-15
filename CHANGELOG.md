@@ -7,31 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/lidofinance/lido-python-sdk) - 2021-09-15
 ### Changed
-- Fixed behavior when input is an empty array in lido methods [#0043](https://github.com/lidofinance/lido-python-sdk/pull/43)
+- Fixed behavior when input is an empty array in lido methods ([#0043](https://github.com/lidofinance/lido-python-sdk/pull/43))
+
+## [2.2.0](https://github.com/lidofinance/lido-python-sdk) - 2021-09-14
+### Changed
+- Remove strict param from validate_keys method ([#0042](https://github.com/lidofinance/lido-python-sdk/pull/42))
 
 ## [2.1.2](https://github.com/lidofinance/lido-python-sdk) - 2021-09-09
 ### Changed
-- Cache eth_chain_id value [#0037](https://github.com/lidofinance/lido-python-sdk/pull/37)
+- Cache eth_chain_id value ([#0037](https://github.com/lidofinance/lido-python-sdk/pull/37))
 
 ## [2.1.1](https://github.com/lidofinance/lido-python-sdk) - 2021-09-03
 ### Changed
-- Update web3 from 5.23.0 to 5.23.1. Now "used" key is optional for verification [#0035](https://github.com/lidofinance/lido-python-sdk/pull/35)
+- Update web3 from 5.23.0 to 5.23.1. Now "used" key is optional for verification ([#0035](https://github.com/lidofinance/lido-python-sdk/pull/35))
 
 ## [2.1.0](https://github.com/lidofinance/lido-python-sdk) - 2021-09-03
 ### Added
-- Add new params that could be provided to multicall [#0032](https://github.com/lidofinance/lido-python-sdk/pull/32)
+- Add new params that could be provided to multicall ([#0032](https://github.com/lidofinance/lido-python-sdk/pull/32))
 
 ## [2.0.1](https://github.com/lidofinance/lido-python-sdk) - 2021-09-01
 ### Changed
-- Renamed library root package to `lido_sdk`, added more tests, fixed ABIs packaging [#0029](https://github.com/lidofinance/lido-python-sdk/pull/29)
+- Renamed library root package to `lido_sdk`, added more tests, fixed ABIs packaging ([#0029](https://github.com/lidofinance/lido-python-sdk/pull/29))
 
 ## [1.0.1](https://github.com/lidofinance/lido-python-sdk) - 2021-08-31
 ### Added
-- Lido public class [#0020](https://github.com/lidofinance/lido-python-sdk/pull/20)
-- Added fast BLS verification [#0019](https://github.com/lidofinance/lido-python-sdk/pull/19)
+- Lido public class ([#0020](https://github.com/lidofinance/lido-python-sdk/pull/20))
+- Added fast BLS verification ([#0019](https://github.com/lidofinance/lido-python-sdk/pull/19))
 
 ### Changed
-- If strict is false, for validation we will try possible WC only for already used keys [#0024](https://github.com/lidofinance/lido-python-sdk/pull/24)
+- If strict is false, for validation we will try possible WC only for already used keys ([#0024](https://github.com/lidofinance/lido-python-sdk/pull/24))
 
 ## [0.3.0](https://github.com/lidofinance/lido-python-sdk) - 2021-08-26
 ### Fixed
