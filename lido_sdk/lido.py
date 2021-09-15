@@ -61,7 +61,9 @@ class Lido:
         @param operators_indexes: List operators indexes to fetch.
         @return: List of operators details.
         """
-        operators_indexes = operators_indexes or self.operators_indexes
+        operators_indexes = (
+            self.operators_indexes if operators_indexes is None else operators_indexes
+        )
         if operators_indexes is None:
             raise LidoException(
                 "`get_operators_indexes` should be called first or provide `operators_indexes` param"
@@ -80,7 +82,7 @@ class Lido:
         @param operators: List of operators details. We need few fields to fetch "index" and "totalSigningKeys".
         @return: List of keys. Each key can be identified and refetched by "index" and "operator_index".
         """
-        operators = operators or self.operators
+        operators = self.operators if operators is None else operators
         if operators is None:
             raise LidoException(
                 "`get_operators_data` should be called first or provide `operators` param"
@@ -99,7 +101,7 @@ class Lido:
         @param keys: List of operators keys.
         @return: All invalid keys that were found.
         """
-        keys = keys or self.keys
+        keys = self.keys if keys is None else keys
         if keys is None:
             raise LidoException(
                 "`get_operators_keys` should be called first or provide `keys` param"
@@ -116,7 +118,7 @@ class Lido:
         @param keys: List a keys to check.
         @return: List of duplicate pairs keys.
         """
-        keys = keys or self.keys
+        keys = self.keys if keys is None else keys
         if keys is None:
             raise LidoException(
                 "`get_operators_keys` should be called first or provide `keys` param"

@@ -5,6 +5,10 @@ All notable changes to this project are documented in this file.
 This changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased](https://github.com/lidofinance/lido-python-sdk) - 2021-09-15
+### Changed
+- Fixed behavior when input is an empty array in lido methods ([#0043](https://github.com/lidofinance/lido-python-sdk/pull/43))
+
 ## [2.2.0](https://github.com/lidofinance/lido-python-sdk) - 2021-09-14
 ### Changed
 - Remove strict param from validate_keys method ([#0042](https://github.com/lidofinance/lido-python-sdk/pull/42))
