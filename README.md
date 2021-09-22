@@ -172,6 +172,10 @@ Install all dependencies:
 ```bash
   poetry install
 ```
+Activate virtual env
+```bash
+  poetry shell
+```
 Build blst locally (linux):
 ```bash
   cd blst/
@@ -200,5 +204,5 @@ Build blst locally (osx):
 ## How to test
 Simply run in project root directory:
 ```bash
-pytest .
+poetry run pytest .
 ```
