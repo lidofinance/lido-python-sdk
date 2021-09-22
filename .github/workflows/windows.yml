@@ -36,7 +36,6 @@ jobs:
     - name: Install dependencies
       run: |
         poetry install
-        poetry shell
     - name: Prepapre MSVC dev environment
       uses: ilammy/msvc-dev-cmd@v1
     - name: Compile blst and build ext (in-place)
@@ -52,4 +51,4 @@ jobs:
         python setup.py build_ext --inplace
     - name: Test with pytest
       run: |
-        pytest .
+        poetry run pytest .

@@ -36,7 +36,6 @@ jobs:
     - name: Install dependencies
       run: |
         poetry install
-        poetry shell
     - name: Compile blst and build ext (in-place)
       run: |
         cd blst/
@@ -47,7 +46,7 @@ jobs:
         cp ./blst/bindings/blst.h     ./blst-lib/
         cp ./blst/bindings/blst.hpp   ./blst-lib/
         cp ./blst/bindings/blst_aux.h ./blst-lib/
-        python setup.py build_ext --inplace
+        setup.py build_ext --inplace
     - name: Test with pytest
       run: |
-        pytest .
+        poetry pytest .

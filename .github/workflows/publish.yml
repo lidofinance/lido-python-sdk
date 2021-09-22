@@ -186,7 +186,6 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
-          poetry shell
 
       - name: Testing (native blst tests)
         run: |
@@ -195,7 +194,7 @@ jobs:
 
       - name: Testing (pytest)
         run: |
-          pytest .
+          poetry run pytest .
 
       - name: Building binary wheel distrubution (windows and macos)
         if: matrix.os == 'macos-latest' || matrix.os == 'windows-latest'

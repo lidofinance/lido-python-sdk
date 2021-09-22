@@ -36,7 +36,6 @@ jobs:
     - name: Install dependencies
       run: |
         poetry install
-        poetry shell
     - name: Check files using the black formatter
       uses: rickstaa/action-black@v1
       id: action_black
@@ -52,10 +51,10 @@ jobs:
         cp ./blst/bindings/blst.h     ./blst-lib/
         cp ./blst/bindings/blst.hpp   ./blst-lib/
         cp ./blst/bindings/blst_aux.h ./blst-lib/
-        python setup.py build_ext --inplace
+        poetry setup.py build_ext --inplace
     - name: Test with pytest
       run: |
-        pytest . --cov-config=.coveragerc --cov-report=xml --cov=lido
+        poetry run pytest . --cov-config=.coveragerc --cov-report=xml --cov=lido
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
