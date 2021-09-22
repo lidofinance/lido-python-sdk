@@ -15,6 +15,7 @@ GENESIS_FORK_VERSION = {
     Network.Mainnet: bytes.fromhex("00000000"),
     Network.Görli: bytes.fromhex("00001020"),
     Network.Ropsten: bytes.fromhex("00000000"),
+    Network.Rinkeby: bytes.fromhex("00000000"),
 }
 
 # Existing withdrawal credentials on the chain
@@ -34,4 +35,5 @@ WITHDRAWAL_CREDENTIALS = {
         "0x010000000000000000000000aa139137fdd974181a49268d7b0ae888634e5469",
         "0x73c72beecbd832c9ce342e61a772c8cfe6f1c6d661b19a98317b5dac05ce9685",
     ],
+    Network.Rinkeby: [],
 }

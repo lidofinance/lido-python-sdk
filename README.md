@@ -154,6 +154,7 @@ Available networks:
 - Mainnet
 - Görli
 - Ropsten
+- Rinkeby
 
 ## Development
 
