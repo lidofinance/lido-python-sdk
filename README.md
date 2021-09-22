@@ -169,8 +169,7 @@ source .env/bin/activate
 ```
 Install all dependencies:
 ```bash
-  pip install -r requirements.txt
-  pip install -r requirements-dev.txt
+  poetry install
 ```
 Build blst locally (linux):
 ```bash
