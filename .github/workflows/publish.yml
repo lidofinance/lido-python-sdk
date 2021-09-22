@@ -186,6 +186,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
+          poetry shell
 
       - name: Testing (native blst tests)
         run: |

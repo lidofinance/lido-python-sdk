@@ -36,6 +36,7 @@ jobs:
     - name: Install dependencies
       run: |
         poetry install
+        poetry shell
     - name: Prepapre MSVC dev environment
       uses: ilammy/msvc-dev-cmd@v1
     - name: Compile blst and build ext (in-place)

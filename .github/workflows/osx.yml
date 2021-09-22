@@ -36,6 +36,7 @@ jobs:
     - name: Install dependencies
       run: |
         poetry install
+        poetry shell
     - name: Compile blst and build ext (in-place)
       run: |
         cd blst/
