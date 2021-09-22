@@ -46,7 +46,7 @@ jobs:
         cp ./blst/bindings/blst.h     ./blst-lib/
         cp ./blst/bindings/blst.hpp   ./blst-lib/
         cp ./blst/bindings/blst_aux.h ./blst-lib/
-        setup.py build_ext --inplace
+        python setup.py build_ext --inplace
     - name: Test with pytest
       run: |
         poetry pytest .
