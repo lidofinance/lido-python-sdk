@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
+## [2.3.0](https://github.com/lidofinance/lido-python-sdk) - 2021-09-22
+### Changed
+- Move from req.txt to poetry ([#0048](https://github.com/lidofinance/lido-python-sdk/pull/48))
+
+## [2.2.2](https://github.com/lidofinance/lido-python-sdk) - 2021-09-22
+### Added
+- Add Rinkeby support ([#0047](https://github.com/lidofinance/lido-python-sdk/pull/47))
+
 ## [2.2.0](https://github.com/lidofinance/lido-python-sdk) - 2021-09-14
 ### Changed
 - Remove strict param from validate_keys method ([#0042](https://github.com/lidofinance/lido-python-sdk/pull/42))
