@@ -206,3 +206,10 @@ Simply run in project root directory:
 ```bash
 poetry run pytest .
 ```
+
+## Release new version
+```bash
+git tag v2.x.x  master
+git push --tags
+```
+New version should be published after all pipelines passed.
