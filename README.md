@@ -170,8 +170,11 @@ source .env/bin/activate
 ```
 Install all dependencies:
 ```bash
-  pip install -r requirements.txt
-  pip install -r requirements-dev.txt
+  poetry install
+```
+Activate virtual env
+```bash
+  poetry shell
 ```
 Build blst locally (linux):
 ```bash
@@ -201,5 +204,12 @@ Build blst locally (osx):
 ## How to test
 Simply run in project root directory:
 ```bash
-pytest .
+poetry run pytest .
 ```
+
+## Release new version
+```bash
+git tag v2.x.x  master
+git push --tags
+```
+New version should be published after all pipelines passed.

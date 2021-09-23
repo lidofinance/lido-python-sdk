@@ -22,7 +22,7 @@ URL = "https://github.com/lidofinance/lido-python-sdk"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
 REQUIRES_PYTHON = ">=3.7,<4"
-VERSION = "2.2.2"
+VERSION = "2.3.0"
 
 # Detecting target platform
 PLATFORMS = {"windows", "linux", "darwin", "cygwin", "android"}
@@ -94,10 +94,6 @@ except FileNotFoundError:
     long_description = DESCRIPTION
 
 
-with open("requirements.txt", "r") as file:
-    requirements = [lib.strip() for lib in file.read().split("\n") if lib]
-
-
 # Where the magic happens:
 setup(
     name=NAME,
@@ -112,7 +108,11 @@ setup(
     package_dir={"": "."},
     packages=find_packages(exclude=("tests",)),
     package_data={"lido_sdk.contract": ["abi/*.json"]},
-    install_requires=requirements,
+    install_requires=[
+        "multicall==0.1.2",
+        "web3==5.23.1",
+        "ssz==0.2.4",
+    ],
     tests_require=["pytest==6.2.4"],
     include_package_data=True,
     license="MIT",
