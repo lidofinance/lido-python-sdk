@@ -106,6 +106,21 @@ class OperatorTest(MockTestCase):
         keys = self.lido.get_operators_keys([])
         self.assertEqual(0, len(keys))
 
+    def test_get_operator_unused_keys(self):
+        get_keys_func = self.mocker.patch(
+            "lido_sdk.contract.load_contract.NodeOpsContract.getSigningKey_multicall",
+            return_value=[],
+        )
+
+        operators = OPERATORS_DATA[:]
+
+        operators[0]["index"] = 0
+        operators[1]["index"] = 1
+
+        self.lido.get_operators_keys(OPERATORS_DATA, unused_keys_only=True)
+
+        self.assertListEqual(get_keys_func.call_args, [(0, 1)])
+
     def test_validate_keys(self):
         self.mocker.patch(
             "lido_sdk.contract.load_contract.LidoContract.getWithdrawalCredentials",
