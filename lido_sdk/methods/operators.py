@@ -36,7 +36,9 @@ def get_operators_data(w3: Web3, operators_index_list: List[int]) -> List[Operat
     return operators
 
 
-def get_operators_keys(w3: Web3, operators: List[Operator], unused_keys_only: bool = False) -> List[OperatorKey]:
+def get_operators_keys(
+    w3: Web3, operators: List[Operator], unused_keys_only: bool = False
+) -> List[OperatorKey]:
     """
     @param w3: Web3 instance
     @param operators: List of method's details from get_operators_data. But we need only `index` and `totalSigningKeys`.
@@ -53,7 +55,9 @@ def get_operators_keys(w3: Web3, operators: List[Operator], unused_keys_only: bo
 
     keys = NodeOpsContract.getSigningKey_multicall(w3, args_list)
 
-    for key, (operator_index, key_index) in zip(keys, _index_generator(operators, unused_keys_only)):
+    for key, (operator_index, key_index) in zip(
+        keys, _index_generator(operators, unused_keys_only)
+    ):
         key["index"] = key_index
         key["operator_index"] = operator_index
 

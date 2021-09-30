@@ -74,7 +74,9 @@ class Lido:
         return self.operators
 
     def get_operators_keys(
-        self, operators: Optional[List[Operator]] = None, unused_keys_only: Optional[bool] = None
+        self,
+        operators: Optional[List[Operator]] = None,
+        unused_keys_only: Optional[bool] = None,
     ) -> List[OperatorKey]:
         """
         Returns all keys for specified operators.
