@@ -75,11 +75,12 @@ Returns: List of operators details.
 [{'active': True, 'name': 'Certus One', 'rewardAddress': '0x8d689476eb446a1fb0065bffac32398ed7f89165', 'stakingLimit': 1000, 'stoppedValidators': 0, 'totalSigningKeys': 1000, 'usedSigningKeys': 1000, 'index': 1}]```
 ```
 
-- `Lido.get_operators_keys(self, operators: Optional[List[Operator]] = None) -> List[OperatorKey]`
-Receives: List of operators details. If nothing provided will take previous return from `get_operators_data` method.  
+- `Lido.get_operators_keys(self, operators: Optional[List[Operator]] = None, unused_keys_only = False : bool) -> List[OperatorKey]`
+Receives: List of operators details. If nothing provided will take previous return from `get_operators_data` method.
+Receives: if `unused_keys_only` is True will fetch only unused operator keys, if False all keys will be 
 Returns: List of keys in contract.
 ```
->>> lido.get_operators_keys(operators_data)
+>>> lido.get_operators_keys(operators_data, unused_keys_only)
 
 [{'key': b'...', 'depositSignature': b'...', 'used': False, 'index': 6921, 'operator_index': 8}, ...]
 ```

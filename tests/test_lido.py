@@ -119,7 +119,7 @@ class OperatorTest(MockTestCase):
 
         self.lido.get_operators_keys(OPERATORS_DATA, unused_keys_only=True)
 
-        self.assertListEqual(get_keys_func.call_args, [(0, 1)])
+        self.assertListEqual(get_keys_func.call_args[0][1], [(0, 1)])
 
     def test_validate_keys(self):
         self.mocker.patch(
