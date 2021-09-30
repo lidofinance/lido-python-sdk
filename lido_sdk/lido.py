@@ -74,12 +74,13 @@ class Lido:
         return self.operators
 
     def get_operators_keys(
-        self, operators: Optional[List[Operator]] = None
+        self, operators: Optional[List[Operator]] = None, unused_keys_only: Optional[bool] = None
     ) -> List[OperatorKey]:
         """
         Returns all keys for specified operators.
 
         @param operators: List of operators details. We need few fields to fetch "index" and "totalSigningKeys".
+        @param unused_keys_only: if True that will fetch only not deposited keys.
         @return: List of keys. Each key can be identified and refetched by "index" and "operator_index".
         """
         operators = self.operators if operators is None else operators

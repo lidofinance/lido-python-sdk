@@ -36,10 +36,11 @@ def get_operators_data(w3: Web3, operators_index_list: List[int]) -> List[Operat
     return operators
 
 
-def get_operators_keys(w3: Web3, operators: List[Operator]) -> List[OperatorKey]:
+def get_operators_keys(w3: Web3, operators: List[Operator], only_unused: bool = False) -> List[OperatorKey]:
     """
     @param w3: Web3 instance
     @param operators: List of method's details from get_operators_data. But we need only `index` and `totalSigningKeys`.
+    @param only_unused: If True fetch only unused keys from smart contract (keys that wasn't deposited yet)
     @return: List of dicts (OperatorKey)
     """
     args_list = []
@@ -47,19 +48,22 @@ def get_operators_keys(w3: Web3, operators: List[Operator]) -> List[OperatorKey]
     if len(operators) == 0:
         return []
 
-    for args in _index_generator(operators):
+    for args in _index_generator(operators, only_unused):
         args_list.append(args)
 
     keys = NodeOpsContract.getSigningKey_multicall(w3, args_list)
 
-    for key, (operator_index, key_index) in zip(keys, _index_generator(operators)):
+    for key, (operator_index, key_index) in zip(keys, _index_generator(operators, only_unused)):
         key["index"] = key_index
         key["operator_index"] = operator_index
 
     return keys
 
 
-def _index_generator(operators):
+def _index_generator(operators: List[Operator], only_unused: bool):
     for operator in operators:
         for key_index in range(operator["totalSigningKeys"]):
-            yield operator["index"], key_index
+            if not only_unused:
+                yield operator["index"], key_index
+            elif key_index >= operator["usedSigningKeys"]:
+                yield operator["index"], key_index
