@@ -89,7 +89,7 @@ class Lido:
                 "`get_operators_data` should be called first or provide `operators` param"
             )
 
-        self.keys = get_operators_keys(self._w3, operators)
+        self.keys = get_operators_keys(self._w3, operators, unused_keys_only)
 
         return self.keys
 
