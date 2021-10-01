@@ -85,7 +85,8 @@ Returns: List of keys in contract.
 ```
 
 - `Lido.update_keys(self) -> List[OperatorKey]`  
-Returns actual keys list
+Returns actual keys list. Works only in `get_operators_keys` was called before. Should be used to periodically update keys.
+Faster because not all keys are updated from the contract.
 ```
 >>> lido.update_keys()
 
