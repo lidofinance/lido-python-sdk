@@ -79,7 +79,7 @@ Returns: List of operators details.
 Receives: List of operators details. If nothing provided will take previous return from `get_operators_data` method.
 Returns: List of keys in contract.
 ```
->>> lido.get_operators_keys(operators_data, unused_keys_only)
+>>> lido.get_operators_keys(operators_data)
 
 [{'key': b'...', 'depositSignature': b'...', 'used': False, 'index': 6921, 'operator_index': 8}, ...]
 ```
