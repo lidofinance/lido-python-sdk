@@ -176,18 +176,24 @@ class OperatorTest(MockTestCase):
         self.lido.get_operators_keys()
 
         operators = copy.deepcopy(OPERATORS_DATA)
-        operators[0]['totalSigningKeys'] += 2
-        operators[0]['usedSigningKeys'] += 1
+        operators[0]["totalSigningKeys"] += 2
+        operators[0]["usedSigningKeys"] += 1
 
         self.mocker.patch(
             "lido_sdk.contract.load_contract.NodeOpsContract.getNodeOperator_multicall",
             return_value=operators,
         )
 
-        keys = copy.deepcopy([OPERATORS_KEYS[1].copy(), OPERATORS_KEYS[1].copy(), OPERATORS_KEYS[1].copy()])
-        keys[0]['used'] = True
-        keys[1]['index'] += 1
-        keys[2]['index'] += 2
+        keys = copy.deepcopy(
+            [
+                OPERATORS_KEYS[1].copy(),
+                OPERATORS_KEYS[1].copy(),
+                OPERATORS_KEYS[1].copy(),
+            ]
+        )
+        keys[0]["used"] = True
+        keys[1]["index"] += 1
+        keys[2]["index"] += 2
         keys_list_call = self.mocker.patch(
             "lido_sdk.contract.load_contract.NodeOpsContract.getSigningKey_multicall",
             return_value=keys,
@@ -199,5 +205,11 @@ class OperatorTest(MockTestCase):
 
         self.assertEqual(len(self.lido.keys), 7)
 
-        key = next((key for key in self.lido.keys if key['index'] == 1 and key['operator_index'] == 0))
-        self.assertTrue(key['used'])
+        key = next(
+            (
+                key
+                for key in self.lido.keys
+                if key["index"] == 1 and key["operator_index"] == 0
+            )
+        )
+        self.assertTrue(key["used"])

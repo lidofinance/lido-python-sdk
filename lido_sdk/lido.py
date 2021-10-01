@@ -120,7 +120,9 @@ class Lido:
         return self.keys
 
     @staticmethod
-    def _get_key_args_to_call(old_operators: List[Operator], new_operators: List[Operator]) -> List[Tuple[int, int]]:
+    def _get_key_args_to_call(
+        old_operators: List[Operator], new_operators: List[Operator]
+    ) -> List[Tuple[int, int]]:
         """
         Check diff between previous operators and new operator's update and generate args for multicall to fetch new
         and old unused keys.
@@ -128,20 +130,24 @@ class Lido:
         key_args = []
 
         for operator in new_operators:
-            prev_op_state = next(op for op in old_operators if op['index'] == operator['index'])
+            prev_op_state = next(
+                op for op in old_operators if op["index"] == operator["index"]
+            )
 
             if prev_op_state:
-                start_index_keys = prev_op_state['usedSigningKeys']
+                start_index_keys = prev_op_state["usedSigningKeys"]
             else:
                 start_index_keys = 0
 
-            for key_index in range(start_index_keys, operator['totalSigningKeys']):
-                key_args.append((operator['index'], key_index))
+            for key_index in range(start_index_keys, operator["totalSigningKeys"]):
+                key_args.append((operator["index"], key_index))
 
         return key_args
 
     @staticmethod
-    def _merge_keys(old_keys: List[OperatorKey], new_keys: List[OperatorKey]) -> List[OperatorKey]:
+    def _merge_keys(
+        old_keys: List[OperatorKey], new_keys: List[OperatorKey]
+    ) -> List[OperatorKey]:
         """
         Merge keys from last request with old one. We should merge keys by index and operator_index.
         If key exists in new list and in old - new key is actual.
@@ -151,7 +157,9 @@ class Lido:
         updated_keys = []
 
         for old_key in old_keys:
-            new_key = Lido._find_key(old_key['index'], old_key['operator_index'], new_keys)
+            new_key = Lido._find_key(
+                old_key["index"], old_key["operator_index"], new_keys
+            )
 
             if new_key:
                 updated_keys.append(new_key)
@@ -159,7 +167,9 @@ class Lido:
                 updated_keys.append(old_key)
 
         for new_key in new_keys:
-            key = Lido._find_key(new_key['index'], new_key['operator_index'], updated_keys)
+            key = Lido._find_key(
+                new_key["index"], new_key["operator_index"], updated_keys
+            )
 
             if not key:
                 updated_keys.append(new_key)
@@ -167,8 +177,17 @@ class Lido:
         return updated_keys
 
     @staticmethod
-    def _find_key(index: int, operator_index: int, keys: List[OperatorKey]) -> Optional[OperatorKey]:
-        return next((key for key in keys if key['index'] == index and key['operator_index'] == operator_index), None)
+    def _find_key(
+        index: int, operator_index: int, keys: List[OperatorKey]
+    ) -> Optional[OperatorKey]:
+        return next(
+            (
+                key
+                for key in keys
+                if key["index"] == index and key["operator_index"] == operator_index
+            ),
+            None,
+        )
 
     def validate_keys(
         self, keys: Optional[List[OperatorKey]] = None
