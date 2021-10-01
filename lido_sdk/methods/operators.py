@@ -65,7 +65,9 @@ def _index_generator(operators):
             yield operator["index"], key_index
 
 
-def get_keys_by_indexes(w3: Web3, call_args: List[Tuple[int, int]]) -> List[OperatorKey]:
+def get_keys_by_indexes(
+    w3: Web3, call_args: List[Tuple[int, int]]
+) -> List[OperatorKey]:
     """
     Via this method you can fetch list of keys by operator_index and key_index
     e.g. get_keys_by_index(w3, ((0, 0), (0, 1)) ) -> Will be fetched first two First operator's keys
