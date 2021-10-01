@@ -104,7 +104,7 @@ class Lido:
 
         if self.keys is None:
             raise LidoException(
-                "`get_operators_keys` should be called first or provide `keys` param"
+                "`get_operators_keys` should be called first
             )
 
         self.get_operators_indexes()
