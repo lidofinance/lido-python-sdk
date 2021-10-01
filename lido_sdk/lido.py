@@ -1,3 +1,4 @@
+import copy
 from typing import List, Optional, Tuple, Dict
 
 from web3 import Web3
@@ -11,6 +12,7 @@ from lido_sdk.methods import (
     get_operators_keys,
     get_status,
 )
+from lido_sdk.methods.operators import get_keys_by_indexes
 from lido_sdk.methods.typing import Operator, OperatorKey
 from lido_sdk.network import Network
 
@@ -76,7 +78,6 @@ class Lido:
     def get_operators_keys(
         self,
         operators: Optional[List[Operator]] = None,
-        unused_keys_only: Optional[bool] = None,
     ) -> List[OperatorKey]:
         """
         Returns all keys for specified operators.
@@ -91,9 +92,84 @@ class Lido:
                 "`get_operators_data` should be called first or provide `operators` param"
             )
 
-        self.keys = get_operators_keys(self._w3, operators, unused_keys_only)
+        self.keys = get_operators_keys(self._w3, operators)
 
         return self.keys
+
+    def update_keys(self) -> List[OperatorKey]:
+        """
+        All keys in Lido object will be updated in optimal way.
+
+        @return: Actual keys list
+        """
+
+        if self.keys is None:
+            raise LidoException(
+                "`get_operators_keys` should be called first or provide `keys` param"
+            )
+
+        self.get_operators_indexes()
+        old_operators = copy.deepcopy(self.operators)
+        self.get_operators_data()
+
+        key_args = self._get_key_args_to_call(old_operators, self.operators)
+
+        keys = get_keys_by_indexes(self._w3, key_args)
+
+        self.keys = self._merge_keys(self.keys, keys)
+
+        return self.keys
+
+    @staticmethod
+    def _get_key_args_to_call(old_operators: List[Operator], new_operators: List[Operator]) -> List[Tuple[int, int]]:
+        """
+        Check diff between previous operators and new operator's update and generate args for multicall to fetch new
+        and old unused keys.
+        """
+        key_args = []
+
+        for operator in new_operators:
+            prev_op_state = next(op for op in old_operators if op['index'] == operator['index'])
+
+            if prev_op_state:
+                start_index_keys = prev_op_state['usedSigningKeys']
+            else:
+                start_index_keys = 0
+
+            for key_index in range(start_index_keys, operator['totalSigningKeys']):
+                key_args.append((operator['index'], key_index))
+
+        return key_args
+
+    @staticmethod
+    def _merge_keys(old_keys: List[OperatorKey], new_keys: List[OperatorKey]) -> List[OperatorKey]:
+        """
+        Merge keys from last request with old one. We should merge keys by index and operator_index.
+        If key exists in new list and in old - new key is actual.
+        If only old key exists - seems it was used so will never change.
+        If only new key exists - seems it was added recently.
+        """
+        updated_keys = []
+
+        for old_key in old_keys:
+            new_key = Lido._find_key(old_key['index'], old_key['operator_index'], new_keys)
+
+            if new_key:
+                updated_keys.append(new_key)
+            else:
+                updated_keys.append(old_key)
+
+        for new_key in new_keys:
+            key = Lido._find_key(new_key['index'], new_key['operator_index'], updated_keys)
+
+            if not key:
+                updated_keys.append(new_key)
+
+        return updated_keys
+
+    @staticmethod
+    def _find_key(index: int, operator_index: int, keys: List[OperatorKey]) -> Optional[OperatorKey]:
+        return next((key for key in keys if key['index'] == index and key['operator_index'] == operator_index), None)
 
     def validate_keys(
         self, keys: Optional[List[OperatorKey]] = None

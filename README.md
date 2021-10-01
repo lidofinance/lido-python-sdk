@@ -75,15 +75,23 @@ Returns: List of operators details.
 [{'active': True, 'name': 'Certus One', 'rewardAddress': '0x8d689476eb446a1fb0065bffac32398ed7f89165', 'stakingLimit': 1000, 'stoppedValidators': 0, 'totalSigningKeys': 1000, 'usedSigningKeys': 1000, 'index': 1}]```
 ```
 
-- `Lido.get_operators_keys(self, operators: Optional[List[Operator]] = None, unused_keys_only = False : bool) -> List[OperatorKey]`
+- `Lido.get_operators_keys(self, operators: Optional[List[Operator]] = None) -> List[OperatorKey]`
 Receives: List of operators details. If nothing provided will take previous return from `get_operators_data` method.
-Receives: if `unused_keys_only` is True will fetch only unused operator keys, if False all keys will be 
 Returns: List of keys in contract.
 ```
 >>> lido.get_operators_keys(operators_data, unused_keys_only)
 
 [{'key': b'...', 'depositSignature': b'...', 'used': False, 'index': 6921, 'operator_index': 8}, ...]
 ```
+
+- `Lido.update_keys(self) -> List[OperatorKey]`  
+Returns actual keys list
+```
+>>> lido.update_keys()
+
+[{'key': b'...', 'depositSignature': b'...', 'used': False, 'index': 6521, 'operator_index': 5}]
+```  
+  
 - `Lido.validate_keys(self, keys: Optional[List[OperatorKey]] = None) -> List[OperatorKey]`  
 Receives: List of keys to validate. If nothing provided will take previous return from `get_operators_keys` method.  
 Returns: List of invalid keys.

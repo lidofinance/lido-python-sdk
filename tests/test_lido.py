@@ -1,3 +1,4 @@
+import copy
 from unittest.mock import PropertyMock
 
 from web3 import Web3
@@ -106,21 +107,6 @@ class OperatorTest(MockTestCase):
         keys = self.lido.get_operators_keys([])
         self.assertEqual(0, len(keys))
 
-    def test_get_operator_unused_keys(self):
-        get_keys_func = self.mocker.patch(
-            "lido_sdk.contract.load_contract.NodeOpsContract.getSigningKey_multicall",
-            return_value=[],
-        )
-
-        operators = OPERATORS_DATA[:]
-
-        operators[0]["index"] = 0
-        operators[1]["index"] = 1
-
-        self.lido.get_operators_keys(OPERATORS_DATA, unused_keys_only=True)
-
-        self.assertListEqual(get_keys_func.call_args[0][1], [(0, 1)])
-
     def test_validate_keys(self):
         self.mocker.patch(
             "lido_sdk.contract.load_contract.LidoContract.getWithdrawalCredentials",
@@ -170,3 +156,48 @@ class OperatorTest(MockTestCase):
         duplicates = self.lido.find_duplicated_keys()
         self.assertEqual(1, len(duplicates))
         self.assertEqual(duplicates[0][0]["key"], duplicates[0][1]["key"])
+
+    def test_keys_update(self):
+        self.mocker.patch(
+            "lido_sdk.contract.load_contract.NodeOpsContract.getNodeOperatorsCount",
+            return_value={"": 5},
+        )
+        self.mocker.patch(
+            "lido_sdk.contract.load_contract.NodeOpsContract.getNodeOperator_multicall",
+            return_value=OPERATORS_DATA,
+        )
+        self.mocker.patch(
+            "lido_sdk.contract.load_contract.NodeOpsContract.getSigningKey_multicall",
+            return_value=OPERATORS_KEYS,
+        )
+
+        self.lido.get_operators_indexes()
+        self.lido.get_operators_data()
+        self.lido.get_operators_keys()
+
+        operators = copy.deepcopy(OPERATORS_DATA)
+        operators[0]['totalSigningKeys'] += 2
+        operators[0]['usedSigningKeys'] += 1
+
+        self.mocker.patch(
+            "lido_sdk.contract.load_contract.NodeOpsContract.getNodeOperator_multicall",
+            return_value=operators,
+        )
+
+        keys = copy.deepcopy([OPERATORS_KEYS[1].copy(), OPERATORS_KEYS[1].copy(), OPERATORS_KEYS[1].copy()])
+        keys[0]['used'] = True
+        keys[1]['index'] += 1
+        keys[2]['index'] += 2
+        keys_list_call = self.mocker.patch(
+            "lido_sdk.contract.load_contract.NodeOpsContract.getSigningKey_multicall",
+            return_value=keys,
+        )
+
+        self.lido.update_keys()
+
+        self.assertEqual(len(keys_list_call.call_args[0][1]), 3)
+
+        self.assertEqual(len(self.lido.keys), 7)
+
+        key = next((key for key in self.lido.keys if key['index'] == 1 and key['operator_index'] == 0))
+        self.assertTrue(key['used'])
