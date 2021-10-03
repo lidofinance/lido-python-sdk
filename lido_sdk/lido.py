@@ -149,10 +149,12 @@ class Lido:
         old_keys: List[OperatorKey], new_keys: List[OperatorKey]
     ) -> List[OperatorKey]:
         """
-        Merge keys from last request with old one. We should merge keys by index and operator_index.
+        Merge keys from last request with old one.
+        We should merge keys by index and operator_index.
         If key exists in new list and in old - new key is actual.
-        If only old key exists - seems it was used so will never change.
-        If only new key exists - seems it was added recently.
+        If only old key exists - seems it was deleted or used.
+            if it was used we should leave it in list
+            if it wasn't used we should remove it, because it was deleted recently.
         """
         updated_keys = []
 
@@ -163,7 +165,7 @@ class Lido:
 
             if new_key:
                 updated_keys.append(new_key)
-            else:
+            elif old_key["used"]:
                 updated_keys.append(old_key)
 
         for new_key in new_keys:

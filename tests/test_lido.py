@@ -178,6 +178,7 @@ class OperatorTest(MockTestCase):
         operators = copy.deepcopy(OPERATORS_DATA)
         operators[0]["totalSigningKeys"] += 2
         operators[0]["usedSigningKeys"] += 1
+        operators[1]["totalSigningKeys"] -= 1
 
         self.mocker.patch(
             "lido_sdk.contract.load_contract.NodeOpsContract.getNodeOperator_multicall",
@@ -203,7 +204,9 @@ class OperatorTest(MockTestCase):
 
         self.assertEqual(len(keys_list_call.call_args[0][1]), 3)
 
-        self.assertEqual(len(self.lido.keys), 7)
+        # Two keys were added (operator 0)
+        # One key was removed (operator 1)
+        self.assertEqual(len(self.lido.keys), 6)
 
         key = next(
             (

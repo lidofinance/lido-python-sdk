@@ -15,7 +15,7 @@ OPERATORS_DATA = [
         "stakingLimit": 1000,
         "stoppedValidators": 0,
         "totalSigningKeys": 3,
-        "usedSigningKeys": 3,
+        "usedSigningKeys": 2,
     },
 ]
 
@@ -65,7 +65,7 @@ OPERATORS_KEYS = [
         b"/\x9d\xce-\xeak\xe3\xc8@\x1d\xcfN$\x9ftg\xd3\xb8\x10Z\xb5M\x8c\xb2\x99\x1c9\xd1\xde"
         b"\xccO\xfc\x94N\xc6\xac9\x01\xa7\xf6\xe9\x96oUJ\x99q\x1a;Y!\xda\xa9\x8a\xb3\xe5\x02qP"
         b"|\xfe6\xbf\xfc\xbc/",
-        "used": True,
+        "used": False,
     },
 ]
 
