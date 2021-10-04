@@ -193,6 +193,8 @@ jobs:
           python ./lido_sdk/blstverify/test.py
 
       - name: Testing (pytest)
+        env:
+          INFURA_PROJECT_ID: ${{ secrets.INFURA_PROJECT_ID }}
         run: |
           poetry run pytest .
 

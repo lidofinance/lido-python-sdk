@@ -76,13 +76,23 @@ Returns: List of operators details.
 ```
 
 - `Lido.get_operators_keys(self, operators: Optional[List[Operator]] = None) -> List[OperatorKey]`
-Receives: List of operators details. If nothing provided will take previous return from `get_operators_data` method.  
+Receives: List of operators details. If nothing provided will take previous return from `get_operators_data` method.
 Returns: List of keys in contract.
 ```
 >>> lido.get_operators_keys(operators_data)
 
 [{'key': b'...', 'depositSignature': b'...', 'used': False, 'index': 6921, 'operator_index': 8}, ...]
 ```
+
+- `Lido.update_keys(self) -> List[OperatorKey]`  
+Returns actual keys list. Works only in `get_operators_keys` was called before. Should be used to periodically update keys.
+Faster because not all keys are updated from the contract.
+```
+>>> lido.update_keys()
+
+[{'key': b'...', 'depositSignature': b'...', 'used': False, 'index': 6521, 'operator_index': 5}]
+```  
+  
 - `Lido.validate_keys(self, keys: Optional[List[OperatorKey]] = None) -> List[OperatorKey]`  
 Receives: List of keys to validate. If nothing provided will take previous return from `get_operators_keys` method.  
 Returns: List of invalid keys.

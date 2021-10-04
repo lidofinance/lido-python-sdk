@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from web3 import Web3
 
@@ -63,3 +63,23 @@ def _index_generator(operators):
     for operator in operators:
         for key_index in range(operator["totalSigningKeys"]):
             yield operator["index"], key_index
+
+
+def get_keys_by_indexes(
+    w3: Web3, call_args: List[Tuple[int, int]]
+) -> List[OperatorKey]:
+    """
+    Via this method you can fetch list of keys by operator_index and key_index
+    e.g. get_keys_by_index(w3, ((0, 0), (0, 1)) ) -> Will be fetched first two First operator's keys
+
+    @param w3: Web3 instance
+    @param call_args: List of operator_index and keys_index
+    @return: List of dicts (OperatorKey)
+    """
+    keys = NodeOpsContract.getSigningKey_multicall(w3, call_args)
+
+    for key, (operator_index, key_index) in zip(keys, call_args):
+        key["index"] = key_index
+        key["operator_index"] = operator_index
+
+    return keys

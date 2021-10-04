@@ -48,5 +48,7 @@ jobs:
         cp ./blst/bindings/blst_aux.h ./blst-lib/
         python setup.py build_ext --inplace
     - name: Test with pytest
+      env:
+        INFURA_PROJECT_ID: ${{ secrets.INFURA_PROJECT_ID }}
       run: |
         poetry run pytest .
