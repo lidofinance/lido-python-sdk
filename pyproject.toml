@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lido-sdk"
-version = "2.4.0"
+version = "2.4.1"
 description = "This library consolidates various functions to efficiently load network data for Lido, validate node operator keys and find key duplicates."
 authors = ["Lido <info@lido.fi>"]
 license = "MIT License"

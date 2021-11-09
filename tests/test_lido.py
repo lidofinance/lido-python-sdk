@@ -216,3 +216,40 @@ class OperatorTest(MockTestCase):
             )
         )
         self.assertTrue(key["used"])
+
+    def test_keys_update_when_unused_keys_removed(self):
+        self.mocker.patch(
+            "lido_sdk.contract.load_contract.NodeOpsContract.getNodeOperatorsCount",
+            return_value={"": 2},
+        )
+        self.mocker.patch(
+            "lido_sdk.contract.load_contract.NodeOpsContract.getNodeOperator_multicall",
+            return_value=OPERATORS_DATA,
+        )
+        self.mocker.patch(
+            "lido_sdk.contract.load_contract.NodeOpsContract.getSigningKey_multicall",
+            return_value=OPERATORS_KEYS,
+        )
+
+        self.lido.get_operators_indexes()
+        self.lido.get_operators_data()
+        self.lido.get_operators_keys()
+
+        operators = copy.deepcopy(OPERATORS_DATA)
+        # All unused keys were removed (operator 0)
+        # All unused keys were removed (operator 1)
+        operators[0]["totalSigningKeys"] = 1
+        operators[0]["usedSigningKeys"] = 1
+        operators[1]["totalSigningKeys"] = 2
+        operators[1]["usedSigningKeys"] = 2
+
+        self.mocker.patch(
+            "lido_sdk.contract.load_contract.NodeOpsContract.getNodeOperator_multicall",
+            return_value=operators,
+        )
+
+        self.lido.update_keys()
+
+        # All unused keys were removed (operator 0)
+        # All unused keys were removed (operator 1)
+        self.assertEqual(len(self.lido.keys), 3)
