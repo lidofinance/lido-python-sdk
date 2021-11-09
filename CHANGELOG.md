@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
+
+## [2.4.1](https://github.com/lidofinance/lido-python-sdk) - 2021-11-09
+### Added
+- Fixed empty call_args when operators have zero unused keys while updating keys (`lido.update_keys`) ([#0054](https://github.com/lidofinance/lido-python-sdk/pull/54))
+
 ## [2.4.0](https://github.com/lidofinance/lido-python-sdk) - 2021-10-01
 ### Added
 - Add ability to update keys in optimal way (`lido.update_keys`) ([#0050](https://github.com/lidofinance/lido-python-sdk/pull/50))

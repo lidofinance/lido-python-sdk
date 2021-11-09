@@ -76,6 +76,9 @@ def get_keys_by_indexes(
     @param call_args: List of operator_index and keys_index
     @return: List of dicts (OperatorKey)
     """
+    if not call_args:
+        return []
+
     keys = NodeOpsContract.getSigningKey_multicall(w3, call_args)
 
     for key, (operator_index, key_index) in zip(keys, call_args):
