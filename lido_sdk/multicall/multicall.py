@@ -31,7 +31,9 @@ class Multicall(DefaultMulticall):
         ]
 
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-            thread_results = executor.map(self.execute, calls_list, timeout=MULTICALL_POOL_EXECUTOR_TIMEOUT)
+            thread_results = executor.map(
+                self.execute, calls_list, timeout=MULTICALL_POOL_EXECUTOR_TIMEOUT
+            )
 
         result = []
 
