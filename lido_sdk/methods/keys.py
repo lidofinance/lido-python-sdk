@@ -1,6 +1,7 @@
 from concurrent.futures import ProcessPoolExecutor
 from typing import List, Tuple
 
+from lido_sdk.config import VALIDATE_POOL_EXECUTOR_TIMEOUT
 from lido_sdk.eth2deposit.ssz import (
     compute_deposit_domain,
     DepositMessage,
@@ -62,7 +63,12 @@ def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
 
     with ProcessPoolExecutor() as executor:
         for key, is_valid in zip(
-            keys, executor.map(_executor_validate_key, key_params)
+            keys,
+            executor.map(
+                _executor_validate_key,
+                key_params,
+                timeout=VALIDATE_POOL_EXECUTOR_TIMEOUT,
+            ),
         ):
             if not is_valid:
                 invalid_keys.append(key)
