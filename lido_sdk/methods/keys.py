@@ -63,7 +63,12 @@ def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
 
     with ProcessPoolExecutor() as executor:
         for key, is_valid in zip(
-            keys, executor.map(_executor_validate_key, key_params, timeout=VALIDATE_POOL_EXECUTOR_TIMEOUT)
+            keys,
+            executor.map(
+                _executor_validate_key,
+                key_params,
+                timeout=VALIDATE_POOL_EXECUTOR_TIMEOUT,
+            ),
         ):
             if not is_valid:
                 invalid_keys.append(key)
