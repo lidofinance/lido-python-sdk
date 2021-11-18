@@ -3,7 +3,6 @@ from concurrent.futures import ThreadPoolExecutor
 from multicall import Call, Multicall as DefaultMulticall
 
 from lido_sdk import config
-from lido_sdk.config import MULTICALL_POOL_EXECUTOR_TIMEOUT
 from lido_sdk.multicall.multicall_address import MULTICALL_ADDRESSES
 
 
@@ -32,7 +31,9 @@ class Multicall(DefaultMulticall):
 
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             thread_results = executor.map(
-                self.execute, calls_list, timeout=MULTICALL_POOL_EXECUTOR_TIMEOUT
+                self.execute,
+                calls_list,
+                timeout=config.MULTICALL_POOL_EXECUTOR_TIMEOUT,
             )
 
         result = []
