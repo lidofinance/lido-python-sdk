@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
+## [2.4.5](https://github.com/lidofinance/lido-python-sdk) - 2021-12-22
+### Changed
+- Change library dependency ([#0059](https://github.com/lidofinance/lido-python-sdk/pull/59))
+
 ## [2.4.3](https://github.com/lidofinance/lido-python-sdk) - 2021-11-18
 ### Changed
 - Fixes for configurable timeouts ([#0058](https://github.com/lidofinance/lido-python-sdk/pull/58))
