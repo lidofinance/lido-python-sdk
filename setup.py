@@ -22,7 +22,7 @@ URL = "https://github.com/lidofinance/lido-python-sdk"
 EMAIL = "info@lido.fi"
 AUTHOR = "Lido"
 REQUIRES_PYTHON = ">=3.7,<4"
-VERSION = "2.4.5"
+VERSION = "2.4.6"
 
 # Detecting target platform
 PLATFORMS = {"windows", "linux", "darwin", "cygwin", "android"}
