@@ -8,6 +8,7 @@ class Network(IntEnum):
     Görli = 5
     xDai = 100
     Ropsten = 3
+    Kintsugi = 1337702
 
 
 # Network
@@ -16,6 +17,7 @@ GENESIS_FORK_VERSION = {
     Network.Görli: bytes.fromhex("00001020"),
     Network.Ropsten: bytes.fromhex("00000000"),
     Network.Rinkeby: bytes.fromhex("00000000"),
+    Network.Kintsugi: bytes.fromhex("60000069"),
 }
 
 # Existing withdrawal credentials on the chain
@@ -36,4 +38,7 @@ WITHDRAWAL_CREDENTIALS = {
         "0x73c72beecbd832c9ce342e61a772c8cfe6f1c6d661b19a98317b5dac05ce9685",
     ],
     Network.Rinkeby: [],
+    Network.Kintsugi: [
+        ""
+    ],
 }
