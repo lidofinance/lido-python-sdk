@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
-## [2.4.6](https://github.com/lidofinance/lido-python-sdk) - 2021-12-28
+## [2.4.7](https://github.com/lidofinance/lido-python-sdk) - 2021-12-28
 ### Changed
 - Added Kintsugi network ([#0060](https://github.com/lidofinance/lido-python-sdk/pull/60))
+
+## [2.4.6](https://github.com/lidofinance/lido-python-sdk) - 2021-12-28
+### Fixed
+- Library works correctly without typing_extensions when python >= 3.8 ([#0060](https://github.com/lidofinance/lido-python-sdk/pull/60))
 
 ## [2.4.5](https://github.com/lidofinance/lido-python-sdk) - 2021-12-22
 ### Changed
