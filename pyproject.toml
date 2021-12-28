@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "lido-sdk"
-version = "2.4.5"
+version = "2.4.6"
 description = "This library consolidates various functions to efficiently load network data for Lido, validate node operator keys and find key duplicates."
 authors = ["Lido <info@lido.fi>"]
 license = "MIT License"
 
 [tool.poetry.dependencies]
-python = "^3.7.2"
+python = "^3.8"
 multicall = "^0.1.3"
 web3 = "^5.23.1"
 ssz = "^0.2.4"

@@ -1,4 +1,9 @@
-from typing_extensions import TypedDict
+try:
+    # For python >= 3.8
+    from typing import TypedDict
+except ImportError:
+    # For python 3.7
+    from typing_extensions import TypedDict
 
 
 class Operator(TypedDict):
