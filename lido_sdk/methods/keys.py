@@ -103,7 +103,7 @@ def validate_key(
     pub_key = key["key"]
     signature = key["depositSignature"]
 
-    ETH32 = 32 * 10 ** 9
+    ETH32 = 32 * 10**9
     deposit_message = DepositMessage(
         pubkey=key["key"],
         withdrawal_credentials=withdrawal_credential,
