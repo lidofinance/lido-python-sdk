@@ -13,7 +13,10 @@ from lido_sdk.contract import LidoContract
 from lido_sdk.methods.typing import OperatorKey
 from lido_sdk.network.type import WITHDRAWAL_CREDENTIALS, GENESIS_FORK_VERSION
 from lido_sdk.blstverify.verifier import verify
+import logging
 
+KEYS_VERIFICATION_PROGRESS_LOGGER = "verified_keys_progress_logger"
+VERIFIED_KEYS_PERIOD_TO_PRINT = 300
 
 def find_duplicated_keys(
     keys: List[OperatorKey],
@@ -50,6 +53,9 @@ def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
     @param keys: List of keys to validate
     @return: List of keys that are invalid
     """
+    logging.getLogger(KEYS_VERIFICATION_PROGRESS_LOGGER).addHandler(logging.NullHandler())
+    logger = logging.getLogger(KEYS_VERIFICATION_PROGRESS_LOGGER)
+
     deposit_domain = compute_deposit_domain(GENESIS_FORK_VERSION[w3.eth.chain_id])
 
     actual_credential = LidoContract.getWithdrawalCredentials(w3)[""]
@@ -61,6 +67,9 @@ def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
         (key, actual_credential, possible_credentials, deposit_domain) for key in keys
     ]
 
+    keys_total_num = len(keys)
+    verified_keys = 0
+
     with ProcessPoolExecutor() as executor:
         for key, is_valid in zip(
             keys,
@@ -70,6 +79,9 @@ def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
                 timeout=config.VALIDATE_POOL_EXECUTOR_TIMEOUT,
             ),
         ):
+            verified_keys += 1
+            if not (verified_keys % VERIFIED_KEYS_PERIOD_TO_PRINT):
+                logger.debug(f"Verified {verified_keys}/{keys_total_num} keys")
             if not is_valid:
                 invalid_keys.append(key)
 
