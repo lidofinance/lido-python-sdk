@@ -16,7 +16,7 @@ from lido_sdk.blstverify.verifier import verify
 import logging
 
 KEYS_VERIFICATION_PROGRESS_LOGGER = "verified_keys_progress_logger"
-VERIFIED_KEYS_PERIOD_TO_PRINT = 300
+VERIFIED_KEYS_PERIOD_TO_PRINT = 500
 
 def find_duplicated_keys(
     keys: List[OperatorKey],

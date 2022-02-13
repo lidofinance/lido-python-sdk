@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
+## [2.4.8](https://github.com/lidofinance/lido-python-sdk) - 2022-02-13
+### Changed
+- Add logs for verification keys progress ([#0063](https://github.com/lidofinance/lido-python-sdk/pull/63))
+
 ## [2.4.7](https://github.com/lidofinance/lido-python-sdk) - 2021-12-28
 ### Changed
 - Added Kintsugi network ([#0060](https://github.com/lidofinance/lido-python-sdk/pull/60))
