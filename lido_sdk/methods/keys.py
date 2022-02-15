@@ -64,7 +64,7 @@ def validate_keys(w3: Web3, keys: List[OperatorKey]) -> List[OperatorKey]:
     with ProcessPoolExecutor() as executor:
         results = executor.map(
             _executor_validate_keys_list,
-            [key_params[i:i + 1000] for i in range(0, len(key_params), 1000)],
+            [key_params[i : i + 1000] for i in range(0, len(key_params), 1000)],
             timeout=config.VALIDATE_POOL_EXECUTOR_TIMEOUT,
         )
 
@@ -81,10 +81,12 @@ def _executor_validate_keys_list(keys: List[Tuple]) -> List[Tuple[bool, Operator
 
     # In each key -> actual_credential, possible_credential, deposit_domain
     for key in keys:
-        result.append((
-            _executor_validate_key(key),
-            key[0],
-        ))
+        result.append(
+            (
+                _executor_validate_key(key),
+                key[0],
+            )
+        )
 
     return result
 

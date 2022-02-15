@@ -262,7 +262,11 @@ class OperatorTest(MockTestCase):
             },
         )
 
-        keys_to_check = [OPERATORS_KEYS[0], *OPERATORS_KEYS[2:3] * 200 * 2, OPERATORS_KEYS[1]]
+        keys_to_check = [
+            OPERATORS_KEYS[0],
+            *OPERATORS_KEYS[2:3] * 200 * 2,
+            OPERATORS_KEYS[1],
+        ]
 
         invalid_keys = self.lido.validate_keys(keys_to_check)  # 2000 keys
         self.assertEqual(2, len(invalid_keys))
