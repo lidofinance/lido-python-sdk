@@ -3,7 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 from multicall import Call, Multicall as DefaultMulticall
 
 from lido_sdk import config
-from lido_sdk.multicall.multicall_address import MULTICALL_ADDRESSES
+from lido_sdk.eth_multicall.multicall_address import MULTICALL_ADDRESSES
 
 
 class Multicall(DefaultMulticall):
@@ -43,7 +43,7 @@ class Multicall(DefaultMulticall):
 
         return result
 
-    def execute(self, calls):
+    def execute(self, contract_calls):
         aggregate = Call(
             MULTICALL_ADDRESSES[self.w3.eth.chain_id],
             "aggregate((address,bytes)[])(uint256,bytes[])",
@@ -52,7 +52,7 @@ class Multicall(DefaultMulticall):
             block_id=self.block_id,
         )
 
-        args = [[[call.target, call.data] for call in calls]]
+        args = [[[call.target, call.data] for call in contract_calls]]
 
         for retry_num in range(self.max_retries):
             try:
@@ -62,7 +62,7 @@ class Multicall(DefaultMulticall):
                     raise error
             else:
                 results = []
-                for call, output in zip(self.calls, outputs):
+                for call, output in zip(contract_calls, outputs):
                     results.append(call.decode_output(output))
 
                 return results
