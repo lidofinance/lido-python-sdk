@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
+## [2.5.0](https://github.com/lidofinance/lido-python-sdk) - 2021-02-15
+### Changed
+- Now python processes validates a bunch of keys (1000) instead of 1. ([#0065](https://github.com/lidofinance/lido-python-sdk/pull/65))
+
+### Fix
+- Fix typo in mulicall decode code inputs.
+
 ## [2.4.7](https://github.com/lidofinance/lido-python-sdk) - 2021-12-28
 ### Changed
 - Added Kintsugi network ([#0060](https://github.com/lidofinance/lido-python-sdk/pull/60))
