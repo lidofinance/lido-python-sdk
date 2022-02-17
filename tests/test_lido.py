@@ -253,3 +253,23 @@ class OperatorTest(MockTestCase):
         # All unused keys were removed (operator 0)
         # All unused keys were removed (operator 1)
         self.assertEqual(len(self.lido.keys), 3)
+
+    def test_keys_bulk_verify(self):
+        self.mocker.patch(
+            "lido_sdk.contract.load_contract.LidoContract.getWithdrawalCredentials",
+            return_value={
+                "": b"\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xb9\xd7\x93Hx\xb5\xfb\x96\x10\xb3\xfe\x8a^D\x1e\x8f\xad~)?"
+            },
+        )
+
+        keys_to_check = [
+            OPERATORS_KEYS[0],
+            *OPERATORS_KEYS[2:3] * 200 * 2,
+            OPERATORS_KEYS[1],
+        ]
+
+        invalid_keys = self.lido.validate_keys(keys_to_check)  # 2000 keys
+        self.assertEqual(2, len(invalid_keys))
+
+        self.assertEqual(invalid_keys[0], OPERATORS_KEYS[0])
+        self.assertEqual(invalid_keys[1], OPERATORS_KEYS[1])
