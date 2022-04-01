@@ -9,4 +9,5 @@ MULTICALL_ADDRESSES = {
     Network.xDai: "0xb5b692a88BDFc81ca69dcB1d924f59f0413A602a",
     Network.Ropsten: "0x53c43764255c17bd724f74c4ef150724ac50a3ed",
     Network.Kintsugi: "0x34cA8B8879C3578FBcDd50D88ECc29eDdBEDE0fD",
+    Network.Kiln: "0x7C7080f63Bc44321eDbB0b64D3e8B37aC7edc623",
 }
