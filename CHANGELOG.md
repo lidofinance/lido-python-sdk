@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
-## [2.5.1](https://github.com/lidofinance/lido-python-sdk) - 2021-12-28
+## [2.5.1](https://github.com/lidofinance/lido-python-sdk) - 2022-04-01
 ### Changed
 - Added Kiln network ([#0067](https://github.com/lidofinance/lido-python-sdk/pull/67))
 
