@@ -30,15 +30,6 @@ class Lido:
         self._w3 = w3
         self._set_configs(kwargs)
 
-        if self._w3.eth.chain_id == Network.Görli:
-            from web3.middleware import geth_poa_middleware
-
-            # Checking by value b/c we don't know the key
-            if geth_poa_middleware not in self._w3.middleware_onion:
-                raise LidoException(
-                    "PoA middleware isn't injected into Web3 middleware onion"
-                )
-
     def _set_configs(self, kwargs: Dict):
         chain_id = self._w3.eth.chain_id
         # Lifehack to cache chain_id
