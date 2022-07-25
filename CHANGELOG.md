@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
+## [2.5.3](https://github.com/lidofinance/lido-python-sdk) - 2022-07-22
+### Removed
+- Removed PoA check for Goerli nerwork ([#0068](https://github.com/lidofinance/lido-python-sdk/pull/68))
+
 ## [2.5.2](https://github.com/lidofinance/lido-python-sdk) - 2022-04-01
 ### Fix
 - Set upper bound to `multicall` version
