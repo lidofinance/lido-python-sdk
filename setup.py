@@ -11,7 +11,6 @@ from setuptools import find_packages, setup, Extension
 if sys.version_info < (3, 7):
     raise Exception("Python 3.7 or higher is required")
 
-
 # Package meta-data.
 NAME = "lido-sdk"
 DESCRIPTION = (

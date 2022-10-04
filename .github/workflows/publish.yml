@@ -74,7 +74,7 @@ jobs:
         with:
           submodules: true
 
-      - name: Prepapre MSVC dev environment (windows)
+      - name: Prepare MSVC dev environment (windows)
         if: matrix.os == 'windows-latest'
         uses: ilammy/msvc-dev-cmd@v1
 
