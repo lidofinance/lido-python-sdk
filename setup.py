@@ -62,6 +62,7 @@ ext_modules = [
         library_dirs=LIBRARY_DIRS,
         extra_objects=EXTRA_OBJECTS,
         py_limited_api=True,
+        extra_compile_args=['-std=c++11'],
     ),
 ]
 
