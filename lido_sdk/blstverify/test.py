@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import re
+import hashlib
+
+
 print("testing...") or sys.stdout.flush()
 ########################################################################
 import blst
