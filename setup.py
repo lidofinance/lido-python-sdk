@@ -7,22 +7,6 @@ import sys
 
 from setuptools import find_packages, setup, Extension
 
-
-if sys.version_info < (3, 7):
-    raise Exception("Python 3.7 or higher is required")
-
-# Package meta-data.
-NAME = "lido-sdk"
-DESCRIPTION = (
-    "This library consolidates various functions to efficiently load network data for Lido,"
-    " validate node operator keys and find key duplicates."
-)
-URL = "https://github.com/lidofinance/lido-python-sdk"
-EMAIL = "info@lido.fi"
-AUTHOR = "Lido"
-REQUIRES_PYTHON = ">=3.7,<4"
-VERSION = "2.5.3"
-
 # Detecting target platform
 PLATFORMS = {"windows", "linux", "darwin", "cygwin", "android"}
 
@@ -81,29 +65,24 @@ ext_modules = [
     ),
 ]
 
-# The rest you shouldn't have to touch too much :)
-# ------------------------------------------------
+# ---------------- setup --------------------
 
 here = os.path.abspath(os.path.dirname(__file__))
-
-try:
-    with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
-        long_description = "\n" + f.read()
-except FileNotFoundError:
-    long_description = DESCRIPTION
-
+with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
+    long_description = "\n" + f.read()
 
 # Where the magic happens:
 setup(
-    name=NAME,
-    version=VERSION,
-    description=DESCRIPTION,
+    name='lido-sdk',
+    version='2.5.3',
+    description='This library consolidates various functions to efficiently load network data for Lido,'
+                ' validate node operator keys and find key duplicates.',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author=AUTHOR,
-    author_email=EMAIL,
-    python_requires=REQUIRES_PYTHON,
-    url=URL,
+    author='Lido',
+    author_email='info@lido.fi',
+    python_requires='>=3.7,<4',
+    url='https://github.com/lidofinance/lido-python-sdk',
     package_dir={"": "."},
     packages=find_packages(exclude=("tests",)),
     package_data={"lido_sdk.contract": ["abi/*.json"]},
