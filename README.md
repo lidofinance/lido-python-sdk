@@ -19,7 +19,7 @@ pip install lido-sdk
 1. Create Web3 provider. One of fast options to start is INFURA.
 ```python
 from web3 import Web3
-# 
+
 w3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/{INFURA_PROJECT_ID}'))
 ```
 
@@ -43,14 +43,14 @@ else:
 ```
 
 ## Params for Lido
-| Param name                        | Default value | Description |
-| -------------                     | ---------     | ----------- |
-| w3                                | required      | Web3 provider |
-| MULTICALL_MAX_BUNCH               | 275           | Count of calls in one multicall (not recommended to increase) |
-| MULTICALL_MAX_WORKERS             | 6             | Count of requests in parallel (not recommended to have more than 12) |
-| MULTICALL_MAX_RETRIES             | 5             | Count of retries before exception will be raised |
-| MULTICALL_POOL_EXECUTOR_TIMEOUT   | 30            | Thread pool timeout for multicall (seconds) |
-| VALIDATE_POOL_EXECUTOR_TIMEOUT    | 10            | Process pool timeout for keys validation (seconds) |
+| Param name                      | Default value | Description                                                          |
+|---------------------------------|---------------|----------------------------------------------------------------------|
+| w3                              | required      | Web3 provider                                                        |
+| MULTICALL_MAX_BUNCH             | 275           | Count of calls in one multicall (not recommended to increase)        |
+| MULTICALL_MAX_WORKERS           | 6             | Count of requests in parallel (not recommended to have more than 12) |
+| MULTICALL_MAX_RETRIES           | 5             | Count of retries before exception will be raised                     |
+| MULTICALL_POOL_EXECUTOR_TIMEOUT | 30            | Thread pool timeout for multicall (seconds)                          |
+| VALIDATE_POOL_EXECUTOR_TIMEOUT  | 10            | Process pool timeout for keys validation (seconds)                   |
 
 Settings example if timeout exception was raised:
 ```python
