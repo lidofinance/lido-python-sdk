@@ -10,155 +10,14 @@ on:
   pull_request:
     branches: [ master ]
 
-  workflow_dispatch:
-
 jobs:
-  build-swig:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-          architecture: x64
-
-      - name: Build blst library bindings for python
-        run: |
-          cd blst/bindings/python;
-          ./run.me;
-
-      - name: Upload blst_wrap.cpp
-        uses: actions/upload-artifact@v2
-        with:
-          name: blst_swig_bindings_cpp
-          path: |
-            blst/bindings/python/blst_wrap.cpp
-          if-no-files-found: error
-
-      - name: Upload blst.py
-        uses: actions/upload-artifact@v2
-        with:
-          name: blst_swig_bindings_py
-          path: |
-            blst/bindings/python/blst.py
-          if-no-files-found: error
-
-  build-blst-macos:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      - name: Build 'blst' dynamic library (macos)
-        run: |
-          cd blst/
-          ./build.sh
-          cd ..
-          mkdir -p ./blst-lib/darwin/
-          cp ./blst/libblst.a   ./blst-lib/darwin/
-
-      - name: Upload static blst library
-        uses: actions/upload-artifact@v2
-        with:
-          name: blst_static_lib
-          path: |
-            ./blst-lib/**/*.a
-          if-no-files-found: error
-
-  build-blst-windows:
-    runs-on: windows-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      - name: Prepare MSVC dev environment (windows)
-        uses: ilammy/msvc-dev-cmd@v1
-
-      - name: Build 'blst' dynamic library (windows)
-        run: |
-          cd blst/
-          ./build.bat
-          cd ..
-          mkdir -p ./blst-lib/windows/
-          cp ./blst/blst.lib   ./blst-lib/windows/
-
-      - name: Upload static blst library
-        uses: actions/upload-artifact@v2
-        with:
-          name: blst_static_lib
-          path: |
-            ./blst-lib/**/*.lib
-          if-no-files-found: error
-
-  build-blst-ubuntu:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      - name: Build 'blst' dynamic library (ubuntu)
-        run: |
-          cd blst/
-          sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
-          ./build.sh
-          cd ..
-          mkdir -p ./blst-lib/linux/
-          cp ./blst/libblst.a   ./blst-lib/linux/
-
-      - name: Upload static blst library
-        uses: actions/upload-artifact@v2
-        with:
-          name: blst_static_lib
-          path: |
-            ./blst-lib/**/*.a
-          if-no-files-found: error
-
-  build-blst-arm64:
-    runs-on: ubuntu20.04
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      - uses: uraimo/run-on-arch-action@v2
-        name: Build 'blst' dynamic library (ubuntu-arm64)
-        with:
-          arch: aarch64
-          distro: ubuntu20.04
-          run: |
-            cd blst/
-            sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
-            ./build.sh
-            cd ..
-            mkdir -p ./blst-lib/linux/
-            cp ./blst/libblst.a   ./blst-lib/linux/
-
-      - name: Upload static blst library
-        uses: actions/upload-artifact@v2
-        with:
-          name: blst_static_lib
-          path: |
-            ./blst-lib/**/*.a
-          if-no-files-found: error
-
   build-wheels-and-publish:
-    needs: ["build-swig", "build-blst-macos", "build-blst-windows", "build-blst-ubuntu", "build-blst-arm64"]
     runs-on: ${{matrix.os}}
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        python-version: [ 3.7, 3.8, 3.9 ]
+        python-version: [ 3.7, 3.8, 3.9, 3.10 ]
         architecture: [ x64 ]
     defaults:
       run:
@@ -174,44 +33,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.architecture }}
 
-      - name: Print python version
-        run: |
-          python --version
-          python3 --version
-
-      - name: Print CPU info
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          ./cpuinfo.sh
-
       - name: Installing pip packages
         run: |
           pip install wheel
           pip install twine
-
-      - name: Get SWIG pre-built 'blst_wrap.cpp'  from artifact storage
-        uses: actions/download-artifact@v2
-        with:
-          name: blst_swig_bindings_cpp
-          path: ./blst-lib/
-
-      - name: Get SWIG pre-built 'blst.py' from artifact storage
-        uses: actions/download-artifact@v2
-        with:
-          name: blst_swig_bindings_py
-          path: ./lido_sdk/blstverify/
-
-      - name: Get static blst library from artifact storage
-        uses: actions/download-artifact@v2
-        with:
-          name: blst_static_lib
-          path: ./blst-lib/
-
-      - name: Copy headers and c-files for creating python binary extensions
-        run: |
-          cp ./blst/bindings/blst.h     ./blst-lib/
-          cp ./blst/bindings/blst.hpp   ./blst-lib/
-          cp ./blst/bindings/blst_aux.h ./blst-lib/
 
       - uses: Gr1N/setup-poetry@v7
       - name: Install dependencies

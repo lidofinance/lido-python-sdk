@@ -142,14 +142,5 @@ cython_debug/
 
 # BLST
 blst
-blst/libblst.a
-blst-lib/linux/libblst.a
-blst-lib/windows/blst.lib
-blst-lib/darwin/libblst.a
-blst-lib/*.cpp
-blst-lib/*.h
-blst-lib/*.hpp
-!blst-lib/blst_wrap.cpp
-lido/blstverify/*.so
 lido/blstverify/*.pyd
 lido/blstverify/*.dll
