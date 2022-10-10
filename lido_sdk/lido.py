@@ -14,7 +14,6 @@ from lido_sdk.methods import (
 )
 from lido_sdk.methods.operators import get_keys_by_indexes
 from lido_sdk.methods.typing import Operator, OperatorKey
-from lido_sdk.network import Network
 
 
 class LidoException(Exception):
