@@ -26,19 +26,8 @@ jobs:
           python-version: 3.9
           architecture: x64
 
-      - name: Setup SWIG
-        run: |
-          git clone --branch v4.0.2 https://github.com/swig/swig;
-          cd swig;
-          ./autogen.sh;
-          ./configure --prefix=$HOME/swig;
-          make;
-          make install;
-
       - name: Build blst library bindings for python
         run: |
-          python --version;
-          python3 --version;
           cd blst/bindings/python;
           ./run.me;
 
@@ -58,51 +47,14 @@ jobs:
             blst/bindings/python/blst.py
           if-no-files-found: error
 
-  build-blst:
-    runs-on: ${{matrix.os}}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
-        architecture: [ x64 ]
-    defaults:
-      run:
-        shell: bash
+  build-blst-macos:
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
 
-      - name: Prepare MSVC dev environment (windows)
-        if: matrix.os == 'windows-latest'
-        uses: ilammy/msvc-dev-cmd@v1
-
-      - name: Print CPU info
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          ./cpuinfo.sh
-
-      - name: Build 'blst' dynamic library (windows)
-        if: matrix.os == 'windows-latest'
-        run: |
-          cd blst/
-          ./build.bat
-          cd ..
-          mkdir -p ./blst-lib/windows/
-          cp ./blst/blst.lib   ./blst-lib/windows/
-
-      - name: Build 'blst' dynamic library (ubuntu)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          cd blst/
-          sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
-          ./build.sh
-          cd ..
-          mkdir -p ./blst-lib/linux/
-          cp ./blst/libblst.a   ./blst-lib/linux/
-
       - name: Build 'blst' dynamic library (macos)
-        if: matrix.os == 'macos-latest'
         run: |
           cd blst/
           ./build.sh
@@ -116,7 +68,86 @@ jobs:
           name: blst_static_lib
           path: |
             ./blst-lib/**/*.a
+          if-no-files-found: error
+
+  build-blst-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Prepare MSVC dev environment (windows)
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Build 'blst' dynamic library (windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd blst/
+          ./build.bat
+          cd ..
+          mkdir -p ./blst-lib/windows/
+          cp ./blst/blst.lib   ./blst-lib/windows/
+
+      - name: Upload static blst library
+        uses: actions/upload-artifact@v2
+        with:
+          name: blst_static_lib
+          path: |
             ./blst-lib/**/*.lib
+          if-no-files-found: error
+
+  build-blst-ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - uses: uraimo/run-on-arch-action@v2
+        name: Build 'blst' dynamic library (ubuntu)
+        run: |
+          cd blst/
+          sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
+          ./build.sh
+          cd ..
+          mkdir -p ./blst-lib/aarch64/
+          cp ./blst/libblst.a   ./blst-lib/aarch64/
+
+      - name: Upload static blst library
+        uses: actions/upload-artifact@v2
+        with:
+          name: blst_static_lib
+          path: |
+            ./blst-lib/**/*.a
+          if-no-files-found: error
+
+  build-blst-arm64:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Build 'blst' dynamic library (ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          cd blst/
+          sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
+          ./build.sh
+          cd ..
+          mkdir -p ./blst-lib/linux/
+          cp ./blst/libblst.a   ./blst-lib/linux/
+
+      - name: Upload static blst library
+        uses: actions/upload-artifact@v2
+        with:
+          name: blst_static_lib
+          path: |
+            ./blst-lib/**/*.a
           if-no-files-found: error
 
   build-wheels-and-publish:

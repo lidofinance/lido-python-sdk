@@ -22,6 +22,9 @@ for known in PLATFORMS:
 if target not in PLATFORMS:
     target = "linux"
 
+if platform.processor() == "aarch64":
+    target = "aarch64"
+
 # C/C++ Extensions
 LIBRARIES = []
 STATIC_LIBRARIES = ["blst"]
@@ -62,7 +65,7 @@ ext_modules = [
         library_dirs=LIBRARY_DIRS,
         extra_objects=EXTRA_OBJECTS,
         py_limited_api=True,
-        extra_compile_args=['-std=c++11'],
+        extra_compile_args=["-std=c++11"],
     ),
 ]
 
@@ -74,16 +77,16 @@ with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
 
 # Where the magic happens:
 setup(
-    name='lido-sdk',
-    version='2.5.3',
-    description='This library consolidates various functions to efficiently load network data for Lido,'
-                ' validate node operator keys and find key duplicates.',
+    name="lido-sdk",
+    version="2.5.3",
+    description="This library consolidates various functions to efficiently load network data for Lido,"
+                " validate node operator keys and find key duplicates.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author='Lido',
-    author_email='info@lido.fi',
-    python_requires='>=3.7,<4',
-    url='https://github.com/lidofinance/lido-python-sdk',
+    author="Lido",
+    author_email="info@lido.fi",
+    python_requires=">=3.7,<4",
+    url="https://github.com/lidofinance/lido-python-sdk",
     package_dir={"": "."},
     packages=find_packages(exclude=("tests",)),
     package_data={"lido_sdk.contract": ["abi/*.json"]},

@@ -4,8 +4,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This repo provides a scratch of a Python project. Its purpose is to serve as starting point for
-the development of a Python project based on a minimal working structure.
+A library with which you can get all Lido validator's signatures and check their validity.
 
 ## Installation
 This library is available on PyPi:
@@ -172,7 +171,7 @@ Available networks:
 
 Clone project:
 ```bash
-git clone git@github.com:lidofinance/lido-python-sdk.git
+git clone --recurse-submodules git@github.com:lidofinance/lido-python-sdk.git
 cd lido-python-sdk
 ```
 Create virtual env:
