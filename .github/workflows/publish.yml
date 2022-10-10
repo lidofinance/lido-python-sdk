@@ -116,8 +116,8 @@ jobs:
             sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
             ./build.sh
             cd ..
-            mkdir -p ./blst-lib/aarch64/
-            cp ./blst/libblst.a   ./blst-lib/aarch64/
+            mkdir -p ./blst-lib/linux/
+            cp ./blst/libblst.a   ./blst-lib/linux/
 
       - name: Upload static blst library
         uses: actions/upload-artifact@v2
@@ -142,8 +142,8 @@ jobs:
           sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
           ./build.sh
           cd ..
-          mkdir -p ./blst-lib/linux/
-          cp ./blst/libblst.a   ./blst-lib/linux/
+          mkdir -p ./blst-lib/aarch64/
+          cp ./blst/libblst.a   ./blst-lib/aarch64/
 
       - name: Upload static blst library
         uses: actions/upload-artifact@v2
@@ -154,7 +154,7 @@ jobs:
           if-no-files-found: error
 
   build-wheels-and-publish:
-    needs: ["build-swig", "build-blst"]
+    needs: ["build-swig", "build-blst-macos", "build-blst-windows", "build-blst-ubuntu", "build-blst-arm64"]
     runs-on: ${{matrix.os}}
     strategy:
       fail-fast: false
