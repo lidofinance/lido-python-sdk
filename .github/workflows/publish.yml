@@ -108,13 +108,16 @@ jobs:
 
       - uses: uraimo/run-on-arch-action@v2
         name: Build 'blst' dynamic library (ubuntu)
-        run: |
-          cd blst/
-          sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
-          ./build.sh
-          cd ..
-          mkdir -p ./blst-lib/aarch64/
-          cp ./blst/libblst.a   ./blst-lib/aarch64/
+        with:
+          arch: armv7
+          distro: ubuntu-latest
+          run: |
+            cd blst/
+            sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
+            ./build.sh
+            cd ..
+            mkdir -p ./blst-lib/aarch64/
+            cp ./blst/libblst.a   ./blst-lib/aarch64/
 
       - name: Upload static blst library
         uses: actions/upload-artifact@v2
