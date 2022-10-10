@@ -100,7 +100,7 @@ setup(
     license="MIT",
     classifiers=[
         "License :: OSI Approved :: MIT License",
-        "Development Status :: 5 - Stable",
+        "Development Status :: 5 - Production/Stable",
         # Supported Python versions
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.7",
