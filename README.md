@@ -171,7 +171,7 @@ Available networks:
 
 Clone project:
 ```bash
-git clone --recurse-submodules git@github.com:lidofinance/lido-python-sdk.git
+git clone --recurse-submodules https://github.com/lidofinance/lido-python-sdk.git
 cd lido-python-sdk
 ```
 Create virtual env:
