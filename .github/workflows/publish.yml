@@ -123,7 +123,7 @@ jobs:
           if-no-files-found: error
 
   build-blst-arm64:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu20.04
 
     steps:
       - uses: actions/checkout@v2
@@ -133,8 +133,8 @@ jobs:
       - uses: uraimo/run-on-arch-action@v2
         name: Build 'blst' dynamic library (ubuntu-arm64)
         with:
-          arch: armv7
-          distro: ubuntu-18.04
+          arch: aarch64
+          distro: ubuntu20.04
           run: |
             cd blst/
             sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh
