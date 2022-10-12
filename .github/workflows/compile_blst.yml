@@ -130,10 +130,10 @@ jobs:
 
       - name: Build test arm binding
         run: |
-          docker buildx build --platform linux/arm64 -t armbuild:latest --load --progress=plain .;
-          docker create --name armbuild armbuild:latest;
-          docker exec -it armbuild cd blst & ./build.sh;
-          docker cp armbuild:/blst/libblst.a ./blst-lib/aarch64/;
+          docker run -dt --platform linux/arm64 --name arm64v8 arm64v8/ubuntu:latest;
+          docker cp blst/ arm64v8:/
+          docker exec -u root arm64v8 apt update && sudo apt install -y build-essential && ./blst/build.sh;
+          docker cp arm64v8:/blst/libblst.a ./blst-lib/aarch64/;
 
       - name: Commit linux lib
         run: |
