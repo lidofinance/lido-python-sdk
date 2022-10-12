@@ -35,7 +35,8 @@ jobs:
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
-        branch: feature/recompile-blst-lib
+        with:
+          branch: feature/recompile-blst-lib
 
   build-blst-macos:
     runs-on: macos-latest
@@ -52,4 +53,5 @@ jobs:
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
-        branch: feature/recompile-blst-lib
+        with:
+          branch: feature/recompile-blst-lib
