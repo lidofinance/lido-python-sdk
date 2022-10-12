@@ -99,8 +99,7 @@ jobs:
         with:
           submodules: true
 
-      - uses: uraimo/run-on-arch-action@v2
-        name: Build 'blst' dynamic library (ubuntu)
+      - name: Build 'blst' dynamic library (ubuntu)
         run: |
           cd blst/;
           sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh;
@@ -137,10 +136,8 @@ jobs:
           docker exec -it armbuild cd blst & ./build.sh;
           docker cp armbuild:/blst/libblst.a ./blst-lib/aarch64/;
 
-      - name: Upload static blst library
-        uses: actions/upload-artifact@v2
-        with:
-          name: blst_static_lib
-          path: |
-            ./blst-lib/**/*.a
-          if-no-files-found: error
+      - name: Commit linux lib
+        run: |
+          git add ./blst-lib/aarch64/libblst.a;
+          git commit -m 'Update blst lib for arm64.';
+          git push;
