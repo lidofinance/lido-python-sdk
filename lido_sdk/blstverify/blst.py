@@ -5,6 +5,7 @@
 # the SWIG interface file instead.
 
 from sys import version_info as _swig_python_version_info
+
 if _swig_python_version_info < (2, 7, 0):
     raise RuntimeError("Python 2.7 or later required")
 
@@ -22,12 +23,17 @@ except ImportError:
 _swig_new_instance_method = _blst.SWIG_PyInstanceMethod_New
 _swig_new_static_method = _blst.SWIG_PyStaticMethod_New
 
+
 def _swig_repr(self):
     try:
         strthis = "proxy of " + self.this.__repr__()
     except __builtin__.Exception:
         strthis = ""
-    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis,)
+    return "<%s.%s; %s >" % (
+        self.__class__.__module__,
+        self.__class__.__name__,
+        strthis,
+    )
 
 
 def _swig_setattr_nondynamic_instance_variable(set):
@@ -40,6 +46,7 @@ def _swig_setattr_nondynamic_instance_variable(set):
             set(self, name, value)
         else:
             raise AttributeError("You cannot add instance attributes to %s" % self)
+
     return set_instance_attr
 
 
@@ -49,18 +56,22 @@ def _swig_setattr_nondynamic_class_variable(set):
             set(cls, name, value)
         else:
             raise AttributeError("You cannot add class attributes to %s" % cls)
+
     return set_class_attr
 
 
 def _swig_add_metaclass(metaclass):
     """Class decorator for adding a metaclass to a SWIG wrapped class - a slimmed down version of six.add_metaclass"""
+
     def wrapper(cls):
         return metaclass(cls.__name__, cls.__bases__, cls.__dict__.copy())
+
     return wrapper
 
 
 class _SwigNonDynamicMeta(type):
     """Meta class to enforce nondynamic attributes (no new attributes) for a class"""
+
     __setattr__ = _swig_setattr_nondynamic_class_variable(type.__setattr__)
 
 
@@ -71,15 +82,23 @@ BLST_POINT_NOT_IN_GROUP = _blst.BLST_POINT_NOT_IN_GROUP
 BLST_AGGR_TYPE_MISMATCH = _blst.BLST_AGGR_TYPE_MISMATCH
 BLST_VERIFY_FAIL = _blst.BLST_VERIFY_FAIL
 BLST_PK_IS_INFINITY = _blst.BLST_PK_IS_INFINITY
+
+
 class SecretKey(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    thisown = property(
+        lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
+    )
     __repr__ = _swig_repr
     keygen = _swig_new_instance_method(_blst.SecretKey_keygen)
     keygen_v3 = _swig_new_instance_method(_blst.SecretKey_keygen_v3)
     keygen_v4_5 = _swig_new_instance_method(_blst.SecretKey_keygen_v4_5)
     keygen_v5 = _swig_new_instance_method(_blst.SecretKey_keygen_v5)
-    derive_master_eip2333 = _swig_new_instance_method(_blst.SecretKey_derive_master_eip2333)
-    derive_child_eip2333 = _swig_new_instance_method(_blst.SecretKey_derive_child_eip2333)
+    derive_master_eip2333 = _swig_new_instance_method(
+        _blst.SecretKey_derive_master_eip2333
+    )
+    derive_child_eip2333 = _swig_new_instance_method(
+        _blst.SecretKey_derive_child_eip2333
+    )
     from_bendian = _swig_new_instance_method(_blst.SecretKey_from_bendian)
     from_lendian = _swig_new_instance_method(_blst.SecretKey_from_lendian)
     to_bendian = _swig_new_instance_method(_blst.SecretKey_to_bendian)
@@ -87,17 +106,23 @@ class SecretKey(object):
 
     def __init__(self):
         _blst.SecretKey_swiginit(self, _blst.new_SecretKey())
+
     __swig_destroy__ = _blst.delete_SecretKey
+
 
 # Register SecretKey in _blst:
 _blst.SecretKey_swigregister(SecretKey)
 
+
 class Scalar(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    thisown = property(
+        lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
+    )
     __repr__ = _swig_repr
 
     def __init__(self, *args):
         _blst.Scalar_swiginit(self, _blst.new_Scalar(*args))
+
     dup = _swig_new_instance_method(_blst.Scalar_dup)
     from_bendian = _swig_new_instance_method(_blst.Scalar_from_bendian)
     from_lendian = _swig_new_instance_method(_blst.Scalar_from_lendian)
@@ -109,15 +134,20 @@ class Scalar(object):
     inverse = _swig_new_instance_method(_blst.Scalar_inverse)
     __swig_destroy__ = _blst.delete_Scalar
 
+
 # Register Scalar in _blst:
 _blst.Scalar_swigregister(Scalar)
 
+
 class P1_Affine(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    thisown = property(
+        lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
+    )
     __repr__ = _swig_repr
 
     def __init__(self, *args):
         _blst.P1_Affine_swiginit(self, _blst.new_P1_Affine(*args))
+
     dup = _swig_new_instance_method(_blst.P1_Affine_dup)
     to_jacobian = _swig_new_instance_method(_blst.P1_Affine_to_jacobian)
     serialize = _swig_new_instance_method(_blst.P1_Affine_serialize)
@@ -130,16 +160,21 @@ class P1_Affine(object):
     generator = _swig_new_static_method(_blst.P1_Affine_generator)
     __swig_destroy__ = _blst.delete_P1_Affine
 
+
 # Register P1_Affine in _blst:
 _blst.P1_Affine_swigregister(P1_Affine)
 P1_Affine_generator = _blst.P1_Affine_generator
 
+
 class P1(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    thisown = property(
+        lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
+    )
     __repr__ = _swig_repr
 
     def __init__(self, *args):
         _blst.P1_swiginit(self, _blst.new_P1(*args))
+
     dup = _swig_new_instance_method(_blst.P1_dup)
     to_affine = _swig_new_instance_method(_blst.P1_to_affine)
     serialize = _swig_new_instance_method(_blst.P1_serialize)
@@ -160,19 +195,25 @@ class P1(object):
     generator = _swig_new_static_method(_blst.P1_generator)
     __swig_destroy__ = _blst.delete_P1
 
+
 # Register P1 in _blst:
 _blst.P1_swigregister(P1)
 P1_generator = _blst.P1_generator
 
+
 class P1_Affines(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    thisown = property(
+        lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
+    )
 
     def __init__(self, *args, **kwargs):
         raise AttributeError("No constructor defined")
+
     __repr__ = _swig_repr
     mult_pippenger = _swig_new_static_method(_blst.P1_Affines_mult_pippenger)
     add = _swig_new_static_method(_blst.P1_Affines_add)
     as_memory = _swig_new_static_method(_blst.P1_Affines_as_memory)
+
 
 # Register P1_Affines in _blst:
 _blst.P1_Affines_swigregister(P1_Affines)
@@ -180,12 +221,16 @@ P1_Affines_mult_pippenger = _blst.P1_Affines_mult_pippenger
 P1_Affines_add = _blst.P1_Affines_add
 P1_Affines_as_memory = _blst.P1_Affines_as_memory
 
+
 class P2_Affine(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    thisown = property(
+        lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
+    )
     __repr__ = _swig_repr
 
     def __init__(self, *args):
         _blst.P2_Affine_swiginit(self, _blst.new_P2_Affine(*args))
+
     dup = _swig_new_instance_method(_blst.P2_Affine_dup)
     to_jacobian = _swig_new_instance_method(_blst.P2_Affine_to_jacobian)
     serialize = _swig_new_instance_method(_blst.P2_Affine_serialize)
@@ -198,16 +243,21 @@ class P2_Affine(object):
     generator = _swig_new_static_method(_blst.P2_Affine_generator)
     __swig_destroy__ = _blst.delete_P2_Affine
 
+
 # Register P2_Affine in _blst:
 _blst.P2_Affine_swigregister(P2_Affine)
 P2_Affine_generator = _blst.P2_Affine_generator
 
+
 class P2(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    thisown = property(
+        lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
+    )
     __repr__ = _swig_repr
 
     def __init__(self, *args):
         _blst.P2_swiginit(self, _blst.new_P2(*args))
+
     dup = _swig_new_instance_method(_blst.P2_dup)
     to_affine = _swig_new_instance_method(_blst.P2_to_affine)
     serialize = _swig_new_instance_method(_blst.P2_serialize)
@@ -228,19 +278,25 @@ class P2(object):
     generator = _swig_new_static_method(_blst.P2_generator)
     __swig_destroy__ = _blst.delete_P2
 
+
 # Register P2 in _blst:
 _blst.P2_swigregister(P2)
 P2_generator = _blst.P2_generator
 
+
 class P2_Affines(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    thisown = property(
+        lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
+    )
 
     def __init__(self, *args, **kwargs):
         raise AttributeError("No constructor defined")
+
     __repr__ = _swig_repr
     mult_pippenger = _swig_new_static_method(_blst.P2_Affines_mult_pippenger)
     add = _swig_new_static_method(_blst.P2_Affines_add)
     as_memory = _swig_new_static_method(_blst.P2_Affines_as_memory)
+
 
 # Register P2_Affines in _blst:
 _blst.P2_Affines_swigregister(P2_Affines)
@@ -250,12 +306,17 @@ P2_Affines_as_memory = _blst.P2_Affines_as_memory
 
 G1 = _blst.G1
 G2 = _blst.G2
+
+
 class PT(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    thisown = property(
+        lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
+    )
     __repr__ = _swig_repr
 
     def __init__(self, *args):
         _blst.PT_swiginit(self, _blst.new_PT(*args))
+
     dup = _swig_new_instance_method(_blst.PT_dup)
     is_one = _swig_new_instance_method(_blst.PT_is_one)
     is_equal = _swig_new_instance_method(_blst.PT_is_equal)
@@ -268,17 +329,22 @@ class PT(object):
     one = _swig_new_static_method(_blst.PT_one)
     __swig_destroy__ = _blst.delete_PT
 
+
 # Register PT in _blst:
 _blst.PT_swigregister(PT)
 PT_finalverify = _blst.PT_finalverify
 PT_one = _blst.PT_one
 
+
 class Pairing(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    thisown = property(
+        lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
+    )
     __repr__ = _swig_repr
 
     def __init__(self, hash_or_encode, DST):
         _blst.Pairing_swiginit(self, _blst.new_Pairing(hash_or_encode, DST))
+
     __swig_destroy__ = _blst.delete_Pairing
     aggregate = _swig_new_instance_method(_blst.Pairing_aggregate)
     mul_n_aggregate = _swig_new_instance_method(_blst.Pairing_mul_n_aggregate)
@@ -287,6 +353,7 @@ class Pairing(object):
     finalverify = _swig_new_instance_method(_blst.Pairing_finalverify)
     raw_aggregate = _swig_new_instance_method(_blst.Pairing_raw_aggregate)
     as_fp12 = _swig_new_instance_method(_blst.Pairing_as_fp12)
+
 
 # Register Pairing in _blst:
 _blst.Pairing_swigregister(Pairing)
