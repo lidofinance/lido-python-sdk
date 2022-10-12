@@ -63,7 +63,7 @@ jobs:
         run: |
           git add ./blst-lib/darwin/libblst.a;
           git commit -m 'Update blst lib for macos.';
-          git push origin feature/remove-poa-middleware-check;
+          git push;
 
   build-blst-windows:
     needs: update-blst-interface
@@ -89,7 +89,7 @@ jobs:
         run: |
           git add ./blst-lib/windows/blst.lib;
           git commit -m 'Update blst lib for windows.';
-          git push origin feature/remove-poa-middleware-check;
+          git push;
 
   build-blst-ubuntu:
     needs: update-blst-interface
@@ -111,9 +111,10 @@ jobs:
 
       - name: Commit linux lib
         run: |
+          git config --global user.email "info@lido.fi"
           git add ./blst-lib/linux/libblst.a;
           git commit -m 'Update blst lib for linux.';
-          git push origin feature/remove-poa-middleware-check;
+          git push;
 
   build-blst-arm64:
     needs: update-blst-interface
@@ -138,11 +139,11 @@ jobs:
           docker run -dt --platform linux/arm64 --name arm64v8 arm64v8/ubuntu:latest;
           docker cp blst/ arm64v8:/
           docker exec arm64v8 apt update && sudo apt install -y build-essential && cd blst && ./build.sh;
-          docker cp arm64v8:/blst/libblst.a ./blst-lib/aarch64/;
+          docker cp arm64v8:/blst/libblst.a blst-lib/aarch64/;
           docker rm -f arm64v8;
 
       - name: Commit linux lib
         run: |
           git add ./blst-lib/aarch64/libblst.a;
           git commit -m 'Update blst lib for arm64.';
-          git push origin feature/remove-poa-middleware-check;
+          git push;
