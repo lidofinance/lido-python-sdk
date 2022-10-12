@@ -137,7 +137,7 @@ jobs:
           docker run -dt --platform linux/arm64 --name arm64v8 arm64v8/ubuntu:latest;
           docker cp blst/ arm64v8:/
           docker exec arm64v8 apt update && sudo apt install -y build-essential && ./blst/build.sh;
-          docker cp arm64v8:/blst/libblst.a ./blst-lib/aarch64/;
+          docker cp arm64v8:/libblst.a ./blst-lib/aarch64/;
           docker rm -f arm64v8;
 
       - name: Commit linux lib
