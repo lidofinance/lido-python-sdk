@@ -77,12 +77,11 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Build 'blst' dynamic library (windows)
-        if: matrix.os == 'windows-latest'
         run: |
           cd blst/;
           ./build.bat;
           mkdir -p ../blst-lib/windows/;
-          cp ./blst/blst.lib   ./blst-lib/windows/;
+          cp blst.lib   ./blst-lib/windows/;
 
       - name: Commit windows lib
         run: |
@@ -105,7 +104,7 @@ jobs:
           sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh;
           ./build.sh;
           mkdir -p ../blst-lib/linux/;
-          cp ../blst/libblst.a   ./blst-lib/linux/;
+          cp libblst.a   ./blst-lib/linux/;
 
       - name: Commit linux lib
         run: |
