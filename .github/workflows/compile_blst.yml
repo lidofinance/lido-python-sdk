@@ -61,6 +61,8 @@ jobs:
 
       - name: Commit macos lib
         run: |
+          git config user.email "info@lido.fi";
+          git config user.name "Raman";
           git add ./blst-lib/darwin/libblst.a;
           git commit -m 'Update blst lib for macos.';
           git push;
@@ -138,11 +140,11 @@ jobs:
 
       - name: Build test arm binding
         run: |
-          mkdir -p ./blst-lib/aarch64/;
           docker run -dt --platform linux/arm64 --name arm64v8 arm64v8/ubuntu:latest;
           docker cp blst/ arm64v8:/
           docker exec arm64v8 apt update && sudo apt install -y build-essential && cd blst && ./build.sh;
-          docker cp arm64v8:/blst/libblst.a blst-lib/aarch64/;
+          mkdir -p ./blst-lib/aarch64/;
+          docker cp arm64v8:/blst/libblst.a ./blst-lib/aarch64/;
           docker rm -f arm64v8;
 
       - name: Commit linux lib
