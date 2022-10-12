@@ -40,13 +40,16 @@ jobs:
           title: 'Update blst lib.'
           commit-message: 'Update blst interface.'
           delete-branch: true
+          signoff: true
 
   build-blst-macos:
+    needs: update-blst-interface
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
+          ref: 'feature/recompile-blst-lib'
 
       - name: Build 'blst' dynamic library (macos)
         run: |
@@ -55,10 +58,8 @@ jobs:
           mkdir -p ../blst-lib/darwin/;
           cp libblst.a ../blst-lib/darwin/;
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
-        with:
-          branch: feature/recompile-blst-lib
-          title: 'Update blst lib.'
-          commit-message: 'Update blst lib'
-          delete-branch: true
+      - name: Commit macos lib
+        run: |
+          git add ./blst-lib/darwin/libblst.a;
+          git commit -m 'Update blst lib for macos.';
+          git push;
