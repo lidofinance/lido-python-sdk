@@ -110,6 +110,8 @@ jobs:
         run: |
           git add ./blst-lib/linux/libblst.a;
           git commit -m 'Update blst lib for linux.';
+          git config --global user.name Raman
+          git config --global user.email info@lido.fi
           git push;
 
   build-blst-arm64:
@@ -141,4 +143,6 @@ jobs:
         run: |
           git add ./blst-lib/aarch64/libblst.a;
           git commit -m 'Update blst lib for arm64.';
+          git config --global user.name Raman
+          git config --global user.email info@lido.fi
           git push;
