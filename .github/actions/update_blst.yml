@@ -1,0 +1,55 @@
+name: Build blst and create PR
+
+on: workflow_dispatch
+
+jobs:
+  update-blst-interface:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+          architecture: x64
+
+      - name: Setup SWIG
+        run: |
+          pip install swig
+
+      - name: Build blst library bindings for python
+        run: |
+          cd blst/bindings/python;
+          ./run.me;
+
+      - name: Copy files
+        run: |
+          cp ./blst/bindings/python/blst_wrap.cpp blst-lib;
+          cp ./blst/bindings/python/blst.py lido_sdk/blstverify;
+          cp ./blst/bindings/blst.h     ./blst-lib/;
+          cp ./blst/bindings/blst.hpp   ./blst-lib/;
+          cp ./blst/bindings/blst_aux.h ./blst-lib/;
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v4
+        branch: feature/recompile-blst-lib
+
+  build-blst-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Build 'blst' dynamic library (macos)
+        run: |
+          ./blst/build.sh;
+          mkdir -p ./blst-lib/darwin/;
+          cp ./blst/libblst.a   ./blst-lib/darwin/;
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        branch: feature/recompile-blst-lib
