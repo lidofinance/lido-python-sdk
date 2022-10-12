@@ -72,6 +72,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
+          ref: 'feature/recompile-blst-lib'
 
       - name: Prepare MSVC dev environment (windows)
         uses: ilammy/msvc-dev-cmd@v1
@@ -97,6 +98,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
+          ref: 'feature/recompile-blst-lib'
 
       - name: Build 'blst' dynamic library (ubuntu)
         run: |
@@ -108,8 +110,6 @@ jobs:
 
       - name: Commit linux lib
         run: |
-          git config --global user.name Raman
-          git config --global user.email info@lido.fi
           git add ./blst-lib/linux/libblst.a;
           git commit -m 'Update blst lib for linux.';
           git push;
@@ -122,6 +122,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
+          ref: 'feature/recompile-blst-lib'
 
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
@@ -141,8 +142,6 @@ jobs:
 
       - name: Commit linux lib
         run: |
-          git config --global user.name Raman
-          git config --global user.email info@lido.fi
           git add ./blst-lib/aarch64/libblst.a;
           git commit -m 'Update blst lib for arm64.';
           git push;
