@@ -83,10 +83,12 @@ jobs:
           cd blst/;
           ./build.bat;
           mkdir -p ../blst-lib/windows/;
-          cp blst.lib ../blst-lib/windows/;
+          cp ./blst.lib ../blst-lib/windows/;
 
       - name: Commit windows lib
         run: |
+          git config user.email "info@lido.fi";
+          git config user.name "Raman";
           git add ./blst-lib/windows/blst.lib;
           git commit -m 'Update blst lib for windows.';
           git push;
@@ -111,7 +113,8 @@ jobs:
 
       - name: Commit linux lib
         run: |
-          git config --global user.email "info@lido.fi"
+          git config user.email "info@lido.fi";
+          git config user.name "Raman";
           git add ./blst-lib/linux/libblst.a;
           git commit -m 'Update blst lib for linux.';
           git push;
@@ -144,6 +147,8 @@ jobs:
 
       - name: Commit linux lib
         run: |
+          git config user.email "info@lido.fi";
+          git config user.name "Raman";
           git add ./blst-lib/aarch64/libblst.a;
           git commit -m 'Update blst lib for arm64.';
           git push;
