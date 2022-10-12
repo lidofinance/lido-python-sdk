@@ -11,7 +11,7 @@ jobs:
           submodules: true
 
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: "3.10"
           architecture: x64
@@ -69,7 +69,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -94,7 +94,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -108,10 +108,10 @@ jobs:
 
       - name: Commit linux lib
         run: |
-          git add ./blst-lib/linux/libblst.a;
-          git commit -m 'Update blst lib for linux.';
           git config --global user.name Raman
           git config --global user.email info@lido.fi
+          git add ./blst-lib/linux/libblst.a;
+          git commit -m 'Update blst lib for linux.';
           git push;
 
   build-blst-arm64:
@@ -119,7 +119,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -135,14 +135,14 @@ jobs:
           mkdir -p ./blst-lib/aarch64/;
           docker run -dt --platform linux/arm64 --name arm64v8 arm64v8/ubuntu:latest;
           docker cp blst/ arm64v8:/
-          docker exec -u root arm64v8 apt update && sudo apt install -y build-essential && ./blst/build.sh;
+          docker exec arm64v8 apt update && sudo apt install -y build-essential && ./blst/build.sh;
           docker cp arm64v8:/blst/libblst.a ./blst-lib/aarch64/;
           docker rm -f arm64v8;
 
       - name: Commit linux lib
         run: |
-          git add ./blst-lib/aarch64/libblst.a;
-          git commit -m 'Update blst lib for arm64.';
           git config --global user.name Raman
           git config --global user.email info@lido.fi
+          git add ./blst-lib/aarch64/libblst.a;
+          git commit -m 'Update blst lib for arm64.';
           git push;
