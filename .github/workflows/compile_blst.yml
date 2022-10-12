@@ -63,3 +63,84 @@ jobs:
           git add ./blst-lib/darwin/libblst.a;
           git commit -m 'Update blst lib for macos.';
           git push;
+
+  build-blst-windows:
+    needs: update-blst-interface
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Prepare MSVC dev environment (windows)
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Build 'blst' dynamic library (windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd blst/;
+          ./build.bat;
+          mkdir -p ../blst-lib/windows/;
+          cp ./blst/blst.lib   ./blst-lib/windows/;
+
+      - name: Commit windows lib
+        run: |
+          git add ./blst-lib/windows/libblst.lib;
+          git commit -m 'Update blst lib for windows.';
+          git push;
+
+  build-blst-ubuntu:
+    needs: update-blst-interface
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - uses: uraimo/run-on-arch-action@v2
+        name: Build 'blst' dynamic library (ubuntu)
+        run: |
+          cd blst/;
+          sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh;
+          ./build.sh;
+          mkdir -p ../blst-lib/linux/;
+          cp ../blst/libblst.a   ./blst-lib/linux/;
+
+      - name: Commit linux lib
+        run: |
+          git add ./blst-lib/linux/libblst.a;
+          git commit -m 'Update blst lib for linux.';
+          git push;
+
+  build-blst-arm64:
+    needs: update-blst-interface
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      # https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build test arm binding
+        run: |
+          docker buildx build --platform linux/arm64 -t armbuild:latest --load --progress=plain .;
+          docker create --name armbuild armbuild:latest;
+          docker exec -it armbuild cd blst & ./build.sh;
+          docker cp armbuild:/blst/libblst.a ./blst-lib/aarch64/;
+
+      - name: Upload static blst library
+        uses: actions/upload-artifact@v2
+        with:
+          name: blst_static_lib
+          path: |
+            ./blst-lib/**/*.a
+          if-no-files-found: error
