@@ -91,7 +91,7 @@ setup(
     packages=find_packages(exclude=("tests",)),
     package_data={"lido_sdk.contract": ["abi/*.json"]},
     install_requires=[
-        "multicall>=0.1.2,<1",
+        "multicall>=0.1.2,<0.5.0",
         "web3>=5.23.1,<6",
         "ssz>=0.2.4,<1",
     ],
