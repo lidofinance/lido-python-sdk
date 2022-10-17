@@ -1,0 +1,154 @@
+name: Build blst and create PR
+
+on: workflow_dispatch
+
+jobs:
+  update-blst-interface:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          architecture: x64
+
+      - name: Setup SWIG
+        run: |
+          pip install swig
+
+      - name: Build blst library bindings for python
+        run: |
+          cd blst/bindings/python;
+          ./run.me;
+
+      - name: Copy files
+        run: |
+          cp ./blst/bindings/python/blst_wrap.cpp blst-lib;
+          cp ./blst/bindings/python/blst.py lido_sdk/blstverify;
+          cp ./blst/bindings/blst.h     ./blst-lib/;
+          cp ./blst/bindings/blst.hpp   ./blst-lib/;
+          cp ./blst/bindings/blst_aux.h ./blst-lib/;
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          branch: feature/recompile-blst-lib
+          title: 'Update blst lib.'
+          commit-message: 'Update blst interface.'
+          delete-branch: true
+          signoff: true
+
+  build-blst-macos:
+    needs: update-blst-interface
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          ref: 'feature/recompile-blst-lib'
+
+      - name: Build 'blst' dynamic library (macos)
+        run: |
+          cd blst;
+          ./build.sh;
+          mkdir -p ../blst-lib/darwin/;
+          cp libblst.a ../blst-lib/darwin/;
+
+      - name: Commit macos lib
+        run: |
+          git config user.email "info@lido.fi";
+          git config user.name "Raman";
+          git add ./blst-lib/darwin/libblst.a;
+          git commit -m 'Update blst lib for macos.';
+          git push;
+
+  build-blst-windows:
+    needs: update-blst-interface
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          ref: 'feature/recompile-blst-lib'
+
+      - name: Prepare MSVC dev environment (windows)
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Build 'blst' dynamic library (windows)
+        run: |
+          cd blst/;
+          ./build.bat;
+          mkdir -p ../blst-lib/windows/;
+          cp ./blst.lib ../blst-lib/windows/;
+
+      - name: Commit windows lib
+        run: |
+          git config user.email "info@lido.fi";
+          git config user.name "Raman";
+          git add ./blst-lib/windows/blst.lib;
+          git commit -m 'Update blst lib for windows.';
+          git push;
+
+  build-blst-ubuntu:
+    needs: update-blst-interface
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          ref: 'feature/recompile-blst-lib'
+
+      - name: Build 'blst' dynamic library (ubuntu)
+        run: |
+          cd blst/;
+          sed -i 's/cflags="-D__ADX__ $cflags"/echo "adx skip"/' build.sh;
+          ./build.sh;
+          mkdir -p ../blst-lib/linux/;
+          cp libblst.a ../blst-lib/linux/;
+
+      - name: Commit linux lib
+        run: |
+          git config user.email "info@lido.fi";
+          git config user.name "Raman";
+          git add ./blst-lib/linux/libblst.a;
+          git commit -m 'Update blst lib for linux.';
+          git push;
+
+  build-blst-arm64:
+    needs: update-blst-interface
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          ref: 'feature/recompile-blst-lib'
+
+      # https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build test arm binding
+        run: |
+          mkdir -p ./blst-lib/aarch64/;
+          docker buildx build --platform linux/arm64 -t armbuild:latest --load --progress=plain .;
+          docker create --name armbuild --platform linux/arm64 armbuild:latest;
+          docker cp armbuild:/blst/libblst.a ./blst-lib/aarch64/;
+
+      - name: Commit linux lib
+        run: |
+          git config user.email "info@lido.fi";
+          git config user.name "Raman";
+          git add ./blst-lib/aarch64/libblst.a;
+          git commit -m 'Update blst lib for arm64.';
+          git push;
