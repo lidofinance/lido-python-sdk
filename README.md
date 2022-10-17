@@ -4,8 +4,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This repo provides a scratch of a Python project. Its purpose is to serve as starting point for
-the development of a Python project based on a minimal working structure.
+A library with which you can get all Lido validator's signatures and check their validity.
 
 ## Installation
 This library is available on PyPi:
@@ -19,7 +18,7 @@ pip install lido-sdk
 1. Create Web3 provider. One of fast options to start is INFURA.
 ```python
 from web3 import Web3
-# 
+
 w3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/{INFURA_PROJECT_ID}'))
 ```
 
@@ -43,14 +42,14 @@ else:
 ```
 
 ## Params for Lido
-| Param name                        | Default value | Description |
-| -------------                     | ---------     | ----------- |
-| w3                                | required      | Web3 provider |
-| MULTICALL_MAX_BUNCH               | 275           | Count of calls in one multicall (not recommended to increase) |
-| MULTICALL_MAX_WORKERS             | 6             | Count of requests in parallel (not recommended to have more than 12) |
-| MULTICALL_MAX_RETRIES             | 5             | Count of retries before exception will be raised |
-| MULTICALL_POOL_EXECUTOR_TIMEOUT   | 30            | Thread pool timeout for multicall (seconds) |
-| VALIDATE_POOL_EXECUTOR_TIMEOUT    | 10            | Process pool timeout for keys validation (seconds) |
+| Param name                      | Default value | Description                                                          |
+|---------------------------------|---------------|----------------------------------------------------------------------|
+| w3                              | required      | Web3 provider                                                        |
+| MULTICALL_MAX_BUNCH             | 275           | Count of calls in one multicall (not recommended to increase)        |
+| MULTICALL_MAX_WORKERS           | 6             | Count of requests in parallel (not recommended to have more than 12) |
+| MULTICALL_MAX_RETRIES           | 5             | Count of retries before exception will be raised                     |
+| MULTICALL_POOL_EXECUTOR_TIMEOUT | 30            | Thread pool timeout for multicall (seconds)                          |
+| VALIDATE_POOL_EXECUTOR_TIMEOUT  | 10            | Process pool timeout for keys validation (seconds)                   |
 
 Settings example if timeout exception was raised:
 ```python
@@ -172,7 +171,7 @@ Available networks:
 
 Clone project:
 ```bash
-git clone git@github.com:lidofinance/lido-python-sdk.git
+git clone --recurse-submodules https://github.com/lidofinance/lido-python-sdk.git
 cd lido-python-sdk
 ```
 Create virtual env:
