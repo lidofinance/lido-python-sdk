@@ -69,6 +69,9 @@ ext_modules = [
     ),
 ]
 
+print(STATIC_LIB_DIR)
+print(EXTRA_OBJECTS)
+
 # ---------------- setup --------------------
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -78,7 +81,7 @@ with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
 # Where the magic happens:
 setup(
     name="lido-sdk",
-    version="2.6.3",
+    version="2.6.4",
     description="This library consolidates various functions to efficiently load network data for Lido,"
                 " validate node operator keys and find key duplicates.",
     long_description=long_description,
