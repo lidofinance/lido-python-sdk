@@ -140,9 +140,10 @@ jobs:
 
       - name: Build test arm binding
         run: |
-          mkdir -p ../blst-lib/aarch64/;
-          docker buildx build --platform linux/arm64 -t armbuild:latest --load --progress=plain .
-          docker create --name armbuild --platform linux/arm64 armbuild:latest && docker cp armbuild:/blst/libblst.a ./blst-lib/aarch64/;
+          mkdir -p ./blst-lib/aarch64/;
+          docker buildx build --platform linux/arm64 -t armbuild:latest --load --progress=plain .;
+          docker create --name armbuild --platform linux/arm64 armbuild:latest;
+          docker cp armbuild:/blst/libblst.a ./blst-lib/aarch64/;
 
       - name: Commit linux lib
         run: |
