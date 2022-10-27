@@ -22,7 +22,7 @@ for known in PLATFORMS:
 if target not in PLATFORMS:
     target = "linux"
 
-if platform.processor() == "aarch64":
+if platform.processor() in ["arm", "aarch64"]:
     target = "aarch64"
 
 # C/C++ Extensions
@@ -80,7 +80,7 @@ setup(
     name="lido-sdk",
     version="2.5.4",
     description="This library consolidates various functions to efficiently load network data for Lido,"
-                " validate node operator keys and find key duplicates.",
+                " validate node  operator keys and find key duplicates.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Lido",

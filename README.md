@@ -151,6 +151,11 @@ Returns all invalid and duplicated keys.
 }
 ```
 
+## Issues
+
+There is issues with using blst lib on macos ARM cpu.
+But everything works on linux ARM cpu.
+
 ## Main Features
 
 ### Multicall Function Calls
@@ -224,3 +229,8 @@ git tag v2.x.x  master
 git push --tags
 ```
 New version should be published after all pipelines passed.
+
+## Rebuild blst
+Goto actions "Build blst and create PR".
+Review PR and merge.
+Do a release.
