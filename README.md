@@ -216,6 +216,18 @@ Build blst locally (osx):
   cp ./blst/bindings/blst_aux.h ./blst-lib/
   python setup.py build_ext --inplace
 ```
+Build blst locally (osx arm):
+```bash
+  cd blst/
+  ./build.sh
+  cd ..
+  mkdir -p ./blst-lib/darwin-arm64/
+  cp ./blst/libblst.a           ./blst-lib/darwin-arm64/
+  cp ./blst/bindings/blst.h     ./blst-lib/
+  cp ./blst/bindings/blst.hpp   ./blst-lib/
+  cp ./blst/bindings/blst_aux.h ./blst-lib/
+  python setup.py build_ext --inplace
+```
 
 ## How to test
 Simply run in project root directory:
@@ -231,6 +243,7 @@ git push --tags
 New version should be published after all pipelines passed.
 
 ## Rebuild blst
-Goto actions "Build blst and create PR".
+Goto actions "Build blst and create PR". 
+Note that darwin-arm64 binaries are not rebuilt automatically due to GitHub Actions not supporting macOS runners on arm yet
 Review PR and merge.
 Do a release.
