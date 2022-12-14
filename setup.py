@@ -22,7 +22,9 @@ for known in PLATFORMS:
 if target not in PLATFORMS:
     target = "linux"
 
-if platform.processor() in ["arm", "aarch64"]:
+if platform.processor() == "arm" and target == "darwin":
+    target = 'darwin-arm64'
+elif platform.processor() in ["arm", "aarch64"]:
     target = "aarch64"
 
 # C/C++ Extensions
