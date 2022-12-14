@@ -80,7 +80,7 @@ with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
 # Where the magic happens:
 setup(
     name="lido-sdk",
-    version="2.6.0",
+    version="2.6.5",
     description="This library consolidates various functions to efficiently load network data for Lido,"
                 " validate node  operator keys and find key duplicates.",
     long_description=long_description,
