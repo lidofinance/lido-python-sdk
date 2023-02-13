@@ -44,4 +44,5 @@ WITHDRAWAL_CREDENTIALS = {
     Network.Rinkeby: [],
     Network.Kintsugi: [],
     Network.Kiln: [],
+    Network.Zhejiang: [],
 }
