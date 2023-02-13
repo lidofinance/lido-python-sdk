@@ -44,11 +44,14 @@ def get_operators_keys(w3: Web3, operators: List[Operator]) -> List[OperatorKey]
     """
     args_list = []
 
-    if len(operators) == 0:
+    if not operators:
         return []
 
     for args in _index_generator(operators):
         args_list.append(args)
+
+    if not args_list:
+        return []
 
     keys = NodeOpsContract.getSigningKey_multicall(w3, args_list)
 

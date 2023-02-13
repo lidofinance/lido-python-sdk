@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
+## [3.0.3](https://github.com/lidofinance/lido-python-sdk/pull/86) - 2023-02-12
+### Fixed
+- Node Operators has no keys issue.
+
+## [3.0.0](https://github.com/lidofinance/lido-python-sdk/pull/84) - 2023-02-12
+### Added
+- Support to Zhejiang testnet and new versions of contracts
+
 ## [2.7.0](https://github.com/lidofinance/lido-python-sdk/pull/79) - 2022-12-14
 ### Added
 - Support to ARM for MacOS.
