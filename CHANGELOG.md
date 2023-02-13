@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
+## [3.0.1](https://github.com/lidofinance/lido-python-sdk/pull/85) - 2023-02-12
+### Added
+- Support to Zhejiang testnet fixes
+
 ## [3.0.0](https://github.com/lidofinance/lido-python-sdk/pull/84) - 2023-02-12
 ### Added
 - Support to Zhejiang testnet and new versions of contracts

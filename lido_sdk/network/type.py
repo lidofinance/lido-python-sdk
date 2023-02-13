@@ -21,6 +21,7 @@ GENESIS_FORK_VERSION = {
     Network.Rinkeby: bytes.fromhex("00000000"),
     Network.Kintsugi: bytes.fromhex("60000069"),
     Network.Kiln: bytes.fromhex("70000069"),
+    Network.Zhejiang: bytes.fromhex("00000069"),
 }
 
 # Existing withdrawal credentials on the chain
