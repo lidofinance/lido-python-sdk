@@ -15,15 +15,7 @@ from tests.fixtures import OPERATORS_DATA, OPERATORS_KEYS
 from tests.utils import get_mainnet_provider, MockTestCase
 
 
-class OperatorTest(MockTestCase):
-    def setUp(self) -> None:
-        self.mocker.patch(
-            "web3.eth.Eth.chain_id", return_value=1, new_callable=PropertyMock
-        )
-        self.w3 = Web3()
-
-        self.lido = Lido(self.w3)
-
+class LidoE2ETest(MockTestCase):
     def test_main_flow_methods(self):
         w3 = get_mainnet_provider()
         operators_count = get_operators_indexes(w3)[:1]
@@ -37,6 +29,16 @@ class OperatorTest(MockTestCase):
 
         self.assertListEqual(invalid_keys, [])
         self.assertListEqual(duplicates, [])
+
+
+class OperatorTest(MockTestCase):
+    def setUp(self) -> None:
+        self.mocker.patch(
+            "web3.eth.Eth.chain_id", return_value=1, new_callable=PropertyMock
+        )
+        self.w3 = Web3()
+
+        self.lido = Lido(self.w3)
 
     def test_get_operators_indexes(self):
         self.mocker.patch(
