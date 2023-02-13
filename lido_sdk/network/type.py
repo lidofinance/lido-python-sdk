@@ -10,6 +10,7 @@ class Network(IntEnum):
     Ropsten = 3
     Kintsugi = 1337702
     Kiln = 1337802
+    Zhejiang = 1337803
 
 
 # Network
