@@ -28,7 +28,7 @@ jobs:
           submodules: true
 
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.architecture }}
@@ -38,7 +38,9 @@ jobs:
           pip install wheel
           pip install twine
 
-      - uses: Gr1N/setup-poetry@v7
+      - uses: Gr1N/setup-poetry@v8
+        with:
+          poetry-version: "1.2.2"
       - name: Install dependencies
         run: |
           poetry install
