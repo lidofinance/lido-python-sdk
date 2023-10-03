@@ -3,25 +3,15 @@ from enum import IntEnum
 
 class Network(IntEnum):
     Mainnet = 1
-    Kovan = 42
-    Rinkeby = 4
     Görli = 5
-    xDai = 100
-    Ropsten = 3
-    Kintsugi = 1337702
-    Kiln = 1337802
-    Zhejiang = 1337803
+    Holesky = 17000
 
 
 # Network
 GENESIS_FORK_VERSION = {
     Network.Mainnet: bytes.fromhex("00000000"),
     Network.Görli: bytes.fromhex("00001020"),
-    Network.Ropsten: bytes.fromhex("00000000"),
-    Network.Rinkeby: bytes.fromhex("00000000"),
-    Network.Kintsugi: bytes.fromhex("60000069"),
-    Network.Kiln: bytes.fromhex("70000069"),
-    Network.Zhejiang: bytes.fromhex("00000069"),
+    Network.Holesky: bytes.fromhex("01017000"),
 }
 
 # Existing withdrawal credentials on the chain
@@ -34,15 +24,5 @@ WITHDRAWAL_CREDENTIALS = {
     Network.Görli: [
         "0x00040517ce98f81070cea20e35610a3ae23a45f0883b0b035afc5717cc2e833e"
     ],
-    Network.Ropsten: [
-        "0x01000000000000000000000002139137fdd974181a49268d7b0ae888634e5469",
-        "0x000000000000000000000000ff139137fdd974181a49268d7b0ae888634e5469",
-        "0x000000000000000000000000aa139137fdd974181a49268d7b0ae888634e5469",
-        "0x010000000000000000000000aa139137fdd974181a49268d7b0ae888634e5469",
-        "0x73c72beecbd832c9ce342e61a772c8cfe6f1c6d661b19a98317b5dac05ce9685",
-    ],
-    Network.Rinkeby: [],
-    Network.Kintsugi: [],
-    Network.Kiln: [],
-    Network.Zhejiang: [],
+    Network.Holesky: [],
 }

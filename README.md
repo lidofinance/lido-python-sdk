@@ -169,8 +169,7 @@ Depending on which network is configured in web3 object, a set of contracts will
 Available networks:
 - Mainnet
 - Görli
-- Ropsten
-- Rinkeby
+- Holesky
 
 ## Development
 
