@@ -39,9 +39,9 @@ jobs:
           pip install twine
 
       - uses: Gr1N/setup-poetry@v8
-      - name: Install dependencies
         with:
           poetry-version: "1.2.2"
+      - name: Install dependencies
         run: |
           poetry install
 
