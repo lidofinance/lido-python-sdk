@@ -38,10 +38,11 @@ jobs:
           pip install wheel
           pip install twine
 
-      - uses: Gr1N/setup-poetry@v7
-      - name: Install dependencies
+      - name: Setup poetry
         run: |
-          poetry install
+          curl -sSL https://install.python-poetry.org/ | python - && echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+        env:
+          POETRY_VERSION: 1.4.2
 
       - name: Testing (native blst tests)
         run: |
