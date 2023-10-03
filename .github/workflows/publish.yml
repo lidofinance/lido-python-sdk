@@ -40,10 +40,10 @@ jobs:
 
       - uses: Gr1N/setup-poetry@v8
       - name: Install dependencies
-        run: |
-          poetry install
         with:
           poetry-version: "1.2.2"
+        run: |
+          poetry install
 
       - name: Testing (native blst tests)
         run: |
