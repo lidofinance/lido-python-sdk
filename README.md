@@ -4,7 +4,10 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A library with which you can get all Lido validator's signatures and check their validity.
+### ❗Python SDK supports only Curated Staking module. Check out [KAPI](https://github.com/lidofinance/lido-keys-api) project if you need **all** Lido keys.❗
+
+Lido Python SDK - convenient interface to check validator's pub keys in Node Operators registry.
+Provides ability to download, verify and check for duplicates keys in curated module (Node Operators registry).
 
 ## Installation
 This library is available on PyPi:
