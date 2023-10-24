@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [comment]: <> (## [Unreleased]&#40;https://github.com/lidofinance/lido-python-sdk&#41; - 2021-09-15)
 
+## [4.1.0](https://github.com/lidofinance/lido-python-sdk/pull/91) - 2023-10-23
+### Changed
+- Removed support for Kovan, Rinkeby, xDai, Ropsten, Kintsugi, Kiln and Zhejiang.
+- Added support to Holesky.
+
 ## [4.0.0](https://github.com/lidofinance/lido-python-sdk/pull/89) - 2023-03-10
 ### Fixed
 - Support to Zhejiang testnet V2
