@@ -34,7 +34,7 @@ jobs:
           cp ./blst/bindings/blst_aux.h ./blst-lib/;
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v4
+        uses: lidofinance/create-pull-request@v4
         branch: feature/recompile-blst-lib
 
   build-blst-macos:
@@ -51,5 +51,5 @@ jobs:
           cp ./blst/libblst.a   ./blst-lib/darwin/;
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: lidofinance/create-pull-request@v4
         branch: feature/recompile-blst-lib
